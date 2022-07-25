@@ -33,11 +33,22 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
+  flutter_riverpod: ^1.0.4
+  cached_network_image: ^3.2.1
+  hive_flutter: ^1.1.0
+  dio: ^4.0.6
+  intl: ^0.17.0
+  equatable: ^2.0.3
+  url_launcher: ^6.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.9.3
+  http_mock_adapter: ^0.3.2
+  mocktail: ^0.3.0
+  hive_test: ^1.0.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
