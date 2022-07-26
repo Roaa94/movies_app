@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 import 'package:movies_app/core/configs/configs.dart';
 
@@ -16,7 +17,7 @@ class CachedResponse {
     required this.headers,
   });
 
-  bool get isValid => DateTime.now().isBefore(age.add(Configs.maxCacheAge));
+  bool get isValid => clock.now().isBefore(age.add(Configs.maxCacheAge));
 
   factory CachedResponse.fromJson(Map<String, dynamic> data) {
     return CachedResponse(
@@ -24,9 +25,9 @@ class CachedResponse {
       age: DateTime.parse(data['age']),
       statusCode: data['statusCode'],
       headers: Headers.fromMap((Map<String, List<dynamic>>.from(
-          json.decode(json.encode(data['headers']))))
+              json.decode(json.encode(data['headers']))))
           .map(
-            (k, v) => MapEntry(k, List<String>.from(v)),
+        (k, v) => MapEntry(k, List<String>.from(v)),
       )),
     );
   }

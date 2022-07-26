@@ -32,8 +32,6 @@ class DioHttpService implements HttpService {
 
   BaseOptions get baseOptions => BaseOptions(
         baseUrl: baseUrl,
-        // For custom error handling
-        validateStatus: (status) => true,
         headers: headers,
       );
 

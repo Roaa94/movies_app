@@ -1,23 +1,30 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:movies_app/core/models/cache_response.dart';
 import 'package:movies_app/core/services/storage/storage_service.dart';
 
-const dioCacheForceRefreshKey = 'dio_cache_force_refresh';
+const dioCacheForceRefreshKey = 'dio_cache_force_refresh_key';
 
 class CacheInterceptor implements Interceptor {
   final StorageService storageService;
 
   CacheInterceptor(this.storageService);
 
-  String _createStorageKey(RequestOptions requestOptions) {
-    String storageKey =
-        '${requestOptions.method.toUpperCase()}:${requestOptions.baseUrl + requestOptions.path}/';
-    if (requestOptions.queryParameters.isNotEmpty) {
+  @visibleForTesting
+  String createStorageKey(
+    String method,
+    String baseUrl,
+    String path, [
+    Map<String, dynamic> queryParameters = const {},
+  ]) {
+    String storageKey = '${method.toUpperCase()}:${baseUrl + path}/';
+    if (queryParameters.isNotEmpty) {
       storageKey += '?';
-      requestOptions.queryParameters.forEach((key, value) {
+      queryParameters.forEach((key, value) {
         storageKey += '$key=$value&';
       });
     }
@@ -26,17 +33,24 @@ class CacheInterceptor implements Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    String storageKey = _createStorageKey(err.requestOptions);
-    final CachedResponse? cachedResponse = _tryCachedResponse(storageKey);
-    if (cachedResponse != null) {
-      log('❌ ❌ ❌ Dio Error');
-      log('📦 📦 📦 Retrieved response from cache');
-      final Response response =
-          cachedResponse.buildResponse(err.requestOptions);
-      log('⬅️ ⬅️ ⬅️ Response');
-      log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
-      log('-------------------------');
-      return handler.resolve(response);
+    String storageKey = createStorageKey(
+      err.requestOptions.method,
+      err.requestOptions.baseUrl,
+      err.requestOptions.path,
+      err.requestOptions.queryParameters,
+    );
+    if (storageService.has(storageKey)) {
+      final CachedResponse? cachedResponse = _getCachedResponse(storageKey);
+      if (cachedResponse != null) {
+        log('❌ ❌ ❌ Dio Error');
+        log('📦 📦 📦 Retrieved response from cache');
+        final Response response =
+            cachedResponse.buildResponse(err.requestOptions);
+        log('⬅️ ⬅️ ⬅️ Response');
+        log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
+        log('-------------------------');
+        return handler.resolve(response);
+      }
     }
     return handler.next(err);
   }
@@ -47,22 +61,34 @@ class CacheInterceptor implements Interceptor {
       log('🌍 🌍 🌍 Retrieving request from network');
       return handler.next(options);
     }
-    String storageKey = _createStorageKey(options);
-    final CachedResponse? cachedResponse = _tryCachedResponse(storageKey);
-    if (cachedResponse != null) {
-      log('📦 📦 📦 Retrieved response from cache');
-      final Response response = cachedResponse.buildResponse(options);
-      log('⬅️ ⬅️ ⬅️ Response');
-      log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
-      log('-------------------------');
-      return handler.resolve(response);
+    String storageKey = createStorageKey(
+      options.method,
+      options.baseUrl,
+      options.path,
+      options.queryParameters,
+    );
+    if (storageService.has(storageKey)) {
+      final CachedResponse? cachedResponse = _getCachedResponse(storageKey);
+      if (cachedResponse != null) {
+        log('📦 📦 📦 Retrieved response from cache');
+        final Response response = cachedResponse.buildResponse(options);
+        log('⬅️ ⬅️ ⬅️ Response');
+        log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
+        log('-------------------------');
+        return handler.resolve(response);
+      }
     }
     return handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    String storageKey = _createStorageKey(response.requestOptions);
+    String storageKey = createStorageKey(
+      response.requestOptions.method,
+      response.requestOptions.baseUrl,
+      response.requestOptions.path,
+      response.requestOptions.queryParameters,
+    );
 
     if (response.statusCode != null &&
         response.statusCode! >= 200 &&
@@ -70,35 +96,31 @@ class CacheInterceptor implements Interceptor {
       CachedResponse cachedResponse = CachedResponse(
         data: response.data,
         headers: Headers.fromMap(response.headers.map),
-        age: DateTime.now(),
+        age: clock.now(),
         statusCode: response.statusCode!,
       );
-
-      log('Storing request in cache');
       storageService.set(storageKey, cachedResponse.toJson());
     }
     return handler.next(response);
   }
 
-  CachedResponse? _tryCachedResponse(String storageKey) {
-    if (storageService.has(storageKey)) {
-      final rawCachedResponse = storageService.get(storageKey);
-      try {
-        final CachedResponse cachedResponse = CachedResponse.fromJson(
-            json.decode(json.encode(rawCachedResponse)));
-        if (cachedResponse.isValid) {
-          return cachedResponse;
-        } else {
-          log('Cache is outdated, deleting it...');
-          storageService.remove(storageKey);
-          return null;
-        }
-      } catch (e) {
-        log('Error retrieving response from cache');
-        log('e: $e');
+  CachedResponse? _getCachedResponse(String storageKey) {
+    final rawCachedResponse = storageService.get(storageKey);
+    try {
+      final CachedResponse cachedResponse = CachedResponse.fromJson(
+        json.decode(json.encode(rawCachedResponse)),
+      );
+      if (cachedResponse.isValid) {
+        return cachedResponse;
+      } else {
+        log('Cache is outdated, deleting it...');
+        storageService.remove(storageKey);
         return null;
       }
+    } catch (e) {
+      log('Error retrieving response from cache');
+      log('e: $e');
+      return null;
     }
-    return null;
   }
 }
