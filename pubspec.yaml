@@ -41,7 +41,7 @@ dependencies:
   intl: ^0.17.0
   equatable: ^2.0.3
   url_launcher: ^6.1.5
-  clock: ^1.1.1
+  clock: ^1.1.0
 
 dev_dependencies:
   flutter_test:
