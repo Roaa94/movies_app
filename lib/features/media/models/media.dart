@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 import 'package:movies_app/features/media/enums/media_type.dart';
 
 class Media extends Equatable {
@@ -70,50 +71,19 @@ class Media extends Equatable {
       'adult': adult,
       'backdrop_path': backdropPath,
       'genre_ids': List<int>.from(genreIds.map((x) => x)),
-      'original_language': mediaType.name,
-      'original_title': originalLanguage,
-      'overview': originalTitle,
-      'poster_path': overview,
-      'release_date': posterPath,
-      'title': releaseDate.toString(),
-      'video': title,
-      'vote_average': video,
-      'vote_count': voteAverage,
+      'media_type': mediaType.name,
+      'original_language': originalLanguage,
+      'original_title': originalTitle,
+      'overview': overview,
+      'poster_path': posterPath,
+      'release_date': releaseDate == null
+          ? null
+          : DateFormat('yyyy-MM-dd').format(releaseDate!),
+      'title': title,
+      'video': video,
+      'vote_average': voteAverage,
+      'vote_count': voteCount,
     };
-  }
-
-  Media copyWith({
-    int? id,
-    bool? adult,
-    String? backdropPath,
-    List<int>? genreIds,
-    MediaType? mediaType,
-    String? originalLanguage,
-    String? originalTitle,
-    String? overview,
-    String? posterPath,
-    DateTime? releaseDate,
-    String? title,
-    bool? video,
-    double? voteAverage,
-    int? voteCount,
-  }) {
-    return Media(
-      id: id ?? this.id,
-      adult: adult ?? this.adult,
-      backdropPath: backdropPath ?? this.backdropPath,
-      genreIds: genreIds ?? this.genreIds,
-      mediaType: mediaType ?? this.mediaType,
-      originalLanguage: originalLanguage ?? this.originalLanguage,
-      originalTitle: originalTitle ?? this.originalTitle,
-      overview: overview ?? this.overview,
-      posterPath: posterPath ?? this.posterPath,
-      releaseDate: releaseDate ?? this.releaseDate,
-      title: title ?? this.title,
-      video: video ?? this.video,
-      voteAverage: voteAverage ?? this.voteAverage,
-      voteCount: voteCount ?? this.voteCount,
-    );
   }
 
   @override
