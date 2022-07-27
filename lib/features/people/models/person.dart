@@ -42,16 +42,18 @@ class Person extends Equatable {
     DateTime? birthday;
 
     try {
-      birthday =
-          json['birthday'] == null ? null : DateTime.parse(json['birthday']);
+      birthday = json['birthday'] == null || json['birthday'].isEmpty
+          ? null
+          : DateTime.parse(json['birthday']);
     } catch (e) {
       log('Error parsing birthday date! ${json['birthday']}');
     }
     DateTime? deathDate;
 
     try {
-      deathDate =
-          json['deathday'] == null ? null : DateTime.parse(json['deathday']);
+      deathDate = json['deathday'] == null || json['deathday'].isEmpty
+          ? null
+          : DateTime.parse(json['deathday']);
     } catch (e) {
       log('Error parsing deathDate date! ${json['deathday']}');
     }

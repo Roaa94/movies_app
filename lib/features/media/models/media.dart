@@ -47,11 +47,11 @@ class Media extends Equatable {
 
     DateTime? releaseDate;
     try {
-      releaseDate = json['releaseDate'] == null
+      releaseDate = json['release_date'] == null || json['release_date'].isEmpty
           ? null
-          : DateTime.parse(json['releaseDate']);
+          : DateTime.parse(json['release_date']);
     } catch (e) {
-      log('Error parsing releaseDate date! ${json['releaseDate']}');
+      log('Error parsing releaseDate date! ${json['release_date']}');
     }
 
     return Media(
