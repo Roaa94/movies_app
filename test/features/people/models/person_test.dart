@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/models/person.dart';
 
+import '../../../test-utils/dummy-data/dummy_configs.dart';
+
 void main() {
   const Map<String, dynamic> rawExamplePerson = {
     'adult': false,
@@ -53,5 +55,29 @@ void main() {
 
     expect(Person.fromJson(invalidDateExamplePerson).birthday, isNull);
     expect(Person.fromJson(invalidDateExamplePerson).deathDate, isNull);
+  });
+
+  test('can populate avatar and cover from profilePath with correct image urls',
+      () {
+    Person personWithGeneratedImages =
+        examplePerson.populateImages(DummyConfigs.valid);
+
+    String avatarUrl =
+        '${DummyConfigs.valid.secureBaseUrl}${Person.avatarSize.name}${examplePerson.profilePath}';
+    // https://image.tmdb.org/t/p/h632/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
+
+    expect(
+      personWithGeneratedImages.avatar,
+      equals(avatarUrl),
+    );
+
+    String coverUrl =
+        '${DummyConfigs.valid.secureBaseUrl}${Person.coverSize.name}${examplePerson.profilePath}';
+    // https://image.tmdb.org/t/p/original/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
+
+    expect(
+      personWithGeneratedImages.cover,
+      equals(coverUrl),
+    );
   });
 }

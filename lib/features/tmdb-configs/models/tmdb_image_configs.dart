@@ -5,11 +5,11 @@ import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
 class TMDBImageConfigs extends Equatable {
   final String baseUrl;
   final String secureBaseUrl;
-  final List<BackdropImageSize> backdropSizes;
-  final List<LogoImageSize> logoSizes;
-  final List<PosterImageSize> posterSizes;
-  final List<ProfileImageSize> profileSizes;
-  final List<StillImageSize> stillSizes;
+  final List<ImageSize> backdropSizes;
+  final List<ImageSize> logoSizes;
+  final List<ImageSize> posterSizes;
+  final List<ImageSize> profileSizes;
+  final List<ImageSize> stillSizes;
 
   const TMDBImageConfigs({
     required this.baseUrl,
@@ -27,45 +27,80 @@ class TMDBImageConfigs extends Equatable {
       secureBaseUrl: json['secure_base_url'],
       backdropSizes: json['backdrop_sizes'] == null
           ? []
-          : List<BackdropImageSize>.from(
+          : List<ImageSize>.from(
               json['backdrop_sizes'].map((x) =>
-                  BackdropImageSize.values
+                  ImageSize.values
                       .firstWhereOrNull((value) => value.name == x) ??
-                  BackdropImageSize.original),
+                  ImageSize.original),
             ),
       logoSizes: json['logo_sizes'] == null
           ? []
-          : List<LogoImageSize>.from(
+          : List<ImageSize>.from(
               json['logo_sizes'].map((x) =>
-                  LogoImageSize.values
+                  ImageSize.values
                       .firstWhereOrNull((value) => value.name == x) ??
-                  LogoImageSize.original),
+                  ImageSize.original),
             ),
       posterSizes: json['poster_sizes'] == null
           ? []
-          : List<PosterImageSize>.from(
+          : List<ImageSize>.from(
               json['poster_sizes'].map((x) =>
-                  PosterImageSize.values
+                  ImageSize.values
                       .firstWhereOrNull((value) => value.name == x) ??
-                  PosterImageSize.original),
+                  ImageSize.original),
             ),
       profileSizes: json['profile_sizes'] == null
           ? []
-          : List<ProfileImageSize>.from(
+          : List<ImageSize>.from(
               json['profile_sizes'].map((x) =>
-                  ProfileImageSize.values
+                  ImageSize.values
                       .firstWhereOrNull((value) => value.name == x) ??
-                  ProfileImageSize.original),
+                  ImageSize.original),
             ),
       stillSizes: json['still_sizes'] == null
           ? []
-          : List<StillImageSize>.from(
+          : List<ImageSize>.from(
               json['still_sizes'].map((x) =>
-                  StillImageSize.values
+                  ImageSize.values
                       .firstWhereOrNull((value) => value.name == x) ??
-                  StillImageSize.original),
+                  ImageSize.original),
             ),
     );
+  }
+
+  String buildProfileImage(ImageSize size, String path) {
+    String imageSize =
+        profileSizes.contains(size) ? size.name : ImageSize.original.name;
+
+    return '$secureBaseUrl$imageSize$path';
+  }
+
+  String buildLogoImage(ImageSize size, String path) {
+    String imageSize =
+        logoSizes.contains(size) ? size.name : ImageSize.original.name;
+
+    return '$secureBaseUrl$imageSize$path';
+  }
+
+  String buildPosterImage(ImageSize size, String path) {
+    String imageSize =
+        posterSizes.contains(size) ? size.name : ImageSize.original.name;
+
+    return '$secureBaseUrl$imageSize$path';
+  }
+
+  String buildStillImage(ImageSize size, String path) {
+    String imageSize =
+        stillSizes.contains(size) ? size.name : ImageSize.original.name;
+
+    return '$secureBaseUrl$imageSize$path';
+  }
+
+  String buildBackdropImage(ImageSize size, String path) {
+    String imageSize =
+        backdropSizes.contains(size) ? size.name : ImageSize.original.name;
+
+    return '$secureBaseUrl$imageSize$path';
   }
 
   @override

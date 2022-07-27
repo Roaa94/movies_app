@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:movies_app/features/media/models/media.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
+import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
+import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
 class Person extends Equatable {
   final bool adult;
@@ -14,6 +16,8 @@ class Person extends Equatable {
   final String name;
   final double popularity;
   final String? profilePath;
+  final String? avatar;
+  final String? cover;
   final String? biography;
   final DateTime? birthday;
   final DateTime? deathDate;
@@ -30,6 +34,8 @@ class Person extends Equatable {
     this.name = '',
     this.popularity = 0,
     this.profilePath,
+    this.avatar,
+    this.cover,
     this.biography,
     this.birthday,
     this.deathDate,
@@ -37,6 +43,9 @@ class Person extends Equatable {
     this.imdbId,
     this.placeOfBirth,
   });
+
+  static ImageSize avatarSize = ImageSize.h632;
+  static ImageSize coverSize = ImageSize.original;
 
   factory Person.fromJson(Map<String, dynamic> json) {
     DateTime? birthday;
@@ -99,6 +108,31 @@ class Person extends Equatable {
       'imdb_id': imdbId,
       'place_of_birth': placeOfBirth,
     };
+  }
+
+  Person populateImages(TMDBImageConfigs imageConfigs) {
+    return Person(
+      adult: adult,
+      gender: gender,
+      id: id,
+      knownFor: knownFor,
+      knownForDepartment: knownForDepartment,
+      name: name,
+      popularity: popularity,
+      profilePath: profilePath,
+      avatar: profilePath == null
+          ? null
+          : imageConfigs.buildProfileImage(avatarSize, profilePath!),
+      cover: profilePath == null
+          ? null
+          : imageConfigs.buildProfileImage(coverSize, profilePath!),
+      biography: biography,
+      birthday: birthday,
+      deathDate: deathDate,
+      homepage: homepage,
+      imdbId: imdbId,
+      placeOfBirth: placeOfBirth,
+    );
   }
 
   @override
