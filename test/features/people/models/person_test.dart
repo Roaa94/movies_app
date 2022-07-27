@@ -44,7 +44,7 @@ void main() {
     expect(examplePerson.toJson(), equals(rawExamplePerson));
   });
 
-  test('returns null birthday date for invalid formats', () {
+  test('returns null dates for invalid formats', () {
     Map<String, dynamic> invalidDateExamplePerson = {
       ...rawExamplePerson,
       'deathday': 'invalid!',
