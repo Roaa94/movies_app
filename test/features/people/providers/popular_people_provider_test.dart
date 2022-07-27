@@ -10,9 +10,9 @@ import '../../../test-utils/mocks.dart';
 void main() {
   final PeopleRepository mockPeopleRepository = MockPeopleRepository();
 
-  PaginatedResponse<Person> paginatedPopularPeopleResponse = PaginatedResponse(
+  PaginatedResponse<Person> paginatedPopularPeopleResponse = PaginatedResponse<Person>(
     page: 1,
-    results: DummyPeople.popularPeople,
+    results: DummyPeople.popularPeople1,
     totalPages: 500,
     totalResults: 1000,
   );

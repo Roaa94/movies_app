@@ -63,8 +63,9 @@ class Person extends Equatable {
           ? Gender.unknown
           : Gender.fromInt(json['gender']),
       id: json['id'],
-      knownFor:
-          List<Media>.from(json['known_for'].map((x) => Media.fromJson(x))),
+      knownFor: json['known_for'] == null
+          ? []
+          : List<Media>.from(json['known_for'].map((x) => Media.fromJson(x))),
       knownForDepartment: json['known_for_department'],
       name: json['name'],
       popularity: json['popularity']?.toDouble() ?? 0.0,
