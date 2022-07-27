@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:movies_app/features/media/models/media.dart';
@@ -37,8 +39,24 @@ class Person extends Equatable {
   });
 
   factory Person.fromJson(Map<String, dynamic> json) {
+    DateTime? birthday;
+
+    try {
+      birthday =
+          json['birthday'] == null ? null : DateTime.parse(json['birthday']);
+    } catch (e) {
+      log('Error parsing birthday date! ${json['birthday']}');
+    }
+    DateTime? deathDate;
+
+    try {
+      deathDate =
+          json['deathday'] == null ? null : DateTime.parse(json['deathday']);
+    } catch (e) {
+      log('Error parsing deathDate date! ${json['deathday']}');
+    }
     return Person(
-      adult: json['adult'],
+      adult: json['adult'] ?? false,
       gender: json['gender'] == null
           ? Gender.unknown
           : Gender.fromInt(json['gender']),
@@ -47,13 +65,11 @@ class Person extends Equatable {
           List<Media>.from(json['known_for'].map((x) => Media.fromJson(x))),
       knownForDepartment: json['known_for_department'],
       name: json['name'],
-      popularity: json['popularity'],
+      popularity: json['popularity']?.toDouble() ?? 0.0,
       profilePath: json['profile_path'],
       biography: json['biography'],
-      birthday:
-          json['birthday'] == null ? null : DateTime.parse(json['birthday']),
-      deathDate:
-          json['deathday'] == null ? null : DateTime.parse(json['deathday']),
+      birthday: birthday,
+      deathDate: deathDate,
       homepage: json['homepage'],
       imdbId: json['imdb_id'],
       placeOfBirth: json['place_of_birth'],

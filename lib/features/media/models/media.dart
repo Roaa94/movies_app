@@ -45,22 +45,29 @@ class Media extends Equatable {
       log('Unknown media type!');
     }
 
+    DateTime? releaseDate;
+    try {
+      releaseDate = json['releaseDate'] == null
+          ? null
+          : DateTime.parse(json['releaseDate']);
+    } catch (e) {
+      log('Error parsing releaseDate date! ${json['releaseDate']}');
+    }
+
     return Media(
       id: json['id'],
-      adult: json['adult'],
+      adult: json['adult'] ?? false,
       backdropPath: json['backdrop_path'],
-      genreIds: json['genre_ids'],
+      genreIds: List<int>.from(json['genre_ids'].map((x) => x)),
       mediaType: mediaType,
       originalLanguage: json['original_language'],
       originalTitle: json['original_title'],
       overview: json['overview'],
       posterPath: json['poster_path'],
-      releaseDate: json['release_date'] == null
-          ? null
-          : DateTime.parse(json['release_date']),
+      releaseDate: releaseDate,
       title: json['title'],
-      video: json['video'],
-      voteAverage: json['vote_average'],
+      video: json['video'] ?? false,
+      voteAverage: json['vote_average']?.toDouble() ?? 0.0,
       voteCount: json['vote_count'],
     );
   }
