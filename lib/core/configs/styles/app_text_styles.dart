@@ -37,4 +37,9 @@ class AppTextStyles {
     fontSize: 20,
     fontWeight: FontWeight.w400,
   );
+
+  static const TextStyle h4 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  );
 }

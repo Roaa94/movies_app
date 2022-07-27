@@ -7,6 +7,7 @@ import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/person_details_provider.dart';
 import 'package:movies_app/features/people/views/widgets/person_details_sliver_app_bar.dart';
+import 'package:movies_app/features/people/views/widgets/person_info.dart';
 import 'package:movies_app/features/people/views/widgets/person_name.dart';
 
 class PersonDetailsPage extends ConsumerWidget {
@@ -41,8 +42,13 @@ class PersonDetailsPage extends ConsumerWidget {
               PersonName(personName),
               personAsync.when(
                 data: (Person person) {
-                  return Center(
-                    child: Text(person.biography ?? 'Person bio is empty'),
+                  return Column(
+                    children: [
+                      PersonInfo(person),
+                      Center(
+                        child: Text(person.biography ?? 'Person bio is empty'),
+                      ),
+                    ],
                   );
                 },
                 error: (Object error, StackTrace? stackTrace) {
