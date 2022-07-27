@@ -144,8 +144,8 @@ void main() {
         .thenAnswer((_) async {});
 
     await withClock(Clock.fixed(fetchTime), () async {
-      final Response response = await dioHttpService.get(path);
-      expect(response.data, {'data': 'Success!'});
+      final response = await dioHttpService.get(path);
+      expect(response, {'data': 'Success!'});
     });
   });
 
@@ -179,8 +179,8 @@ void main() {
 
       when(() => storageService.get(storageKey))
           .thenReturn(cachedResponse.toJson());
-      final Response response = await dioHttpService.get(path);
-      expect(response.data, cachedResponse.data);
+      final response = await dioHttpService.get(path);
+      expect(response, cachedResponse.data);
     });
   });
 
@@ -221,8 +221,8 @@ void main() {
       when(() => storageService.set(storageKey, newCachedResponse.toJson()))
           .thenAnswer((_) async {});
 
-      final Response response = await dioHttpService.get(path);
-      expect(response.data, responseData);
+      final response = await dioHttpService.get(path);
+      expect(response, responseData);
     });
   });
 
@@ -250,12 +250,12 @@ void main() {
         .thenAnswer((_) async {});
 
     await withClock(Clock.fixed(fetchTime), () async {
-      final Response response = await dioHttpService.get(
+      final response = await dioHttpService.get(
         path,
         forceRefresh: true,
       );
 
-      expect(response.data, responseData);
+      expect(response, responseData);
     });
   });
 
@@ -283,14 +283,12 @@ void main() {
           .thenReturn(cachedResponse.toJson());
 
       await withClock(Clock.fixed(fetchTime), () async {
-        final Response response = await dioHttpService.get(
+        final response = await dioHttpService.get(
           path,
           forceRefresh: true,
         );
 
-        expect(response.data, cachedResponse.data);
-        expect(response.statusCode, 200);
-        expect(response.data, cachedResponse.data);
+        expect(response, cachedResponse.data);
       });
     },
   );
