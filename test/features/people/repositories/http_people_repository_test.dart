@@ -13,7 +13,6 @@ void main() {
   final HttpService mockHttpService = MockHttpService();
   final HttpPeopleRepository httpPeopleRepository = HttpPeopleRepository(
     mockHttpService,
-    DummyConfigs.imageConfigs,
   );
 
   test('fetches paginated popular people', () async {
@@ -38,6 +37,7 @@ void main() {
     PaginatedResponse<Person> paginatedPopularPeople =
         await httpPeopleRepository.getPopularPeople(
       page: 1,
+      imageConfigs: DummyConfigs.imageConfigs,
     );
 
     expect(
@@ -60,6 +60,7 @@ void main() {
 
     final Person person = await httpPeopleRepository.getPersonDetails(
       DummyPeople.person1.id!,
+      imageConfigs: DummyConfigs.imageConfigs,
     );
     expect(person, equals(DummyPeople.person1));
   });

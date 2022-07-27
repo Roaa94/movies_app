@@ -7,12 +7,8 @@ import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart'
 
 class HttpPeopleRepository implements PeopleRepository {
   final HttpService httpService;
-  final TMDBImageConfigs imageConfigs;
 
-  HttpPeopleRepository(
-    this.httpService,
-    this.imageConfigs,
-  );
+  HttpPeopleRepository(this.httpService);
 
   @override
   String get path => '/person';
@@ -24,6 +20,7 @@ class HttpPeopleRepository implements PeopleRepository {
   Future<PaginatedResponse<Person>> getPopularPeople({
     int page = 1,
     bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
   }) async {
     final responseData = await httpService.get(
       '$path/popular',
@@ -48,6 +45,7 @@ class HttpPeopleRepository implements PeopleRepository {
   Future<Person> getPersonDetails(
     int personId, {
     bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
   }) async {
     final responseData = await httpService.get(
       '$path/$personId',

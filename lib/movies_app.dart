@@ -7,7 +7,6 @@ import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/features/people/views/pages/popular_people_page.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_configs.dart';
 import 'package:movies_app/features/tmdb-configs/providers/tmdb_configs_provider.dart';
-import 'package:movies_app/features/tmdb-configs/providers/tmdb_image_configs_provider.dart';
 
 class MoviesApp extends ConsumerWidget {
   const MoviesApp({Key? key}) : super(key: key);
@@ -23,12 +22,7 @@ class MoviesApp extends ConsumerWidget {
       ),
       home: configsAsync.when(
         data: (TMDBConfigs tmdbConfigs) {
-          return ProviderScope(
-            overrides: [
-              tmdbImageConfigsProvider.overrideWithValue(tmdbConfigs.images),
-            ],
-            child: const PopularPeoplePage(),
-          );
+          return const PopularPeoplePage();
         },
         error: (Object error, StackTrace? stackTrace) {
           log('Error fetching popular people');
