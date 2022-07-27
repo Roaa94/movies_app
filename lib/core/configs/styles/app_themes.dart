@@ -8,6 +8,11 @@ class AppThemes {
       brightness: Brightness.dark,
       fontFamily: AppTextStyles.fontFamily,
       primaryColor: AppColors.getMaterialColorFromColor(AppColors.primary),
+      colorScheme: const ColorScheme.dark(
+        primary: AppColors.primary,
+        secondary: AppColors.secondary,
+        background: AppColors.black,
+      ),
       backgroundColor: AppColors.black,
       scaffoldBackgroundColor: AppColors.black,
       textTheme: TextThemes.textTheme,
@@ -25,6 +30,11 @@ class AppThemes {
       primaryColor: AppColors.getMaterialColorFromColor(AppColors.primary),
       textTheme: TextThemes.textTheme,
       primaryTextTheme: TextThemes.primaryTextTheme,
+      colorScheme: const ColorScheme.light(
+        primary: AppColors.primary,
+        secondary: AppColors.secondary,
+        background: AppColors.white,
+      ),
       appBarTheme: const AppBarTheme(
         elevation: 0,
         backgroundColor: AppColors.white,
