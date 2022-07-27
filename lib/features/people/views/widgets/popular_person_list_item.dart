@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movies_app/core/widgets/app_cached_network_image.dart';
 import 'package:movies_app/core/widgets/list_item_shimmer.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/current_popular_person_provider.dart';
 import 'package:movies_app/features/people/views/pages/person_details_page.dart';
+import 'package:movies_app/features/people/views/widgets/person_avatar.dart';
 
 class PopularPersonListItem extends ConsumerWidget {
   const PopularPersonListItem({Key? key}) : super(key: key);
@@ -40,17 +40,13 @@ class PopularPersonListItem extends ConsumerWidget {
               child: Row(
                 children: [
                   // Avatar
-                  if (person.avatar != null)
-                    Expanded(
-                      flex: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: AppCachedNetworkImage(
-                          imageUrl: person.avatar!,
-                          height: 70,
-                        ),
-                      ),
+                  Expanded(
+                    flex: 1,
+                    child: PersonAvatar(
+                      person.avatar,
+                      gender: person.gender,
                     ),
+                  ),
                   const SizedBox(width: 20),
                   Expanded(
                     flex: 3,
