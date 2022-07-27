@@ -15,7 +15,7 @@ class AppThemes {
       ),
       backgroundColor: AppColors.black,
       scaffoldBackgroundColor: AppColors.black,
-      textTheme: TextThemes.textTheme,
+      textTheme: TextThemes.darkTextTheme,
       primaryTextTheme: TextThemes.primaryTextTheme,
       appBarTheme: const AppBarTheme(
         elevation: 0,
@@ -55,6 +55,18 @@ class TextThemes {
       headline2: AppTextStyles.h2,
       headline3: AppTextStyles.h3,
       headline4: AppTextStyles.h4,
+    );
+  }
+  static TextTheme get darkTextTheme {
+    return TextTheme(
+      bodyText1: AppTextStyles.bodyLg.copyWith(color: AppColors.white),
+      bodyText2: AppTextStyles.body.copyWith(color: AppColors.white),
+      subtitle1: AppTextStyles.bodySm.copyWith(color: AppColors.white),
+      subtitle2: AppTextStyles.bodyXs.copyWith(color: AppColors.white),
+      headline1: AppTextStyles.h1.copyWith(color: AppColors.white),
+      headline2: AppTextStyles.h2.copyWith(color: AppColors.white),
+      headline3: AppTextStyles.h3.copyWith(color: AppColors.white),
+      headline4: AppTextStyles.h4.copyWith(color: AppColors.white),
     );
   }
 

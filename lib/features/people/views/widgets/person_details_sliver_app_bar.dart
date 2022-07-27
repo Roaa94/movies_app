@@ -30,7 +30,7 @@ class PersonDetailsSliverAppBar extends StatelessWidget {
           tag: 'person_${personId}_profile_picture',
           child: ClipRRect(
             borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(35),
+              bottomLeft: Radius.circular(50),
             ),
             child: PersonCover(
               avatar,

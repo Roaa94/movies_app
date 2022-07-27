@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movies_app/core/widgets/app_loader.dart';
+import 'package:movies_app/features/media/models/media.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/person_details_provider.dart';
 import 'package:movies_app/features/people/views/widgets/person_details_sliver_app_bar.dart';
 import 'package:movies_app/features/people/views/widgets/person_info.dart';
+import 'package:movies_app/features/people/views/widgets/person_media.dart';
 import 'package:movies_app/features/people/views/widgets/person_name.dart';
 
 class PersonDetailsPage extends ConsumerWidget {
@@ -17,12 +19,14 @@ class PersonDetailsPage extends ConsumerWidget {
     required this.personName,
     required this.personAvatar,
     required this.personGender,
+    this.personMedia = const [],
   }) : super(key: key);
 
   final String personName;
   final String? personAvatar;
   final int personId;
   final Gender personGender;
+  final List<Media> personMedia;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,6 +49,7 @@ class PersonDetailsPage extends ConsumerWidget {
                   return Column(
                     children: [
                       PersonInfo(person),
+                      PersonMedia(personMedia),
                       Center(
                         child: Text(person.biography ?? 'Person bio is empty'),
                       ),

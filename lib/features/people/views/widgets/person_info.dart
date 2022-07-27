@@ -13,55 +13,65 @@ class PersonInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        start: 40,
-        end: 17,
-      ),
-      child: Row(
-        children: [
-          if (person.knownForDepartment != null)
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Known For',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.white.withOpacity(0.5),
-                        ),
+    return Container(
+      color: AppColors.secondary,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          bottomRight: Radius.circular(50),
+        ),
+        child: Container(
+          padding: const EdgeInsetsDirectional.only(
+            start: 40,
+            end: 17,
+            bottom: 20,
+          ),
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Row(
+            children: [
+              if (person.knownForDepartment != null)
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Known For',
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.white.withOpacity(0.5),
+                            ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        person.knownForDepartment!,
+                        style: Theme.of(context).primaryTextTheme.headline4,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    person.knownForDepartment!,
-                    style: Theme.of(context).primaryTextTheme.headline4,
+                ),
+              if (person.birthday != null)
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Birthday',
+                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.white.withOpacity(0.5),
+                            ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        DateFormat('dd-MM-yyyy').format(person.birthday!),
+                        style: Theme.of(context).primaryTextTheme.headline4,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          if (person.birthday != null)
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Birthday',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.white.withOpacity(0.5),
-                        ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    DateFormat('dd-MM-yyyy').format(person.birthday!),
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
-                ],
-              ),
-            ),
-          // Expanded(),
-        ],
+                ),
+              // Expanded(),
+            ],
+          ),
+        ),
       ),
     );
   }

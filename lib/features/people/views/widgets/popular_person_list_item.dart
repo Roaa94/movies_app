@@ -30,6 +30,7 @@ class PopularPersonListItem extends ConsumerWidget {
                           personName: person.name,
                           personAvatar: person.avatar,
                           personGender: person.gender,
+                          personMedia: person.knownFor,
                         ),
                       ),
                     );
