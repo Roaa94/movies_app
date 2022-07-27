@@ -33,6 +33,10 @@ class CacheInterceptor implements Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
+    log('❌ ❌ ❌ Dio Error!');
+    log('❌ ❌ ❌ Url: ${err.requestOptions.uri}');
+    log('❌ ❌ ❌ ${err.stackTrace}');
+    log('❌ ❌ ❌ Response Errors: ${err.response?.data}');
     String storageKey = createStorageKey(
       err.requestOptions.method,
       err.requestOptions.baseUrl,
@@ -42,12 +46,12 @@ class CacheInterceptor implements Interceptor {
     if (storageService.has(storageKey)) {
       final CachedResponse? cachedResponse = _getCachedResponse(storageKey);
       if (cachedResponse != null) {
-        log('❌ ❌ ❌ Dio Error');
         log('📦 📦 📦 Retrieved response from cache');
         final Response response =
             cachedResponse.buildResponse(err.requestOptions);
         log('⬅️ ⬅️ ⬅️ Response');
         log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
+        log('Query params: ${response.requestOptions.queryParameters}');
         log('-------------------------');
         return handler.resolve(response);
       }
@@ -58,7 +62,7 @@ class CacheInterceptor implements Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (options.extra[dioCacheForceRefreshKey] == true) {
-      log('🌍 🌍 🌍 Retrieving request from network');
+      log('🌍 🌍 🌍 Retrieving request from network by force refresh');
       return handler.next(options);
     }
     String storageKey = createStorageKey(
@@ -74,6 +78,7 @@ class CacheInterceptor implements Interceptor {
         final Response response = cachedResponse.buildResponse(options);
         log('⬅️ ⬅️ ⬅️ Response');
         log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
+        log('Query params: ${response.requestOptions.queryParameters}');
         log('-------------------------');
         return handler.resolve(response);
       }
@@ -93,6 +98,12 @@ class CacheInterceptor implements Interceptor {
     if (response.statusCode != null &&
         response.statusCode! >= 200 &&
         response.statusCode! < 300) {
+      log('🌍 🌍 🌍 Retrieved response from network');
+      log('⬅️ ⬅️ ⬅️ Response');
+      log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
+      log('Query params: ${response.requestOptions.queryParameters}');
+      log('-------------------------');
+
       CachedResponse cachedResponse = CachedResponse(
         data: response.data,
         headers: Headers.fromMap(response.headers.map),
