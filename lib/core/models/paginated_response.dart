@@ -10,4 +10,16 @@ class PaginatedResponse<T> {
     this.totalPages = 1,
     this.totalResults = 1,
   });
+
+  factory PaginatedResponse.fromJson(
+    Map<String, dynamic> json, {
+    required List<T> results,
+  }) {
+    return PaginatedResponse<T>(
+      page: json['page'],
+      results: results,
+      totalPages: json['total_pages'],
+      totalResults: json['total_results'],
+    );
+  }
 }

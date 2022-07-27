@@ -29,12 +29,11 @@ class HttpPeopleRepository implements PeopleRepository {
       },
     );
 
-    return PaginatedResponse<Person>(
-      page: page,
+    return PaginatedResponse.fromJson(
+      responseData,
       results: List<Person>.from(
-          responseData['results'].map((x) => Person.fromJson(x))),
-      totalPages: responseData['total_pages'],
-      totalResults: responseData['total_results'],
+        responseData['results'].map((x) => Person.fromJson(x)),
+      ),
     );
   }
 
