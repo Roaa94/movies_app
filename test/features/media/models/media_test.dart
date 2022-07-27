@@ -58,4 +58,13 @@ void main() {
       equals(MediaType.unknown),
     );
   });
+
+  test('returns null release date for invalid format', () {
+    Map<String, dynamic> invalidDateExampleMedia = {
+      ...rawExampleMedia,
+      'release_date': 'invalid!',
+    };
+
+    expect(Media.fromJson(invalidDateExampleMedia).releaseDate, isNull);
+  });
 }
