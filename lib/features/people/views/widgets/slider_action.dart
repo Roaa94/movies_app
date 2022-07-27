@@ -6,22 +6,24 @@ class SliderAction extends StatelessWidget {
     Key? key,
     required this.icon,
     this.onTap,
+    this.color = AppColors.primary,
   }) : super(key: key);
 
-  final IconData icon;
+  final Widget icon;
   final VoidCallback? onTap;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ClipOval(
         child: Material(
-          color: AppColors.primary,
+          color: color,
           child: InkWell(
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Icon(icon),
+              child: icon,
             ),
           ),
         ),
