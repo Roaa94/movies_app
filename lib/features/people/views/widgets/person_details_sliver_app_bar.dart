@@ -18,7 +18,7 @@ class PersonDetailsSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.height * 0.4,
+      expandedHeight: MediaQuery.of(context).size.height * 0.35,
       collapsedHeight: 100,
       leadingWidth: 70,
       backgroundColor: Colors.transparent,

@@ -7,6 +7,7 @@ import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/person_details_provider.dart';
 import 'package:movies_app/features/people/views/widgets/person_details_sliver_app_bar.dart';
+import 'package:movies_app/features/people/views/widgets/person_name.dart';
 
 class PersonDetailsPage extends ConsumerWidget {
   const PersonDetailsPage({
@@ -37,6 +38,7 @@ class PersonDetailsPage extends ConsumerWidget {
           ),
           SliverList(
             delegate: SliverChildListDelegate([
+              PersonName(personName),
               personAsync.when(
                 data: (Person person) {
                   return Center(
