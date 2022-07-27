@@ -42,6 +42,7 @@ class PersonImages extends ConsumerWidget {
                 height: (images.length / 3).ceil() *
                     ((MediaQuery.of(context).size.width - 10 * 4) / 3),
                 child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: images.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
