@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movies_app/core/configs/styles/app_themes.dart';
 import 'package:movies_app/core/widgets/app_loader.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/features/people/views/pages/popular_people_page.dart';
@@ -17,9 +18,10 @@ class MoviesApp extends ConsumerWidget {
 
     return MaterialApp(
       title: 'Movies App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.dark,
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
       home: configsAsync.when(
         data: (TMDBConfigs tmdbConfigs) {
           return const PopularPeoplePage();
