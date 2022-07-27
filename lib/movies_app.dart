@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/features/people/views/pages/popular_people_page.dart';
 
 class MoviesApp extends StatelessWidget {
   const MoviesApp({Key? key}) : super(key: key);
@@ -8,10 +9,9 @@ class MoviesApp extends StatelessWidget {
     return MaterialApp(
       title: 'Movies App',
       theme: ThemeData(
-        //
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(),
+      home: const PopularPeoplePage(),
     );
   }
 }

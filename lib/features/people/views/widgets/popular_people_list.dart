@@ -1,0 +1,46 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movies_app/core/widgets/app_loader.dart';
+import 'package:movies_app/features/people/models/person.dart';
+import 'package:movies_app/features/people/providers/current_popular_person_provider.dart';
+import 'package:movies_app/features/people/providers/popular_people_count.dart';
+import 'package:movies_app/features/people/providers/popular_people_provider.dart';
+import 'package:movies_app/features/people/views/widgets/popular_person_list_item.dart';
+
+class PopularPeopleList extends ConsumerWidget {
+  const PopularPeopleList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final popularPeopleCount = ref.watch(popularPeopleCountProvider);
+
+    return popularPeopleCount.when(
+      loading: () => const AppLoader(),
+      data: (int count) {
+        return ListView.builder(
+          itemCount: count,
+          itemBuilder: (context, index) {
+            final AsyncValue<Person> currentPopularPersonFromIndex = ref
+                .watch(paginatedPopularPeopleProvider(index ~/ 20))
+                .whenData((pageData) => pageData.results[index % 20]);
+
+            return ProviderScope(
+              overrides: [
+                currentPopularPersonProvider
+                    .overrideWithValue(currentPopularPersonFromIndex)
+              ],
+              child: const PopularPersonListItem(),
+            );
+          },
+        );
+      },
+      error: (Object error, StackTrace? stackTrace) {
+        log('Error fetching popular people');
+        log(error.toString());
+        return const Icon(Icons.error);
+      },
+    );
+  }
+}
