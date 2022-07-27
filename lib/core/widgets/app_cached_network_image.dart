@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/widgets/app_loader.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
+import 'package:movies_app/core/widgets/shimmer.dart';
 
 class AppCachedNetworkImage extends StatelessWidget {
   const AppCachedNetworkImage({
@@ -39,7 +39,11 @@ class AppCachedNetworkImage extends StatelessWidget {
       placeholder: noLoader
           ? null
           : (_, __) => Center(
-                child: loaderWidget ?? const AppLoader(),
+                child: loaderWidget ??
+                    Shimmer(
+                      height: height,
+                      width: width,
+                    ),
               ),
       imageUrl: imageUrl,
       width: width,
