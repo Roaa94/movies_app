@@ -20,6 +20,7 @@ class AppThemes {
       appBarTheme: const AppBarTheme(
         elevation: 0,
         backgroundColor: AppColors.black,
+        titleTextStyle: AppTextStyles.h2
       ),
     );
   }

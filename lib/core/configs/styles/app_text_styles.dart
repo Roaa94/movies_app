@@ -30,7 +30,7 @@ class AppTextStyles {
 
   static const TextStyle h2 = TextStyle(
     fontSize: 25,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w400,
   );
 
   static const TextStyle h3 = TextStyle(
