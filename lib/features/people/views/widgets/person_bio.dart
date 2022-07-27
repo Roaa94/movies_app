@@ -18,6 +18,7 @@ class PersonBio extends StatelessWidget {
           topLeft: Radius.circular(50),
         ),
         child: Container(
+          width: double.infinity,
           color: Theme.of(context).scaffoldBackgroundColor,
           padding: const EdgeInsetsDirectional.only(
             start: 40,
