@@ -10,7 +10,12 @@ import 'package:movies_app/features/people/providers/popular_people_provider.dar
 import 'package:movies_app/features/people/views/widgets/popular_person_list_item.dart';
 
 class PopularPeopleList extends ConsumerWidget {
-  const PopularPeopleList({Key? key}) : super(key: key);
+  const PopularPeopleList({
+    Key? key,
+    this.scrollController,
+  }) : super(key: key);
+
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,6 +25,7 @@ class PopularPeopleList extends ConsumerWidget {
       loading: () => const ListItemShimmer(),
       data: (int count) {
         return ListView.builder(
+          controller: scrollController,
           itemCount: count,
           itemBuilder: (context, index) {
             final AsyncValue<Person> currentPopularPersonFromIndex = ref
