@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
+import 'package:equatable/equatable.dart';
 import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
 
-class TMDBImageConfigs {
+class TMDBImageConfigs extends Equatable {
   final String baseUrl;
   final String secureBaseUrl;
   final List<BackdropImageSize> backdropSizes;
@@ -10,7 +11,7 @@ class TMDBImageConfigs {
   final List<ProfileImageSize> profileSizes;
   final List<StillImageSize> stillSizes;
 
-  TMDBImageConfigs({
+  const TMDBImageConfigs({
     required this.baseUrl,
     required this.secureBaseUrl,
     this.backdropSizes = const [],
@@ -33,7 +34,7 @@ class TMDBImageConfigs {
                   BackdropImageSize.original),
             ),
       logoSizes: json['logo_sizes'] == null
-          ? [LogoImageSize.original]
+          ? []
           : List<LogoImageSize>.from(
               json['logo_sizes'].map((x) =>
                   LogoImageSize.values
@@ -41,7 +42,7 @@ class TMDBImageConfigs {
                   LogoImageSize.original),
             ),
       posterSizes: json['poster_sizes'] == null
-          ? [PosterImageSize.original]
+          ? []
           : List<PosterImageSize>.from(
               json['poster_sizes'].map((x) =>
                   PosterImageSize.values
@@ -49,7 +50,7 @@ class TMDBImageConfigs {
                   PosterImageSize.original),
             ),
       profileSizes: json['profile_sizes'] == null
-          ? [ProfileImageSize.original]
+          ? []
           : List<ProfileImageSize>.from(
               json['profile_sizes'].map((x) =>
                   ProfileImageSize.values
@@ -57,7 +58,7 @@ class TMDBImageConfigs {
                   ProfileImageSize.original),
             ),
       stillSizes: json['still_sizes'] == null
-          ? [StillImageSize.original]
+          ? []
           : List<StillImageSize>.from(
               json['still_sizes'].map((x) =>
                   StillImageSize.values
@@ -66,4 +67,15 @@ class TMDBImageConfigs {
             ),
     );
   }
+
+  @override
+  List<Object?> get props => [
+        baseUrl,
+        secureBaseUrl,
+        backdropSizes,
+        logoSizes,
+        posterSizes,
+        profileSizes,
+        stillSizes,
+      ];
 }
