@@ -28,6 +28,8 @@ class PopularPersonListItem extends ConsumerWidget {
                         builder: (context) => PersonDetailsPage(
                           personId: person.id!,
                           personName: person.name,
+                          personAvatar: person.avatar,
+                          personGender: person.gender,
                         ),
                       ),
                     );
@@ -42,9 +44,12 @@ class PopularPersonListItem extends ConsumerWidget {
                   // Avatar
                   Expanded(
                     flex: 1,
-                    child: PersonAvatar(
-                      person.avatar,
-                      gender: person.gender,
+                    child: Hero(
+                      tag: 'person_${person.id}_profile_picture',
+                      child: PersonAvatar(
+                        person.avatar,
+                        gender: person.gender,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),
