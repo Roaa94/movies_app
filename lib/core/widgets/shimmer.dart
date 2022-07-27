@@ -6,10 +6,14 @@ class Shimmer extends StatefulWidget {
     Key? key,
     this.width,
     this.height,
+    this.minOpacity = 0.05,
+    this.maxOpacity = 0.1,
   }) : super(key: key);
 
   final double? width;
   final double? height;
+  final double minOpacity;
+  final double maxOpacity;
 
   @override
   State<Shimmer> createState() => _ShimmerState();
@@ -23,8 +27,8 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
-      lowerBound: 0.05,
-      upperBound: 0.1,
+      lowerBound: widget.minOpacity,
+      upperBound: widget.maxOpacity,
     );
     animationController.repeat(reverse: true);
     super.initState();
