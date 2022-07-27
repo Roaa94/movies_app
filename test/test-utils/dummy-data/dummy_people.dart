@@ -1,5 +1,7 @@
 import 'package:movies_app/features/people/models/person.dart';
 
+import 'dummy_configs.dart';
+
 class DummyPeople {
   static List<Map<String, dynamic>> rawPopularPeople1 = [
     {
@@ -128,8 +130,10 @@ class DummyPeople {
     },
   ];
 
-  static List<Person> popularPeople1 =
-      List<Person>.from(rawPopularPeople1.map((x) => Person.fromJson(x)));
+  static List<Person> popularPeople1 = List<Person>.from(
+    rawPopularPeople1.map(
+        (x) => Person.fromJson(x).populateImages(DummyConfigs.imageConfigs)),
+  );
 
   static Map<String, dynamic> rawPerson1 = {
     'adult': false,
@@ -157,5 +161,6 @@ class DummyPeople {
     'profile_path': '/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg'
   };
 
-  static Person person1 = Person.fromJson(rawPerson1);
+  static Person person1 =
+      Person.fromJson(rawPerson1).populateImages(DummyConfigs.imageConfigs);
 }

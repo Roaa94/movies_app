@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:movies_app/features/media/enums/media_type.dart';
+import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
+import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
 class Media extends Equatable {
   final int id;
@@ -14,6 +16,8 @@ class Media extends Equatable {
   final String? originalTitle;
   final String? overview;
   final String? posterPath;
+  final String? posterThumb;
+  final String? poster;
   final DateTime? releaseDate;
   final String? title;
   final bool video;
@@ -30,6 +34,8 @@ class Media extends Equatable {
     this.originalTitle,
     this.overview,
     this.posterPath,
+    this.posterThumb,
+    this.poster,
     this.releaseDate,
     this.title,
     this.video = false,
@@ -91,6 +97,35 @@ class Media extends Equatable {
       'vote_average': voteAverage,
       'vote_count': voteCount,
     };
+  }
+
+  static ImageSize posterThumbSize = ImageSize.w500;
+
+  static ImageSize posterSize = ImageSize.original;
+
+  Media populateImages(TMDBImageConfigs imageConfigs) {
+    return Media(
+      id: id,
+      adult: adult,
+      backdropPath: backdropPath,
+      genreIds: genreIds,
+      mediaType: mediaType,
+      originalLanguage: originalLanguage,
+      originalTitle: originalTitle,
+      overview: overview,
+      posterPath: posterPath,
+      posterThumb: posterPath == null
+          ? null
+          : imageConfigs.buildPosterImage(posterThumbSize, posterPath!),
+      poster: posterPath == null
+          ? null
+          : imageConfigs.buildPosterImage(posterSize, posterPath!),
+      releaseDate: releaseDate,
+      title: title,
+      video: video,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
+    );
   }
 
   @override

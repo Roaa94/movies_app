@@ -60,10 +60,10 @@ void main() {
   test('can populate avatar and cover from profilePath with correct image urls',
       () {
     Person personWithGeneratedImages =
-        examplePerson.populateImages(DummyConfigs.valid);
+        examplePerson.populateImages(DummyConfigs.imageConfigs);
 
     String avatarUrl =
-        '${DummyConfigs.valid.secureBaseUrl}${Person.avatarSize.name}${examplePerson.profilePath}';
+        '${DummyConfigs.imageConfigs.secureBaseUrl}${Person.avatarSize.name}${examplePerson.profilePath}';
     // https://image.tmdb.org/t/p/h632/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
 
     expect(
@@ -72,7 +72,7 @@ void main() {
     );
 
     String coverUrl =
-        '${DummyConfigs.valid.secureBaseUrl}${Person.coverSize.name}${examplePerson.profilePath}';
+        '${DummyConfigs.imageConfigs.secureBaseUrl}${Person.coverSize.name}${examplePerson.profilePath}';
     // https://image.tmdb.org/t/p/original/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
 
     expect(

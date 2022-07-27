@@ -5,13 +5,16 @@ import 'package:movies_app/core/services/http/http_service.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/repositories/http_people_repository.dart';
 
+import '../../../test-utils/dummy-data/dummy_configs.dart';
 import '../../../test-utils/dummy-data/dummy_people.dart';
 import '../../../test-utils/mocks.dart';
 
 void main() {
   final HttpService mockHttpService = MockHttpService();
-  final HttpPeopleRepository httpPeopleRepository =
-      HttpPeopleRepository(mockHttpService);
+  final HttpPeopleRepository httpPeopleRepository = HttpPeopleRepository(
+    mockHttpService,
+    DummyConfigs.imageConfigs,
+  );
 
   test('fetches paginated popular people', () async {
     int page = 1;

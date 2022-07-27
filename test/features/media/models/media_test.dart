@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/media/enums/media_type.dart';
 import 'package:movies_app/features/media/models/media.dart';
 
+import '../../../test-utils/dummy-data/dummy_configs.dart';
+
 void main() {
   const Map<String, dynamic> rawExampleMedia = {
     'id': 335984,
@@ -66,5 +68,30 @@ void main() {
     };
 
     expect(Media.fromJson(invalidDateExampleMedia).releaseDate, isNull);
+  });
+
+  test(
+      'can populate posterThumb and poster from posterPath with correct image urls',
+      () {
+    Media personWithGeneratedImages =
+        exampleMedia.populateImages(DummyConfigs.imageConfigs);
+
+    String posterThumb =
+        '${DummyConfigs.imageConfigs.secureBaseUrl}${Media.posterThumbSize.name}${exampleMedia.posterPath}';
+    // https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg
+
+    expect(
+      personWithGeneratedImages.posterThumb,
+      equals(posterThumb),
+    );
+
+    String poster =
+        '${DummyConfigs.imageConfigs.secureBaseUrl}${Media.posterSize.name}${exampleMedia.posterPath}';
+    // https://image.tmdb.org/t/p/original/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg
+
+    expect(
+      personWithGeneratedImages.poster,
+      equals(poster),
+    );
   });
 }

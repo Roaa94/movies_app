@@ -3,11 +3,16 @@ import 'package:movies_app/core/models/paginated_response.dart';
 import 'package:movies_app/core/services/http/http_service.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/repositories/people_repository.dart';
+import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
 class HttpPeopleRepository implements PeopleRepository {
   final HttpService httpService;
+  final TMDBImageConfigs imageConfigs;
 
-  HttpPeopleRepository(this.httpService);
+  HttpPeopleRepository(
+    this.httpService,
+    this.imageConfigs,
+  );
 
   @override
   String get path => '/person';
@@ -32,7 +37,9 @@ class HttpPeopleRepository implements PeopleRepository {
     return PaginatedResponse.fromJson(
       responseData,
       results: List<Person>.from(
-        responseData['results'].map((x) => Person.fromJson(x)),
+        responseData['results'].map(
+          (x) => Person.fromJson(x).populateImages(imageConfigs),
+        ),
       ),
     );
   }
@@ -50,6 +57,6 @@ class HttpPeopleRepository implements PeopleRepository {
       },
     );
 
-    return Person.fromJson(responseData);
+    return Person.fromJson(responseData).populateImages(imageConfigs);
   }
 }

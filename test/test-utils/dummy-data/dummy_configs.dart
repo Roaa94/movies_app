@@ -2,7 +2,7 @@ import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
 class DummyConfigs {
-  static const TMDBImageConfigs valid = TMDBImageConfigs(
+  static const TMDBImageConfigs imageConfigs = TMDBImageConfigs(
     baseUrl: 'http://image.tmdb.org/t/p/',
     secureBaseUrl: 'https://image.tmdb.org/t/p/',
     backdropSizes: [

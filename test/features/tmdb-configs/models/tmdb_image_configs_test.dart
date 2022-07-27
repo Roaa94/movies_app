@@ -26,7 +26,7 @@ void main() {
 
     expect(
       TMDBImageConfigs.fromJson(rawValidConfigs),
-      equals(DummyConfigs.valid),
+      equals(DummyConfigs.imageConfigs),
     );
   });
 
@@ -89,7 +89,7 @@ void main() {
   });
 
   test('can build profile image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.valid.buildProfileImage(
+    String generatedImageUrl = DummyConfigs.imageConfigs.buildProfileImage(
       ImageSize.h632,
       '/image-path.png',
     );
@@ -101,7 +101,7 @@ void main() {
   });
 
   test('can build backdrop image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.valid.buildBackdropImage(
+    String generatedImageUrl = DummyConfigs.imageConfigs.buildBackdropImage(
       ImageSize.w1280,
       '/image-path.png',
     );
@@ -113,7 +113,7 @@ void main() {
   });
 
   test('can build poster image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.valid.buildPosterImage(
+    String generatedImageUrl = DummyConfigs.imageConfigs.buildPosterImage(
       ImageSize.w780,
       '/image-path.png',
     );
@@ -125,7 +125,7 @@ void main() {
   });
 
   test('can build still image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.valid.buildStillImage(
+    String generatedImageUrl = DummyConfigs.imageConfigs.buildStillImage(
       ImageSize.w300,
       '/image-path.png',
     );
@@ -137,7 +137,7 @@ void main() {
   });
 
   test('can build logo image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.valid.buildLogoImage(
+    String generatedImageUrl = DummyConfigs.imageConfigs.buildLogoImage(
       ImageSize.w45,
       '/image-path.png',
     );
@@ -147,7 +147,8 @@ void main() {
       equals('https://image.tmdb.org/t/p/w45/image-path.png'),
     );
 
-    String generatedImageUrlInvalidSize = DummyConfigs.valid.buildLogoImage(
+    String generatedImageUrlInvalidSize =
+        DummyConfigs.imageConfigs.buildLogoImage(
       ImageSize.h632,
       '/image-path.png',
     );

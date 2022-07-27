@@ -115,7 +115,8 @@ class Person extends Equatable {
       adult: adult,
       gender: gender,
       id: id,
-      knownFor: knownFor,
+      knownFor:
+          knownFor.map((media) => media.populateImages(imageConfigs)).toList(),
       knownForDepartment: knownForDepartment,
       name: name,
       popularity: popularity,
@@ -145,6 +146,8 @@ class Person extends Equatable {
         name,
         popularity,
         profilePath,
+        avatar,
+        cover,
         biography,
         birthday,
         deathDate,
