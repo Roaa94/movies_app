@@ -20,11 +20,11 @@ class PersonAvatar extends StatelessWidget {
           ? Image.asset(
               'assets/images/placeholder-${gender.name}.png',
               fit: BoxFit.cover,
-              height: 70,
+              height: 90,
             )
           : AppCachedNetworkImage(
               imageUrl: avatarUrl!,
-              height: 70,
+              height: 90,
             ),
     );
   }
