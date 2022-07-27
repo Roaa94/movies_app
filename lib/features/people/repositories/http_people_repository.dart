@@ -2,6 +2,7 @@ import 'package:movies_app/core/configs/configs.dart';
 import 'package:movies_app/core/models/paginated_response.dart';
 import 'package:movies_app/core/services/http/http_service.dart';
 import 'package:movies_app/features/people/models/person.dart';
+import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/repositories/people_repository.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
@@ -56,5 +57,23 @@ class HttpPeopleRepository implements PeopleRepository {
     );
 
     return Person.fromJson(responseData).populateImages(imageConfigs);
+  }
+
+  @override
+  Future<List<PersonImage>> getPersonImages(
+    int personId, {
+    bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
+  }) async {
+    final responseData =
+        await httpService.get('$path/$personId/images', queryParameters: {
+      'api_key': apiKey,
+    });
+
+    return List<PersonImage>.from(
+      responseData['profiles'].map(
+        (x) => PersonImage.fromJson(x).populateImages(imageConfigs),
+      ),
+    );
   }
 }

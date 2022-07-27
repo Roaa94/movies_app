@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movies_app/core/models/paginated_response.dart';
 import 'package:movies_app/core/services/http/http_service_provider.dart';
 import 'package:movies_app/features/people/models/person.dart';
+import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/repositories/http_people_repository.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
@@ -26,6 +27,12 @@ abstract class PeopleRepository {
 
   Future<PaginatedResponse<Person>> getPopularPeople({
     int page = 1,
+    bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
+  });
+
+  Future<List<PersonImage>> getPersonImages(
+    int personId, {
     bool forceRefresh = false,
     required TMDBImageConfigs imageConfigs,
   });

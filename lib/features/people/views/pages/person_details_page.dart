@@ -9,6 +9,7 @@ import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/person_details_provider.dart';
 import 'package:movies_app/features/people/views/widgets/person_bio.dart';
 import 'package:movies_app/features/people/views/widgets/person_details_sliver_app_bar.dart';
+import 'package:movies_app/features/people/views/widgets/person_images.dart';
 import 'package:movies_app/features/people/views/widgets/person_info.dart';
 import 'package:movies_app/features/people/views/widgets/person_media.dart';
 import 'package:movies_app/features/people/views/widgets/person_name.dart';
@@ -51,6 +52,7 @@ class PersonDetailsPage extends ConsumerWidget {
                     children: [
                       PersonInfo(person),
                       PersonMedia(personMedia),
+                      PersonImages(personId),
                       PersonBio(person.biography),
                       SizedBox(height: 20 + MediaQuery.of(context).padding.bottom),
                     ],
