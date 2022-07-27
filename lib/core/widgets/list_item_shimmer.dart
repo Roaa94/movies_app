@@ -12,7 +12,7 @@ class ListItemShimmer extends StatelessWidget {
         children: [
           const Expanded(
             flex: 1,
-            child: Shimmer(height: 70),
+            child: Shimmer(height: 90),
           ),
           const SizedBox(width: 20),
           Expanded(
