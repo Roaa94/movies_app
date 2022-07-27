@@ -48,10 +48,7 @@ class DioHttpService implements HttpService {
       endpoint,
       queryParameters: queryParameters,
     );
-
-    if (response.data == null ||
-        response.statusCode != 200 ||
-        response.data['data'] == null) {
+    if (response.data == null || response.statusCode != 200) {
       throw HttpException(
         title: 'Http Error!',
         statusCode: response.statusCode,
@@ -59,7 +56,7 @@ class DioHttpService implements HttpService {
       );
     }
 
-    return response;
+    return response.data;
   }
 
   @override
@@ -80,7 +77,7 @@ class DioHttpService implements HttpService {
       );
     }
 
-    return response;
+    return response.data;
   }
 
   @override
