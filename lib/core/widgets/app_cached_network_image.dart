@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/core/widgets/app_loader.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/core/widgets/shimmer.dart';
 
@@ -19,6 +20,7 @@ class AppCachedNetworkImage extends StatelessWidget {
     this.alignment = Alignment.center,
     this.color,
     this.colorBlendMode,
+    this.isLoaderShimmer = true,
   }) : super(key: key);
 
   final String imageUrl;
@@ -32,6 +34,7 @@ class AppCachedNetworkImage extends StatelessWidget {
   final Alignment alignment;
   final Color? color;
   final BlendMode? colorBlendMode;
+  final bool isLoaderShimmer;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +43,12 @@ class AppCachedNetworkImage extends StatelessWidget {
           ? null
           : (_, __) => Center(
                 child: loaderWidget ??
-                    Shimmer(
-                      height: height,
-                      width: width,
-                    ),
+                    (isLoaderShimmer
+                        ? Shimmer(
+                            height: height,
+                            width: width,
+                          )
+                        : const AppLoader()),
               ),
       imageUrl: imageUrl,
       width: width,

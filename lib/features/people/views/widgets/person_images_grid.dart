@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/features/people/models/person_image.dart';
+import 'package:movies_app/features/people/views/pages/person_images_slider_page.dart';
 import 'package:movies_app/features/people/views/widgets/person_images_grid_item.dart';
 
 class PersonImagesGrid extends StatelessWidget {
@@ -26,7 +27,19 @@ class PersonImagesGrid extends StatelessWidget {
         padding: const EdgeInsetsDirectional.only(start: 40, end: 17),
         itemBuilder: (context, index) => ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: PersonImagesGridItem(images[index]),
+          child: PersonImagesGridItem(
+            images[index],
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => PersonImagesSliderPage(
+                    images: images,
+                    initialImageIndex: index,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
