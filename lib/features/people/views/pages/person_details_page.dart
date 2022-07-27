@@ -7,6 +7,7 @@ import 'package:movies_app/features/media/models/media.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/person_details_provider.dart';
+import 'package:movies_app/features/people/views/widgets/person_bio.dart';
 import 'package:movies_app/features/people/views/widgets/person_details_sliver_app_bar.dart';
 import 'package:movies_app/features/people/views/widgets/person_info.dart';
 import 'package:movies_app/features/people/views/widgets/person_media.dart';
@@ -50,9 +51,8 @@ class PersonDetailsPage extends ConsumerWidget {
                     children: [
                       PersonInfo(person),
                       PersonMedia(personMedia),
-                      Center(
-                        child: Text(person.biography ?? 'Person bio is empty'),
-                      ),
+                      PersonBio(person.biography),
+                      SizedBox(height: 20 + MediaQuery.of(context).padding.bottom),
                     ],
                   );
                 },
@@ -62,9 +62,6 @@ class PersonDetailsPage extends ConsumerWidget {
                   return const Icon(Icons.error);
                 },
                 loading: () => const AppLoader(),
-              ),
-              Container(
-                height: 1000,
               ),
             ]),
           ),
