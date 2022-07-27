@@ -2,7 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movies_app/core/widgets/app_loader.dart';
+import 'package:movies_app/core/widgets/app_cached_network_image.dart';
+import 'package:movies_app/core/widgets/list_item_shimmer.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/current_popular_person_provider.dart';
 import 'package:movies_app/features/people/views/pages/person_details_page.dart';
@@ -39,17 +40,27 @@ class PopularPersonListItem extends ConsumerWidget {
               child: Row(
                 children: [
                   // Avatar
-                  Expanded(
-                    flex: 1,
-                    child: Container(),
-                  ),
+                  if (person.avatar != null)
+                    Expanded(
+                      flex: 1,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: AppCachedNetworkImage(
+                          imageUrl: person.avatar!,
+                          height: 70,
+                        ),
+                      ),
+                    ),
+                  const SizedBox(width: 20),
                   Expanded(
                     flex: 3,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(person.name),
-                        const Text('Subtitle'),
+                        Text(
+                          person.name,
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
                       ],
                     ),
                   ),
@@ -66,7 +77,7 @@ class PopularPersonListItem extends ConsumerWidget {
           }
           return const Icon(Icons.error);
         },
-        loading: () => const AppLoader(),
+        loading: () => const ListItemShimmer(),
       ),
     );
   }

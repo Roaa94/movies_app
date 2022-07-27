@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movies_app/core/widgets/app_loader.dart';
+import 'package:movies_app/core/widgets/list_item_shimmer.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/current_popular_person_provider.dart';
 import 'package:movies_app/features/people/providers/popular_people_count.dart';
@@ -17,7 +17,7 @@ class PopularPeopleList extends ConsumerWidget {
     final popularPeopleCount = ref.watch(popularPeopleCountProvider);
 
     return popularPeopleCount.when(
-      loading: () => const AppLoader(),
+      loading: () => const ListItemShimmer(),
       data: (int count) {
         return ListView.builder(
           itemCount: count,
