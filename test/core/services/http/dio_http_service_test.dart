@@ -34,38 +34,17 @@ void main() {
     );
   });
 
-  test('Returns correct Dio client', () async {
-    dioAdapter.onGet(
-      'successful-get-request-test',
-      (server) => server.reply(200, {'data': 'Success!'}),
-    );
-
-    final Response response = await dioHttpService.get(
-      'successful-get-request-test',
-    );
-
-    expect(
-      response.requestOptions.baseUrl,
-      equals(dioHttpService.dio.options.baseUrl),
-    );
-
-    expect(
-      response.requestOptions.baseUrl,
-      'https://api.test/',
-    );
-  });
-
   test('Successful Get Request', () async {
     dioAdapter.onGet(
       'successful-get-request-test',
       (server) => server.reply(200, {'data': 'Success!'}),
     );
 
-    final Response response = await dioHttpService.get(
+    final response = await dioHttpService.get(
       'successful-get-request-test',
     );
 
-    expect(response.data, {'data': 'Success!'});
+    expect(response, {'data': 'Success!'});
   });
 
   test('404 Get Request', () async {
@@ -91,11 +70,10 @@ void main() {
       (server) => server.reply(200, {'data': 'Success!'}),
     );
 
-    final Response response =
+    final response =
         await dioHttpService.post('successful-post-request-test');
 
-    expect(response.statusCode, 200);
-    expect(response.data, {'data': 'Success!'});
+    expect(response, {'data': 'Success!'});
   });
 
   test('404 Post Request', () async {

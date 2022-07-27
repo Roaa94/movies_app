@@ -60,7 +60,7 @@ class DioHttpService implements HttpService {
   }
 
   @override
-  Future<Response> post(
+  Future<dynamic> post(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
   }) async {
