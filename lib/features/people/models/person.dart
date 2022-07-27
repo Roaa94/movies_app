@@ -110,6 +110,9 @@ class Person extends Equatable {
     };
   }
 
+  // Todo: to preserve clean architecture,
+  // this should be handled in an entity not the data source model,
+  // but it's done this way due to time limitation
   Person populateImages(TMDBImageConfigs imageConfigs) {
     return Person(
       adult: adult,

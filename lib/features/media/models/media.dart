@@ -103,6 +103,9 @@ class Media extends Equatable {
 
   static ImageSize posterSize = ImageSize.original;
 
+  // Todo: to preserve clean architecture,
+  // this should be handled in an entity not the data source model,
+  // but it's done this way due to time limitation
   Media populateImages(TMDBImageConfigs imageConfigs) {
     return Media(
       id: id,
