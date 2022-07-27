@@ -26,12 +26,12 @@ class PersonDetailsSliverAppBar extends StatelessWidget {
       pinned: true,
       flexibleSpace: Padding(
         padding: const EdgeInsetsDirectional.only(start: 40),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(35),
-          ),
-          child: Hero(
-            tag: 'person_${personId}_profile_picture',
+        child: Hero(
+          tag: 'person_${personId}_profile_picture',
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(35),
+            ),
             child: PersonCover(
               avatar,
               gender: gender,
