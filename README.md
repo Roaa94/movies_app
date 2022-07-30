@@ -11,6 +11,27 @@ An api key from The Movie DB is required to run the app. Then you can run the ap
 --dart-define=TMDB_API_KEY=<YOUR_API_KEY>
 ```
 
+## Previews
+
+### Inifnite Scrolling 
+
+(Paginated list with Riverpod providers, [more information below](#infinite-scroll-functionality) 👇🏼)
+
+![infinite-scrolling](https://user-images.githubusercontent.com/50345358/181906034-a33123c5-cddc-4d38-a8f2-e5c616cc5d48.gif)
+
+### Hero Transition
+
+![hero_animation](https://user-images.githubusercontent.com/50345358/181905989-e2cb9205-7100-4212-bb4e-794900dcc68f.gif)
+
+
+## App Architecture and Folder Structure
+
+(More information will be added)
+
+## Infinite Scroll Functionality
+
+(More information will be added)
+
 ## Test Coverage
 
 To explore the test coverage, run tests with --coverage argument
@@ -25,5 +46,3 @@ Then open the html files:
 ```
 open coverage/html/index.html
 ```
-
-(More information about App Architecture and folder structure will be added)
