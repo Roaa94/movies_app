@@ -30,7 +30,124 @@ An api key from The Movie DB is required to run the app. Then you can run the ap
 
 ## Infinite Scroll Functionality
 
-(More information will be added)
+Infinite scrolling was achieved by utilizing Riverpod's providers and the ListView's `itemBuilder` param whithout needing the complication of listening to scrolling events. The itemBuilder runs on each item build when it comes into view, if the data of this item is available it displays it, if it's not, the next page is fetched. Here is the code with explanation in the comments:
+
+#### The providers you need:
+
+```dart
+
+/// The FutureProvider that does the fetching of the paginated list of people
+final paginatedPopularPeopleProvider =
+    FutureProvider.family<PaginatedResponse<Person>, int>(
+  (ref, int pageIndex) async {
+    final peopleRepository = ref.watch(peopleRepositoryProvider);
+    // The API request:
+    return await peopleRepository.getPopularPeople(page: pageIndex + 1);
+  },
+);
+
+/// The provider that has the value of the total count of the list items
+///
+/// The [PaginatedResponse] class contains information about the total number of
+/// pages and the total results in all pages along with a list of the provided type
+///
+/// An example response from the API for any page looks like this:
+/// {
+///   "page": 1,
+///   "results": [], // list of 20 items
+///   "total_pages": 500,
+///   "total_results": 10000 // Value taken by this provider
+/// }
+final popularPeopleCountProvider = Provider<AsyncValue<int>>((ref) {
+  return ref.watch(paginatedPopularPeopleProvider(0)).whenData(
+        (PaginatedResponse<Person> pageData) => pageData.totalResults,
+      );
+});
+
+/// The provider that provides the Person data for each list item
+///
+/// Initially it throws an UnimplementedError because we won't use it before overriding it
+final currentPopularPersonProvider = Provider<AsyncValue<Person>>((ref) {
+  throw UnimplementedError();
+});
+```
+
+#### Using this in the widgets code
+
+```dart
+
+/// The provider that provides the Person data for each list item
+///
+/// Initially it throws an UnimplementedError because we won't use it before overriding it
+final currentPopularPersonProvider = Provider<AsyncValue<Person>>((ref) {
+  throw UnimplementedError();
+});
+
+class PopularPeopleList extends ConsumerWidget {
+  const PopularPeopleList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final popularPeopleCount = ref.watch(popularPeopleCountProvider);
+
+    // The ListView's count is from the popularPeopleCountProvider which
+    // by watching it here, causes the first fetch with a page index of 0
+    return popularPeopleCount.when(
+      loading: () => const CircularProgressIndicator(),
+      data: (int count) {
+        return ListView.builder(
+          itemCount: count,
+          itemBuilder: (context, index) {
+            // At this point the paginatedPopularPeopleProvider stores the values of the
+            // list items of at least the first page
+            //
+            // (index ~/ 20): Performing a truncating division of the list item index by the number of
+            // items per page gives us the value of the current page that we then access using the
+            // family modifier of the paginatedPopularPeopleProvider provider
+            // This way calling 21 ~/ 20 = 1 will fetch the second page,
+            // and 41 ~/ 20 = 2 will fetch the 3rd page, and so on.
+            final AsyncValue<Person> currentPopularPersonFromIndex = ref
+                .watch(paginatedPopularPeopleProvider(index ~/ 20))
+                .whenData((pageData) => pageData.results[index % 20]);
+
+            return ProviderScope(
+              overrides: [
+                // Override the Unimplemented provider
+                currentPopularPersonProvider
+                    .overrideWithValue(currentPopularPersonFromIndex)
+              ],
+              child: const PopularPersonListItem(),
+            );
+          },
+        );
+      },
+      // Handle error
+      error: (_, __) => const Icon(Icons.error),
+    );
+  }
+}
+
+class PopularPersonListItem extends ConsumerWidget {
+  const PopularPersonListItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Here we don't need to do anything but listen to the currentPopularPersonProvider's
+    // AsyncValue that was overridden in the ListView's builder
+    final AsyncValue<Person> personAsync =
+        ref.watch(currentPopularPersonProvider);
+
+    return Container(
+      child: personAsync.when(
+        data: (Person person) => Container(/* ... */), // List item content
+        loading: () => const CircularProgressIndicator(), // Handle loading
+        error: (_, __) => const Icon(Icons.error), // Handle Error
+      ),
+    );
+  }
+}
+```
+
 
 ## Test Coverage
 
