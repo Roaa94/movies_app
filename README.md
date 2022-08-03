@@ -64,7 +64,9 @@ lib
 ├── main.dart
 └── movies_app.dart
 ```
-
+    
+* `main.dart` file has services initialization code and wraps the root `MoviesApp` with a `ProviderScope`
+* `movies_app.dart` has the root `MaterialApp` and fetches the TMDB configs necessary to generate links for the images of the TMDB API endpoints inside the app
 * The `core` folder contains code shared across features
     * `configs` contain general styles (colors, themes & text styles)
     * `services` abstract app-level services with their implementations
@@ -81,7 +83,7 @@ final storageServiceProvider = Provider<StorageService>(
 // Usage:
 // ref.watch(storageServiceProvider)
 ```
-* `features`: the repository pattern is used to decouple logic required to access data sources from the domain layer. For example, the `PeopleRepository` abstracts and centralizes the various functionality required to access `People` from the TMDB API.
+* The `features` folder: the repository pattern is used to decouple logic required to access data sources from the domain layer. For example, the `PeopleRepository` abstracts and centralizes the various functionality required to access `People` from the TMDB API.
 
 ```dart
 abstract class PeopleRepository {
@@ -159,13 +161,34 @@ final personDetailsProvider = FutureProvider.family<Person, int>(
 );
 ```
 Notice how the abstract `HttpService` is accessed from the repository implementation and then the abstract `PeopleRepository` is accessed from the UI and how each of these layers acheive separation and scalability by providing the ability to switch implementation and make changes and/or test each layer seaparately. ([More about testing 👇🏼](#testing))
-    
-* `main.dart` file has services initialization code and wraps the root `MoviesApp` with a `ProviderScope`
-* `movies_app.dart` has the root `MaterialApp` and fetches the TMDB configs necessary to generate links for the images of the TMDB API endpoints inside the app
 
 ## Http Caching
 
-....
+To achieve caching http requests and the ability to show content to the user even when an error or loss of connectivity happens, a [`CacheInterceptor`](https://github.com/Roaa94/movies_app/blob/main/lib/core/services/http/dio-interceptors/cache_interceptor.dart) was created and added to `Dio`'s interceptor in the `DioHttpService` class. A Dio `Interceptor` has the following methods:
+
+```dart
+class CacheInterceptor implements Interceptor {
+  final StorageService storageService;
+
+  CacheInterceptor(this.storageService);
+  
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    // TODO: implement onError
+  }
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // TODO: implement onRequest
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    // TODO: implement onResponse
+  }
+}
+```
+By depending on our `StorageService` we were able to cache a reposnse when it doesn't exist in storage and when its `age` duration has not passed, and return that cache in case of error in the `onError` method.
 
 ## Infinite Scroll Functionality
 
@@ -288,6 +311,14 @@ class PopularPersonListItem extends ConsumerWidget {
 
 
 ## Testing
+
+The `test` folder mirrors the `lib` folder in addition to some test utilities. And more tests will be added. 
+
+[`http_mock_adapter`](https://pub.dev/packages/http_mock_adapter) is used to test the `DioHttpService` and mock http requests.
+
+[`hive_test`](https://pub.dev/packages/hive_test) is used to test the `HiveStorageService` and mock storage methods.
+
+[`mocktail`](https://pub.dev/packages/mocktail) is used to mock dependecies.
 
 To explore the test coverage, run tests with --coverage argument
 ```
