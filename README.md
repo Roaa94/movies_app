@@ -13,16 +13,15 @@ An api key from The Movie DB is required to run the app. Then you can run the ap
 
 ## Previews
 
-### Inifnite Scrolling 
+### Inifnite Scrolling & Hero Transition
 
 (Paginated list with Riverpod providers, [more information below](#infinite-scroll-functionality) 👇🏼)
 
-![infinite-scrolling](https://user-images.githubusercontent.com/50345358/181906034-a33123c5-cddc-4d38-a8f2-e5c616cc5d48.gif)
+<div style="display: flex">
+<img style="display: inline-block" src="https://user-images.githubusercontent.com/50345358/181906034-a33123c5-cddc-4d38-a8f2-e5c616cc5d48.gif" />
 
-### Hero Transition
-
-![hero_animation](https://user-images.githubusercontent.com/50345358/181905989-e2cb9205-7100-4212-bb4e-794900dcc68f.gif)
-
+<img style="display: inline-block" src="https://user-images.githubusercontent.com/50345358/181905989-e2cb9205-7100-4212-bb4e-794900dcc68f.gif" />
+</div>
 
 ## App Architecture and Folder Structure
 
