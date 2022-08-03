@@ -25,7 +25,147 @@ An api key from The Movie DB is required to run the app. Then you can run the ap
 
 ## App Architecture and Folder Structure
 
-(More information will be added)
+The code of the app implements clean architecture to separate the UI, domain and data layers with a feature-first approach for folder structure.
+
+#### Folder Structure
+
+```
+lib
+├── core
+│   ├── configs
+│   ├── exceptions
+│   ├── models
+│   ├── services
+│   │   ├── http
+│   │   └── storage
+│   └── widgets
+├── features
+│   ├── media
+│   │   ├── enums
+│   │   ├── models
+│   │   ├── providers
+│   │   ├── repositories
+│   │   └── views
+│   │       ├── pages
+│   │       └── widgets
+│   ├── people
+│   │   ├── enums
+│   │   ├── models
+│   │   ├── providers
+│   │   ├── repositories
+│   │   └── views
+│   │       ├── pages
+│   │       └── widgets
+│   └── tmdb-configs
+│       ├── enums
+│       ├── models
+│       ├── providers
+│       └── repositories
+├── main.dart
+└── movies_app.dart
+```
+
+* The `core` folder contains code shared across features
+    * `configs` contain general styles (colors, themes & text styles)
+    * `services` abstract app-level services with their implementations
+        *  `http` service is implemented with [`Dio`](https://pub.dev/packages/dio) and uses a `CacheInterceptor` to achieve caching by using the `StorageService` ([more information about caching below](#http-caching) 👇🏼)
+        *  `storage` service is implemented with [`Hive`](https://pub.dev/packages/hive_flutter)
+        *  Service locator pattern and Riverpod are used to abstract services when used in other layers.
+
+For example:
+```dart
+final storageServiceProvider = Provider<StorageService>(
+  (_) => HiveStorageService(),
+);
+
+// Usage:
+// ref.watch(storageServiceProvider)
+```
+* `features`: the repository pattern is used to decouple logic required to access data sources from the domain layer. For example, the `PeopleRepository` abstracts and centralizes the various functionality required to access `People` from the TMDB API.
+
+```dart
+abstract class PeopleRepository {
+  String get path;
+
+  String get apiKey;
+
+  Future<Person> getPersonDetails(
+    int personId, {
+    bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
+  });
+  
+  //...
+}
+```
+The repository implementation with the `HttpService`:
+
+```dart
+class HttpPeopleRepository implements PeopleRepository {
+  final HttpService httpService;
+
+  HttpPeopleRepository(this.httpService);
+
+  @override
+  String get path => '/person';
+
+  @override
+  String get apiKey => Configs.tmdbAPIKey;
+
+  @override
+  Future<Person> getPersonDetails(
+    int personId, {
+    bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
+  }) async {
+    final responseData = await httpService.get(
+      '$path/$personId',
+      forceRefresh: forceRefresh,
+      queryParameters: {
+        'api_key': apiKey,
+      },
+    );
+
+    return Person.fromJson(responseData).populateImages(imageConfigs);
+  }
+  
+  //...
+}
+```
+Using Riverpod `Provider` to access this implementation:
+
+```dart
+final peopleRepositoryProvider = Provider<PeopleRepository>(
+  (ref) {
+    final httpService = ref.watch(httpServiceProvider);
+
+    return HttpPeopleRepository(httpService);
+  },
+);
+```
+And finally accessing the repository implementation from the UI layer using a Riverpod `FutureProvider`:
+
+```dart
+final personDetailsProvider = FutureProvider.family<Person, int>(
+  (ref, personId) async {
+    final peopleRepository = ref.watch(peopleRepositoryProvider);
+    final tmdbConfigs = await ref.watch(tmdbConfigsProvider.future);
+
+    return await peopleRepository.getPersonDetails(
+      personId,
+      imageConfigs: tmdbConfigs.images,
+    );
+  },
+);
+```
+Notice how the abstract `HttpService` is accessed from the repository implementation and then the abstract `PeopleRepository` is accessed from the UI and how each of these layers acheive separation and scalability by providing the ability to switch implementation and make changes and/or test each layer seaparately. ([More about testing 👇🏼](#testing))
+    
+* `main.dart` file has services initialization code and wraps the root `MoviesApp` with a `ProviderScope`
+* `movies_app.dart` has the root `MaterialApp` and fetches the TMDB configs necessary to generate links for the images of the TMDB API endpoints inside the app
+
+## Http Caching
+
+....
 
 ## Infinite Scroll Functionality
 
@@ -34,7 +174,6 @@ Infinite scrolling was achieved by utilizing Riverpod's providers and the ListVi
 #### The providers you need:
 
 ```dart
-
 /// The FutureProvider that does the fetching of the paginated list of people
 final paginatedPopularPeopleProvider =
     FutureProvider.family<PaginatedResponse<Person>, int>(
@@ -148,7 +287,7 @@ class PopularPersonListItem extends ConsumerWidget {
 ```
 
 
-## Test Coverage
+## Testing
 
 To explore the test coverage, run tests with --coverage argument
 ```
