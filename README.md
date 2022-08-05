@@ -1,5 +1,7 @@
 # Movies App
 
+[![HitCount](https://hits.dwyl.com/roaa94/movies_app.svg?style=flat-square&show=unique)](http://hits.dwyl.com/roaa94/movies_app)
+
 A Flutter app that uses the "[The Movie DB](https://www.themoviedb.org/)" api to fetch popular people and their info (their movies, images, ..etc). [(API version 3 is used)](https://developers.themoviedb.org/3/people/get-popular-people)
 
 
