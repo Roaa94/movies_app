@@ -1,4 +1,5 @@
 import 'package:movies_app/features/people/models/person.dart';
+import 'package:movies_app/features/people/models/person_image.dart';
 
 import 'dummy_configs.dart';
 
@@ -163,4 +164,32 @@ class DummyPeople {
 
   static Person person1 =
       Person.fromJson(rawPerson1).populateImages(DummyConfigs.imageConfigs);
+
+  static const Map<String, dynamic> rawDummyPersonImage1 = {
+    'aspect_ratio': 0.667,
+    'height': 900,
+    'iso_639_1': null,
+    'file_path': '/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg',
+    'vote_average': 5.828,
+    'vote_count': 113,
+    'width': 600,
+  };
+
+  static const Map<String, dynamic> rawDummyPersonImage2 = {
+    'aspect_ratio': 0.667,
+    'height': 1366,
+    'iso_639_1': null,
+    'file_path': '/xRk889LiJsKlijIVp8KfHiZWw7X.jpg',
+    'vote_average': 5.802,
+    'vote_count': 30,
+    'width': 911
+  };
+
+  static final PersonImage dummyPersonImage1 =
+      PersonImage.fromJson(rawDummyPersonImage1)
+          .populateImages(DummyConfigs.imageConfigs);
+
+  static final PersonImage dummyPersonImage2 =
+      PersonImage.fromJson(rawDummyPersonImage2)
+          .populateImages(DummyConfigs.imageConfigs);
 }
