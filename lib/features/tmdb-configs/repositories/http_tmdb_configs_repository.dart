@@ -1,27 +1,12 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movies_app/core/configs/configs.dart';
 import 'package:movies_app/core/services/http/http_service.dart';
-import 'package:movies_app/core/services/http/http_service_provider.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_configs.dart';
+import 'package:movies_app/features/tmdb-configs/repositories/tmdb_configs_repository.dart';
 
-final tmdbConfigsRepositoryProvider = Provider<ConfigsRepository>((ref) {
-  final httpService = ref.watch(httpServiceProvider);
-
-  return HttpConfigsRepository(httpService);
-});
-
-abstract class ConfigsRepository {
-  String get path;
-
-  String get apiKey;
-
-  Future<TMDBConfigs> get({bool forceRefresh = false});
-}
-
-class HttpConfigsRepository implements ConfigsRepository {
+class HttpTMDBConfigsRepository implements TMDBConfigsRepository {
   final HttpService httpService;
 
-  HttpConfigsRepository(this.httpService);
+  HttpTMDBConfigsRepository(this.httpService);
 
   @override
   String get path => '/configuration';
