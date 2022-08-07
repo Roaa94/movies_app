@@ -1,5 +1,7 @@
 # Movies App
 
+[![HitCount](https://hits.dwyl.com/roaa94/movies_app.svg?style=flat-square&show=unique)](http://hits.dwyl.com/roaa94/movies_app)
+
 A Flutter app that uses the "[The Movie DB](https://www.themoviedb.org/)" api to fetch popular people and their info (their movies, images, ..etc). [(API version 3 is used)](https://developers.themoviedb.org/3/people/get-popular-people)
 
 
@@ -25,7 +27,170 @@ An api key from The Movie DB is required to run the app. Then you can run the ap
 
 ## App Architecture and Folder Structure
 
-(More information will be added)
+The code of the app implements clean architecture to separate the UI, domain and data layers with a feature-first approach for folder structure.
+
+#### Folder Structure
+
+```
+lib
+├── core
+│   ├── configs
+│   ├── exceptions
+│   ├── models
+│   ├── services
+│   │   ├── http
+│   │   └── storage
+│   └── widgets
+├── features
+│   ├── media
+│   │   ├── enums
+│   │   ├── models
+│   │   ├── providers
+│   │   ├── repositories
+│   │   └── views
+│   │       ├── pages
+│   │       └── widgets
+│   ├── people
+│   │   ├── enums
+│   │   ├── models
+│   │   ├── providers
+│   │   ├── repositories
+│   │   └── views
+│   │       ├── pages
+│   │       └── widgets
+│   └── tmdb-configs
+│       ├── enums
+│       ├── models
+│       ├── providers
+│       └── repositories
+├── main.dart
+└── movies_app.dart
+```
+    
+* `main.dart` file has services initialization code and wraps the root `MoviesApp` with a `ProviderScope`
+* `movies_app.dart` has the root `MaterialApp` and fetches the TMDB configs necessary to generate links for the images of the TMDB API endpoints inside the app
+* The `core` folder contains code shared across features
+    * `configs` contain general styles (colors, themes & text styles)
+    * `services` abstract app-level services with their implementations
+        *  `http` service is implemented with [`Dio`](https://pub.dev/packages/dio) and uses a `CacheInterceptor` to achieve caching by using the `StorageService` ([more information about caching below](#http-caching) 👇🏼)
+        *  `storage` service is implemented with [`Hive`](https://pub.dev/packages/hive_flutter)
+        *  Service locator pattern and Riverpod are used to abstract services when used in other layers.
+
+For example:
+```dart
+final storageServiceProvider = Provider<StorageService>(
+  (_) => HiveStorageService(),
+);
+
+// Usage:
+// ref.watch(storageServiceProvider)
+```
+* The `features` folder: the repository pattern is used to decouple logic required to access data sources from the domain layer. For example, the `PeopleRepository` abstracts and centralizes the various functionality required to access `People` from the TMDB API.
+
+```dart
+abstract class PeopleRepository {
+  String get path;
+
+  String get apiKey;
+
+  Future<Person> getPersonDetails(
+    int personId, {
+    bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
+  });
+  
+  //...
+}
+```
+The repository implementation with the `HttpService`:
+
+```dart
+class HttpPeopleRepository implements PeopleRepository {
+  final HttpService httpService;
+
+  HttpPeopleRepository(this.httpService);
+
+  @override
+  String get path => '/person';
+
+  @override
+  String get apiKey => Configs.tmdbAPIKey;
+
+  @override
+  Future<Person> getPersonDetails(
+    int personId, {
+    bool forceRefresh = false,
+    required TMDBImageConfigs imageConfigs,
+  }) async {
+    final responseData = await httpService.get(
+      '$path/$personId',
+      forceRefresh: forceRefresh,
+      queryParameters: {
+        'api_key': apiKey,
+      },
+    );
+
+    return Person.fromJson(responseData).populateImages(imageConfigs);
+  }
+  
+  //...
+}
+```
+Using Riverpod `Provider` to access this implementation:
+
+```dart
+final peopleRepositoryProvider = Provider<PeopleRepository>(
+  (ref) {
+    final httpService = ref.watch(httpServiceProvider);
+
+    return HttpPeopleRepository(httpService);
+  },
+);
+```
+And finally accessing the repository implementation from the UI layer using a Riverpod `FutureProvider`:
+
+```dart
+final personDetailsProvider = FutureProvider.family<Person, int>(
+  (ref, personId) async {
+    final peopleRepository = ref.watch(peopleRepositoryProvider);
+    final tmdbConfigs = await ref.watch(tmdbConfigsProvider.future);
+
+    return await peopleRepository.getPersonDetails(
+      personId,
+      imageConfigs: tmdbConfigs.images,
+    );
+  },
+);
+```
+Notice how the abstract `HttpService` is accessed from the repository implementation and then the abstract `PeopleRepository` is accessed from the UI and how each of these layers acheive separation and scalability by providing the ability to switch implementation and make changes and/or test each layer seaparately. ([More about testing 👇🏼](#testing))
+
+## Http Caching
+
+To achieve caching http requests and the ability to show content to the user even when an error or loss of connectivity happens, a [`CacheInterceptor`](https://github.com/Roaa94/movies_app/blob/main/lib/core/services/http/dio-interceptors/cache_interceptor.dart) was created and added to `Dio`'s interceptor in the `DioHttpService` class. A Dio `Interceptor` has the following methods:
+
+```dart
+class CacheInterceptor implements Interceptor {
+  final StorageService storageService;
+
+  CacheInterceptor(this.storageService);
+  
+  @override
+  void onError(DioError err, ErrorInterceptorHandler handler) {
+    // TODO: implement onError
+  }
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // TODO: implement onRequest
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    // TODO: implement onResponse
+  }
+}
+```
+By depending on our `StorageService` we were able to cache a reposnse when it doesn't exist in storage and when its `age` duration has not passed, and return that cache in case of error in the `onError` method.
 
 ## Infinite Scroll Functionality
 
@@ -34,7 +199,6 @@ Infinite scrolling was achieved by utilizing Riverpod's providers and the ListVi
 #### The providers you need:
 
 ```dart
-
 /// The FutureProvider that does the fetching of the paginated list of people
 final paginatedPopularPeopleProvider =
     FutureProvider.family<PaginatedResponse<Person>, int>(
@@ -148,7 +312,15 @@ class PopularPersonListItem extends ConsumerWidget {
 ```
 
 
-## Test Coverage
+## Testing
+
+The `test` folder mirrors the `lib` folder in addition to some test utilities. And more tests will be added. 
+
+[`http_mock_adapter`](https://pub.dev/packages/http_mock_adapter) is used to test the `DioHttpService` and mock http requests.
+
+[`hive_test`](https://pub.dev/packages/hive_test) is used to test the `HiveStorageService` and mock storage methods.
+
+[`mocktail`](https://pub.dev/packages/mocktail) is used to mock dependecies.
 
 To explore the test coverage, run tests with --coverage argument
 ```
