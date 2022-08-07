@@ -16,7 +16,7 @@ void main() {
 
     await tester.pumpApp(
       const AppBarLeading(),
-      mockNavigatorObserver,
+      navigatorObserver: mockNavigatorObserver,
     );
 
     await tester.pumpAndSettle();

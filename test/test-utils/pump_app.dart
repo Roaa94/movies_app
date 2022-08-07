@@ -5,11 +5,15 @@ import 'package:movies_app/core/configs/styles/app_themes.dart';
 
 extension PumpApp on WidgetTester {
   Future<void> pumpApp(
-      Widget widget, NavigatorObserver navigatorObserver) async {
+    Widget widget, {
+    NavigatorObserver? navigatorObserver,
+  }) async {
     return pumpWidget(
       MaterialApp(
         home: widget,
-        navigatorObservers: [navigatorObserver],
+        navigatorObservers: [
+          if (navigatorObserver != null) navigatorObserver,
+        ],
       ),
     );
   }

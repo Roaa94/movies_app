@@ -48,9 +48,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.9.3
-  http_mock_adapter: ^0.3.2
+  http_mock_adapter: ^0.3.3
   mocktail: ^0.3.0
   hive_test: ^1.0.1
+  network_image_mock: ^2.1.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
