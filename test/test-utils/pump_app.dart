@@ -7,7 +7,7 @@ extension PumpApp on WidgetTester {
   Future<void> pumpProviderApp(
     Widget widget, {
     List<Override> overrides = const [],
-  }) {
+  }) async {
     return pumpWidget(
       ProviderScope(
         overrides: overrides,

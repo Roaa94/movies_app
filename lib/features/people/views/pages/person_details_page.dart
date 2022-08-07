@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movies_app/core/widgets/app_loader.dart';
+import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/features/media/models/media.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/models/person.dart';
@@ -61,7 +62,7 @@ class PersonDetailsPage extends ConsumerWidget {
                 error: (Object error, StackTrace? stackTrace) {
                   log('Error fetching person details');
                   log(error.toString());
-                  return const Icon(Icons.error);
+                  return const ErrorView();
                 },
                 loading: () => const AppLoader(),
               ),

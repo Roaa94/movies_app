@@ -65,7 +65,7 @@ class PersonImages extends ConsumerWidget {
                 );
               },
               error: (Object error, StackTrace? stackTrace) {
-                log('Error fetching popular people');
+                log('Error fetching person images');
                 log(error.toString());
                 return const Icon(Icons.error);
               },
