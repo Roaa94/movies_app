@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 
-final mediaServiceProvider = Provider<MediaService>((_) => GallerySaverMediaService());
+final mediaServiceProvider = Provider<MediaService>(
+  (_) => GallerySaverMediaService(),
+);
 
 abstract class MediaService {
   Future<void> saveNetworkImageToGallery(String imageUrl);
