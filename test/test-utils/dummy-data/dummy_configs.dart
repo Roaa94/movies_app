@@ -1,4 +1,5 @@
 import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
+import 'package:movies_app/features/tmdb-configs/models/tmdb_configs.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
 class DummyConfigs {
@@ -11,6 +12,10 @@ class DummyConfigs {
     'profile_sizes': ['w45', 'w185', 'h632', 'original'],
     'still_sizes': ['w92', 'w185', 'w300', 'original']
   };
+
+  static const TMDBConfigs tmdbConfigs = TMDBConfigs(
+    images: imageConfigs,
+  );
 
   static const TMDBImageConfigs imageConfigs = TMDBImageConfigs(
     baseUrl: 'http://image.tmdb.org/t/p/',
