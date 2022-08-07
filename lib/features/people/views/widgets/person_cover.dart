@@ -21,9 +21,11 @@ class PersonCover extends StatelessWidget {
       child: coverUrl == null
           ? Image.asset(
               'assets/images/placeholder-${gender.name}.png',
+              key: const ValueKey('__person_cover_asset__'),
               fit: BoxFit.cover,
             )
           : AppCachedNetworkImage(
+              key: const ValueKey('__person_cover_network__'),
               imageUrl: coverUrl!,
             ),
     );

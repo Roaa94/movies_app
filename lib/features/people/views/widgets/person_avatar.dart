@@ -19,10 +19,12 @@ class PersonAvatar extends StatelessWidget {
       child: avatarUrl == null
           ? Image.asset(
               'assets/images/placeholder-${gender.name}.png',
+              key: const ValueKey('__person_avatar_asset__'),
               fit: BoxFit.cover,
               height: 90,
             )
           : AppCachedNetworkImage(
+              key: const ValueKey('__person_avatar_network__'),
               imageUrl: avatarUrl!,
               height: 90,
             ),
