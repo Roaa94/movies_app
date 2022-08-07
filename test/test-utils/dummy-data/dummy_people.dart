@@ -201,4 +201,9 @@ class DummyPeople {
   static final PersonImage dummyPersonImage2 =
       PersonImage.fromJson(rawDummyPersonImage2)
           .populateImages(DummyConfigs.imageConfigs);
+
+  static final List<PersonImage> personImages = [
+    dummyPersonImage1,
+    dummyPersonImage2,
+  ];
 }
