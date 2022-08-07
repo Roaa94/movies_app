@@ -17,10 +17,10 @@ class PersonImagesSliderPage extends StatefulWidget {
   final List<PersonImage> images;
 
   @override
-  State<PersonImagesSliderPage> createState() => _PersonImagesSliderPageState();
+  State<PersonImagesSliderPage> createState() => PersonImagesSliderPageState();
 }
 
-class _PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
+class PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
   late final PageController pageController;
 
   bool isLoadingImageSave = false;
@@ -41,9 +41,6 @@ class _PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
             PageView.builder(
               controller: pageController,
               itemCount: widget.images.length,
-              onPageChanged: (int currentPageIndex) {
-                setState(() => currentPageIndex = currentPageIndex);
-              },
               itemBuilder: (BuildContext context, int index) {
                 return Stack(
                   children: [
@@ -53,6 +50,8 @@ class _PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
                         child: widget.images[index].imageUrl == null
                             ? Container()
                             : AppCachedNetworkImage(
+                                key: ValueKey(
+                                    '__person_image_slider_${index}__'),
                                 imageUrl: widget.images[index].imageUrl!,
                                 fit: BoxFit.fitWidth,
                                 isLoaderShimmer: false,
@@ -95,6 +94,7 @@ class _PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
               bottom: 0,
               start: 20,
               child: SliderAction(
+                key: const ValueKey('__slider_previous_button__'),
                 icon: const Icon(Icons.arrow_back),
                 onTap: () {
                   pageController.previousPage(
@@ -108,11 +108,13 @@ class _PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
               bottom: 0,
               end: 20,
               child: SliderAction(
+                key: const ValueKey('__slider_next_button__'),
                 icon: const Icon(Icons.arrow_forward),
                 onTap: () {
                   pageController.nextPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut);
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
                 },
               ),
             ),
