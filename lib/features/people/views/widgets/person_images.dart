@@ -71,9 +71,11 @@ class PersonImages extends ConsumerWidget {
                 return const ErrorView();
               },
               loading: () {
-                return const Padding(
-                  padding: EdgeInsetsDirectional.only(start: 40 - 17, end: 17),
+                return Padding(
+                  padding:
+                      const EdgeInsetsDirectional.only(start: 40 - 17, end: 17),
                   child: GridShimmer(
+                    key: ValueKey('__person_${personId}_images_grid__'),
                     minOpacity: 0.2,
                     maxOpacity: 0.3,
                   ),
