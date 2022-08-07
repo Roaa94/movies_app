@@ -37,6 +37,9 @@ class PersonImage extends Equatable {
     );
   }
 
+  static ImageSize imageSize = ImageSize.original;
+  static ImageSize thumbnailSize = ImageSize.h632;
+
   PersonImage populateImages(TMDBImageConfigs imageConfigs) {
     return PersonImage(
         aspectRatio: aspectRatio,
@@ -48,10 +51,10 @@ class PersonImage extends Equatable {
         width: width,
         imageUrl: filePath == null
             ? null
-            : imageConfigs.buildProfileImage(ImageSize.original, filePath!),
+            : imageConfigs.buildProfileImage(imageSize, filePath!),
         thumbnail: filePath == null
             ? null
-            : imageConfigs.buildProfileImage(ImageSize.h632, filePath!));
+            : imageConfigs.buildProfileImage(thumbnailSize, filePath!));
   }
 
   @override
