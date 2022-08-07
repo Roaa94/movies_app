@@ -8,7 +8,7 @@ import '../../../../test-utils/pump_app.dart';
 
 void main() {
   testWidgets('defaults to passed initial page', (WidgetTester tester) async {
-    await tester.pumpApp(
+    await tester.pumpProviderApp(
       PersonImagesSliderPage(
         images: DummyPeople.personImages,
         initialImageIndex: 1,
@@ -31,7 +31,7 @@ void main() {
 
   testWidgets('can go to next slide', (WidgetTester tester) async {
     await mockNetworkImages(() async {
-      await tester.pumpApp(
+      await tester.pumpProviderApp(
         PersonImagesSliderPage(
           images: DummyPeople.personImages,
         ),
@@ -57,7 +57,7 @@ void main() {
   });
 
   testWidgets('defaults to passed initial page', (WidgetTester tester) async {
-    await tester.pumpApp(
+    await tester.pumpProviderApp(
       PersonImagesSliderPage(
         images: DummyPeople.personImages,
         initialImageIndex: 1,
@@ -80,7 +80,7 @@ void main() {
 
   testWidgets('can go to previous slide', (WidgetTester tester) async {
     await mockNetworkImages(() async {
-      await tester.pumpApp(
+      await tester.pumpProviderApp(
         PersonImagesSliderPage(
           images: DummyPeople.personImages,
           initialImageIndex: 1,

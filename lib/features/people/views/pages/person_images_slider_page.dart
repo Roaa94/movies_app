@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gallery_saver/gallery_saver.dart';
-import 'package:movies_app/core/configs/styles/app_colors.dart';
 import 'package:movies_app/core/widgets/app_cached_network_image.dart';
-import 'package:movies_app/core/widgets/app_loader.dart';
 import 'package:movies_app/features/people/models/person_image.dart';
+import 'package:movies_app/features/people/views/widgets/save_image_slider_action.dart';
 import 'package:movies_app/features/people/views/widgets/slider_action.dart';
 
 class PersonImagesSliderPage extends StatefulWidget {
@@ -59,33 +57,14 @@ class PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
                               ),
                       ),
                     ),
-                    PositionedDirectional(
-                      top: 20,
-                      end: 17,
-                      child: isLoadingImageSave
-                          ? const Padding(
-                              padding: EdgeInsets.all(10),
-                              child: AppLoader(),
-                            )
-                          : SliderAction(
-                              color: AppColors.secondary,
-                              icon: const Icon(Icons.download),
-                              onTap: isLoadingImageSave
-                                  ? null
-                                  : () async {
-                                      if (widget.images[index].imageUrl !=
-                                          null) {
-                                        setState(
-                                            () => isLoadingImageSave = true);
-                                        await GallerySaver.saveImage(
-                                          widget.images[index].imageUrl!,
-                                        );
-                                        setState(
-                                            () => isLoadingImageSave = false);
-                                      }
-                                    },
-                            ),
-                    ),
+                    if (widget.images[index].imageUrl != null)
+                      PositionedDirectional(
+                        top: 20,
+                        end: 17,
+                        child: SaveImageSliderAction(
+                          imageUrl: widget.images[index].imageUrl!,
+                        ),
+                      ),
                   ],
                 );
               },
