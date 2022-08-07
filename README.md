@@ -7,6 +7,17 @@ A Flutter app that uses the "[The Movie DB](https://www.themoviedb.org/)" api to
 
 🎨 [Design inspiration](https://dribbble.com/shots/7902411-Actors-Tracking-App/attachments/499926?mode=media)
 
+### Content
+
+* [Running the App](#running-the-app)
+* [Previews](#previews)
+* [App Architecture & Folder Structure](#app-architecture-and-folder-structure)
+* [Http Caching](#http-caching)
+* [Infinite Scroll Functionality](#infinite-scroll-functionality)
+* [Testing with Riverpod](#testing-with-riverpod)
+    1. [Dart-only testing](#1-dart-only-testing) 
+    2. [Flutter Widget Tests](#2-flutter-widget-tests)
+
 ## Running the App
 An api key from The Movie DB is required to run the app. Then you can run the app by adding the following run arguments:
 ```
@@ -444,7 +455,70 @@ void main() {
 
 #### 2. Flutter Widget Tests
 
-...
+We can simply wrap our pumped widget in our widget test with a `ProviderScope` and provide it with the mocks using the `overrides` param.
+
+Let's see how we can test the same `tmdbConfigsProvider` to see how if it behaves as we want in our root `MoviesApp` widget. Basically it should render the `AppLoader` widget while loading, the `ErrorView` widget in case of error, and finally the `PopularPeoplePage` widget when the request completes successfully.
+
+```dart
+void main() {
+  final TMDBConfigsRepository mockTMDBConfigsRepository =
+      MockTMDBConfigsRepository();
+
+  testWidgets('renders ErrorView for request error',
+      (WidgetTester tester) async {
+    when(() => mockTMDBConfigsRepository.get(forceRefresh: false))
+        .thenThrow('An Error Occurred!');
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          // Replace the TMDB Configs repository with the Mock Repository
+          tmdbConfigsRepositoryProvider
+              .overrideWithValue(mockTMDBConfigsRepository),
+        ],
+        child: const MoviesApp(),
+      ),
+    );
+
+    // Initially loading
+    expect(find.byType(AppLoader), findsOneWidget);
+
+    // Re-render to make sure fetching is finished
+    await tester.pumpAndSettle();
+
+    // Shows error view
+    expect(find.byType(ErrorView), findsOneWidget);
+  });
+
+  testWidgets(
+    'renders PopularPeoplePage widget on request success',
+    (WidgetTester tester) async {
+      when(() => mockTMDBConfigsRepository.get(forceRefresh: false))
+          .thenAnswer((_) async => DummyConfigs.tmdbConfigs);
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            // Replace the TMDB Configs repository with the Mock Repository
+            tmdbConfigsRepositoryProvider
+                .overrideWithValue(mockTMDBConfigsRepository),
+          ],
+          child: const MoviesApp(),
+        ),
+      );
+
+      // Initially loading
+      expect(find.byType(AppLoader), findsOneWidget);
+
+      // Re-render to make sure fetching is finished
+      await tester.pumpAndSettle();
+
+      expect(find.byType(PopularPeoplePage), findsOneWidget);
+    },
+  );
+}
+```
+
 
 To explore the test coverage, run tests with --coverage argument
 ```
