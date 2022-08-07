@@ -44,12 +44,9 @@ void main() {
           const AsyncValue<TMDBConfigs>.loading(),
         )).called(1);
 
-    // Wait for loading to finish
-    await Future.delayed(Duration.zero);
-
-    // Perform second reading, expects fetched data
-    final secondReading = providerContainer.read(tmdbConfigsProvider);
-    expect(secondReading.value, DummyConfigs.tmdbConfigs);
+    // Perform second reading, by waiting for the request, expects fetched data
+    final secondReading = await providerContainer.read(tmdbConfigsProvider.future);
+    expect(secondReading, DummyConfigs.tmdbConfigs);
 
     // Listener was fired from loading to fetched values
     verify(() => tmdbConfigsListener(
