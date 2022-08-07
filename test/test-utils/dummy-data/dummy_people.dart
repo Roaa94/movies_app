@@ -1,3 +1,4 @@
+import 'package:movies_app/core/models/paginated_response.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/models/person_image.dart';
 
@@ -130,6 +131,14 @@ class DummyPeople {
       'profile_path': '/lyUyVARQKhGxaxy0FbPJCQRpiaW.jpg'
     },
   ];
+
+  static PaginatedResponse<Person> paginatedPopularPeopleResponse =
+      PaginatedResponse<Person>(
+    page: 1,
+    results: popularPeople1,
+    totalPages: 500,
+    totalResults: 1000,
+  );
 
   static List<Person> popularPeople1 = List<Person>.from(
     rawPopularPeople1.map(

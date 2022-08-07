@@ -14,20 +14,12 @@ import '../../../test-utils/mocks.dart';
 void main() {
   final PeopleRepository mockPeopleRepository = MockPeopleRepository();
 
-  PaginatedResponse<Person> paginatedPopularPeopleResponse =
-      PaginatedResponse<Person>(
-    page: 1,
-    results: DummyPeople.popularPeople1,
-    totalPages: 500,
-    totalResults: 1000,
-  );
-
   setUp(() {
     when(() => mockPeopleRepository.getPopularPeople(
           forceRefresh: false,
           page: 1,
           imageConfigs: DummyConfigs.imageConfigs,
-        )).thenAnswer((_) async => paginatedPopularPeopleResponse);
+        )).thenAnswer((_) async => DummyPeople.paginatedPopularPeopleResponse);
   });
 
   test('fetches paginated popular people', () async {
@@ -65,13 +57,13 @@ void main() {
     // Perform second reading, by waiting for the request, expects fetched data
     final secondReading =
         await providerContainer.read(paginatedPopularPeopleProvider(0).future);
-    expect(secondReading, paginatedPopularPeopleResponse);
+    expect(secondReading, DummyPeople.paginatedPopularPeopleResponse);
 
     // Listener was fired from loading to fetched values
     verify(() => popularPeopleListener(
           const AsyncValue<PaginatedResponse<Person>>.loading(),
           AsyncValue<PaginatedResponse<Person>>.data(
-              paginatedPopularPeopleResponse),
+              DummyPeople.paginatedPopularPeopleResponse),
         )).called(1);
 
     // No more further listener events fired
