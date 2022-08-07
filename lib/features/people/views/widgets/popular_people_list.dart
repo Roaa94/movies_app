@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/core/widgets/list_item_shimmer.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/current_popular_person_provider.dart';
@@ -45,7 +46,7 @@ class PopularPeopleList extends ConsumerWidget {
       error: (Object error, StackTrace? stackTrace) {
         log('Error fetching popular people');
         log(error.toString());
-        return const Icon(Icons.error);
+        return const ErrorView();
       },
     );
   }
