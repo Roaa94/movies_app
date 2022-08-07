@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movies_app/core/configs/styles/app_colors.dart';
+import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/core/widgets/grid_shimmer.dart';
 import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/providers/person_images_provider.dart';
@@ -67,7 +68,7 @@ class PersonImages extends ConsumerWidget {
               error: (Object error, StackTrace? stackTrace) {
                 log('Error fetching person images');
                 log(error.toString());
-                return const Icon(Icons.error);
+                return const ErrorView();
               },
               loading: () {
                 return const Padding(

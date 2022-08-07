@@ -206,4 +206,12 @@ class DummyPeople {
     dummyPersonImage1,
     dummyPersonImage2,
   ];
+
+  static final List<PersonImage> personImagesWithoutImages =
+      List<PersonImage>.from(
+    [
+      rawDummyPersonImage1,
+      rawDummyPersonImage2,
+    ].map((x) => PersonImage.fromJson(x)),
+  );
 }
