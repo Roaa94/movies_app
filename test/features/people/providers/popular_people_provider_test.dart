@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:movies_app/core/models/paginated_response.dart';
 import 'package:movies_app/features/people/models/person.dart';
-import 'package:movies_app/features/people/providers/popular_people_provider.dart';
+import 'package:movies_app/features/people/providers/paginated_popular_people_provider.dart';
 import 'package:movies_app/features/people/repositories/people_repository.dart';
 import 'package:movies_app/features/tmdb-configs/providers/tmdb_configs_provider.dart';
 
