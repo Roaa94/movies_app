@@ -17,7 +17,7 @@ class PersonImagesGridItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: personImage.thumbnail == null
-          ? Container()
+          ? Container(color: Colors.white)
           : AppCachedNetworkImage(
               imageUrl: personImage.thumbnail!,
               fit: BoxFit.cover,
