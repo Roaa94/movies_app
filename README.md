@@ -322,6 +322,133 @@ The `test` folder mirrors the `lib` folder in addition to some test utilities. A
 
 [`mocktail`](https://pub.dev/packages/mocktail) is used to mock dependecies.
 
+### Testing with Riverpod
+
+Testing with Riverpod is hassle-free and simple. You can test your providers separately from Flutter, and you can test how they behave in your widgets with widget testing. You can find helpful information about this in the [official docs](https://riverpod.dev/docs/cookbooks/testing). But let's see examples from this repo to have a look at both methods for different kinds of Riverpod providers.
+
+#### 1. Dart-only Testing
+
+Simply we can read our providers with a `ProviderContainer` and we should make sure to dispose it and not share it between tests. The `ProviderContainer` takes an `overrides` param which you can provide your mocks to.
+
+#### 1.1 Testing the simple `Provider` provider:
+
+This is the simplest provider and it's the easiest to test:
+
+```dart
+final foo = Provider<String>((_) => 'bar');
+
+void main() {
+  test('foo is a bar', () {
+    final providerContainer = ProviderContainer();
+    addTearDown(providerContainer.dispose);
+
+    expect(providerContainer.read(foo), equals('bar'));
+  });
+}
+```
+
+In this app, I am making sure my abstract services and repository providers return the correct implementations by doing these simple tests:
+
+```dart
+// service provider
+final storageServiceProvider = Provider<StorageService>((_) => HiveStorageService());
+
+// test
+void main() {
+  test('serviceProvider returns HiveStorageService', () {
+    final providerContainer = ProviderContainer();
+    addTearDown(providerContainer.dispose);
+
+    expect(
+      providerContainer.read(storageServiceProvider),
+      isA<HiveStorageService>(),
+    );
+  });
+}
+```
+
+#### 1.2 Testing the `FutureProvider` provider:
+
+Let's take our `tmdbConfigsProvider` as an example:
+
+```dart
+final tmdbConfigsProvider = FutureProvider<TMDBConfigs>((ref) async {
+  final tmdbConfigsRepository = ref.watch(tmdbConfigsRepositoryProvider);
+
+  return await tmdbConfigsRepository.get();
+});
+```
+
+And here is how we can test it separately from Flutter:
+
+```dart
+// Mocks
+class MockTMDBConfigsRepository extends Mock implements TMDBConfigsRepository {}
+
+class Listener<T> extends Mock {
+  void call(T? previous, T value);
+}
+
+// Test
+void main() {
+  final TMDBConfigsRepository mockTMDBConfigsRepository =
+      MockTMDBConfigsRepository();
+
+  test('fetches TMDB configs', () async {
+    when(() => mockTMDBConfigsRepository.get(forceRefresh: false))
+        .thenAnswer((_) async => DummyConfigs.tmdbConfigs);
+
+    final tmdbConfigsListener = Listener<AsyncValue<TMDBConfigs>>();
+
+    final providerContainer = ProviderContainer(
+      overrides: [
+        // Replace the TMDB Configs repository with the Mock Repository
+        tmdbConfigsRepositoryProvider
+            .overrideWithValue(mockTMDBConfigsRepository),
+      ],
+    );
+
+    addTearDown(providerContainer.dispose);
+
+    providerContainer.listen<AsyncValue<TMDBConfigs>>(
+      tmdbConfigsProvider,
+      tmdbConfigsListener,
+      fireImmediately: true,
+    );
+
+    // Perform first reading, expects loading state
+    final firstReading = providerContainer.read(tmdbConfigsProvider);
+    expect(firstReading, const AsyncValue<TMDBConfigs>.loading());
+
+    // Listener was fired from `null` to loading AsyncValue
+    verify(() => tmdbConfigsListener(
+          null,
+          const AsyncValue<TMDBConfigs>.loading(),
+        )).called(1);
+
+    // Wait for loading to finish
+    await Future.delayed(Duration.zero);
+
+    // Perform second reading, expects fetched data
+    final secondReading = providerContainer.read(tmdbConfigsProvider);
+    expect(secondReading.value, DummyConfigs.tmdbConfigs);
+
+    // Listener was fired from loading to fetched values
+    verify(() => tmdbConfigsListener(
+      const AsyncValue<TMDBConfigs>.loading(),
+      const AsyncValue<TMDBConfigs>.data(DummyConfigs.tmdbConfigs),
+    )).called(1);
+    
+    // No further listener events fired
+    verifyNoMoreInteractions(tmdbConfigsListener);
+  });
+}
+```
+
+#### 2. Flutter Widget Tests
+
+...
+
 To explore the test coverage, run tests with --coverage argument
 ```
 flutter test --coverage
