@@ -5,10 +5,10 @@ class PopularPeoplePage extends StatefulWidget {
   const PopularPeoplePage({Key? key}) : super(key: key);
 
   @override
-  State<PopularPeoplePage> createState() => _PopularPeoplePageState();
+  State<PopularPeoplePage> createState() => PopularPeoplePageState();
 }
 
-class _PopularPeoplePageState extends State<PopularPeoplePage> {
+class PopularPeoplePageState extends State<PopularPeoplePage> {
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -16,13 +16,12 @@ class _PopularPeoplePageState extends State<PopularPeoplePage> {
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
-          onTap: scrollController.hasClients
-              ? () => scrollController.animateTo(
-                    scrollController.position.minScrollExtent,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  )
-              : null,
+          key: const ValueKey('__app_bar_title_gesture_detector__'),
+          onTap: () => scrollController.animateTo(
+            scrollController.position.minScrollExtent,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          ),
           child: const Text('Popular'),
         ),
       ),
