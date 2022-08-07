@@ -70,8 +70,9 @@ void main() {
       (server) => server.reply(200, {'data': 'Success!'}),
     );
 
-    final response =
-        await dioHttpService.post('successful-post-request-test');
+    final response = await dioHttpService.post(
+      'successful-post-request-test',
+    );
 
     expect(response, {'data': 'Success!'});
   });

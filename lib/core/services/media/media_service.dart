@@ -14,5 +14,5 @@ class GallerySaverMediaService implements MediaService {
   // coverage:ignore-start
   Future<void> saveNetworkImageToGallery(String imageUrl) async {
     await GallerySaver.saveImage(imageUrl);
-  }// coverage:ignore-end
+  } // coverage:ignore-end
 }

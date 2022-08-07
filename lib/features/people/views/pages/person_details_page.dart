@@ -55,7 +55,9 @@ class PersonDetailsPage extends ConsumerWidget {
                       PersonMedia(personMedia),
                       PersonImages(personId),
                       PersonBio(person.biography),
-                      SizedBox(height: 20 + MediaQuery.of(context).padding.bottom),
+                      SizedBox(
+                        height: 20 + MediaQuery.of(context).padding.bottom,
+                      ),
                     ],
                   );
                 },

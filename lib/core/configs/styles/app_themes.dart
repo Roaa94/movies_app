@@ -20,7 +20,7 @@ class AppThemes {
       appBarTheme: const AppBarTheme(
         elevation: 0,
         backgroundColor: AppColors.black,
-        titleTextStyle: AppTextStyles.h2
+        titleTextStyle: AppTextStyles.h2,
       ),
     );
   }
@@ -57,6 +57,7 @@ class TextThemes {
       headline4: AppTextStyles.h4,
     );
   }
+
   static TextTheme get darkTextTheme {
     return TextTheme(
       bodyText1: AppTextStyles.bodyLg.copyWith(color: AppColors.white),

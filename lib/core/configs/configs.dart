@@ -3,5 +3,6 @@ class Configs {
 
   static const String apiBaseUrl = 'https://api.themoviedb.org/3';
 
-  static const String tmdbAPIKey = String.fromEnvironment('TMDB_API_KEY', defaultValue: '');
+  static const String tmdbAPIKey =
+      String.fromEnvironment('TMDB_API_KEY', defaultValue: '');
 }

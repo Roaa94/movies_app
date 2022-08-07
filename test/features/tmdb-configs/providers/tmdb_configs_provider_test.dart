@@ -45,14 +45,15 @@ void main() {
         )).called(1);
 
     // Perform second reading, by waiting for the request, expects fetched data
-    final secondReading = await providerContainer.read(tmdbConfigsProvider.future);
+    final secondReading =
+        await providerContainer.read(tmdbConfigsProvider.future);
     expect(secondReading, DummyConfigs.tmdbConfigs);
 
     // Listener was fired from loading to fetched values
     verify(() => tmdbConfigsListener(
-      const AsyncValue<TMDBConfigs>.loading(),
-      const AsyncValue<TMDBConfigs>.data(DummyConfigs.tmdbConfigs),
-    )).called(1);
+          const AsyncValue<TMDBConfigs>.loading(),
+          const AsyncValue<TMDBConfigs>.data(DummyConfigs.tmdbConfigs),
+        )).called(1);
 
     // No more further listener events fired
     verifyNoMoreInteractions(tmdbConfigsListener);
