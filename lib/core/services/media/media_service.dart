@@ -11,7 +11,8 @@ abstract class MediaService {
 
 class GallerySaverMediaService implements MediaService {
   @override
+  // coverage:ignore-start
   Future<void> saveNetworkImageToGallery(String imageUrl) async {
     await GallerySaver.saveImage(imageUrl);
-  }
+  }// coverage:ignore-end
 }

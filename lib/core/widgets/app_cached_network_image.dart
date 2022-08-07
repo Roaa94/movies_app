@@ -58,11 +58,13 @@ class AppCachedNetworkImage extends StatelessWidget {
       colorBlendMode: colorBlendMode,
       alignment: alignment,
       errorWidget: customErrorWidgetBuilder ??
+          // Todo: test this
+          // coverage:ignore-start
           (BuildContext context, String url, dynamic error) {
             log('🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼 Error Fetching Image 🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼');
             log('Image url: $url');
             return customErrorWidget ?? const ErrorView();
-          },
+          }, // coverage:ignore-end
     );
   }
 }
