@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movies_app/core/configs/styles/ui_constants.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/core/widgets/list_item_shimmer.dart';
 import 'package:movies_app/features/people/models/person.dart';
@@ -25,7 +26,7 @@ class PopularPeopleList extends ConsumerWidget {
         return ListView.builder(
           controller: scrollController,
           itemCount: count,
-          itemExtent: 110,
+          itemExtent: UIConstants.personListItemHeight,
           itemBuilder: (context, index) {
             final AsyncValue<Person> currentPopularPersonFromIndex = ref
                 .watch(paginatedPopularPeopleProvider(index ~/ 20))
