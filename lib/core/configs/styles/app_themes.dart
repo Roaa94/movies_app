@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/configs/styles/app_colors.dart';
 import 'package:movies_app/core/configs/styles/app_text_styles.dart';
 
+/// Styles class holding app theming information
 class AppThemes {
+  /// Dark theme data of the app
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
@@ -25,6 +27,7 @@ class AppThemes {
     );
   }
 
+  /// Light theme data of the app
   static ThemeData get lightTheme {
     return ThemeData(
       brightness: Brightness.light,
@@ -34,7 +37,6 @@ class AppThemes {
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
-        background: AppColors.white,
       ),
       appBarTheme: const AppBarTheme(
         elevation: 0,
@@ -44,7 +46,9 @@ class AppThemes {
   }
 }
 
+/// Styles class holding app text theming information
 class TextThemes {
+  /// Main text theme
   static TextTheme get textTheme {
     return const TextTheme(
       bodyText1: AppTextStyles.bodyLg,
@@ -58,6 +62,7 @@ class TextThemes {
     );
   }
 
+  /// Dark text theme
   static TextTheme get darkTextTheme {
     return TextTheme(
       bodyText1: AppTextStyles.bodyLg.copyWith(color: AppColors.white),
@@ -71,6 +76,8 @@ class TextThemes {
     );
   }
 
+  /// Primary text theme
+  /// Uses [AppColors.primary] for all text styles
   static TextTheme get primaryTextTheme {
     return TextTheme(
       bodyText1: AppTextStyles.bodyLg.copyWith(color: AppColors.primary),
