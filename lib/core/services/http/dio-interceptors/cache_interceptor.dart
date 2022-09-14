@@ -4,16 +4,23 @@ import 'dart:developer';
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:movies_app/core/configs/configs.dart';
 import 'package:movies_app/core/models/cache_response.dart';
 import 'package:movies_app/core/services/storage/storage_service.dart';
 
-const dioCacheForceRefreshKey = 'dio_cache_force_refresh_key';
-
+/// Dio Interceptor used to cache http response in local storage
 class CacheInterceptor implements Interceptor {
-  final StorageService storageService;
-
+  /// Creates new instance of [CacheInterceptor]
   CacheInterceptor(this.storageService);
 
+  /// Storage service used to store cache in local storage
+  final StorageService storageService;
+
+  /// Helper method to create a storage key from
+  /// request/response information
+  ///
+  /// e.g. for a GET request to /person/popular endpoint:
+  /// storage key: 'GET:https://api.themoviedb.org/3/person/popular/'
   @visibleForTesting
   String createStorageKey(
     String method,
@@ -31,13 +38,14 @@ class CacheInterceptor implements Interceptor {
     return storageKey;
   }
 
+  /// Method that intercepts Dio error
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     log('❌ ❌ ❌ Dio Error!');
     log('❌ ❌ ❌ Url: ${err.requestOptions.uri}');
     log('❌ ❌ ❌ ${err.stackTrace}');
     log('❌ ❌ ❌ Response Errors: ${err.response?.data}');
-    var storageKey = createStorageKey(
+    final storageKey = createStorageKey(
       err.requestOptions.method,
       err.requestOptions.baseUrl,
       err.requestOptions.path,
@@ -62,13 +70,14 @@ class CacheInterceptor implements Interceptor {
     return handler.next(err);
   }
 
+  /// Method that intercepts Dio request
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    if (options.extra[dioCacheForceRefreshKey] == true) {
+    if (options.extra[Configs.dioCacheForceRefreshKey] == true) {
       log('🌍 🌍 🌍 Retrieving request from network by force refresh');
       return handler.next(options);
     }
-    var storageKey = createStorageKey(
+    final storageKey = createStorageKey(
       options.method,
       options.baseUrl,
       options.path,
@@ -80,6 +89,7 @@ class CacheInterceptor implements Interceptor {
         log('📦 📦 📦 Retrieved response from cache');
         final response = cachedResponse.buildResponse(options);
         log('⬅️ ⬅️ ⬅️ Response');
+        // ignore: lines_longer_than_80_chars
         log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
         log('Query params: ${response.requestOptions.queryParameters}');
         log('-------------------------');
@@ -89,9 +99,10 @@ class CacheInterceptor implements Interceptor {
     return handler.next(options);
   }
 
+  /// Method that intercepts Dio response
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    var storageKey = createStorageKey(
+    final storageKey = createStorageKey(
       response.requestOptions.method,
       response.requestOptions.baseUrl,
       response.requestOptions.path,
@@ -103,11 +114,12 @@ class CacheInterceptor implements Interceptor {
         response.statusCode! < 300) {
       log('🌍 🌍 🌍 Retrieved response from network');
       log('⬅️ ⬅️ ⬅️ Response');
+      // ignore: lines_longer_than_80_chars
       log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
       log('Query params: ${response.requestOptions.queryParameters}');
       log('-------------------------');
 
-      var cachedResponse = CachedResponse(
+      final cachedResponse = CachedResponse(
         data: response.data,
         headers: Headers.fromMap(response.headers.map),
         age: clock.now(),

@@ -48,7 +48,7 @@ class DioHttpService implements HttpService {
     bool forceRefresh = false,
     String? customBaseUrl,
   }) async {
-    dio.options.extra[dioCacheForceRefreshKey] = forceRefresh;
+    dio.options.extra[Configs.dioCacheForceRefreshKey] = forceRefresh;
 
     final Response response = await dio.get<Map<String, dynamic>>(
       endpoint,

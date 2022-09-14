@@ -1,9 +1,14 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:movies_app/core/services/storage/storage_service.dart';
 
+/// [StorageService] interface implementation using the Hive package
+///
+/// See: https://pub.dev/packages/hive_flutter
 class HiveStorageService implements StorageService {
+  /// A Hive Box
   late Box hiveBox;
 
+  /// Opens a Hive box by its name
   Future<void> openBox([String boxName = 'MOVES_APP']) async {
     hiveBox = await Hive.openBox<dynamic>(boxName);
   }
@@ -15,7 +20,7 @@ class HiveStorageService implements StorageService {
 
   @override
   Future<void> remove(String key) async {
-    hiveBox.delete(key);
+    await hiveBox.delete(key);
   }
 
   @override
@@ -35,7 +40,7 @@ class HiveStorageService implements StorageService {
 
   @override
   Future<void> set(String? key, dynamic data) async {
-    hiveBox.put(key, data);
+    await hiveBox.put(key, data);
   }
 
   @override
