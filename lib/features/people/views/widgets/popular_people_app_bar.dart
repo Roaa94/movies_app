@@ -7,19 +7,16 @@ class PopularPeopleAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Consumer(
-      builder: (_, ref, __) {
-        final scrollController = ref.watch(popularPeopleScrollControllerProvider);
-        return GestureDetector(
-          key: const ValueKey('__app_bar_title_gesture_detector__'),
-          onTap: () => scrollController.animateTo(
-            scrollController.position.minScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          ),
-          child: const Text('Popular'),
-        );
-      },
+    final popularPeopleScrollController = ref.watch(popularPeopleScrollControllerProvider);
+
+    return GestureDetector(
+      key: const ValueKey('__app_bar_title_gesture_detector__'),
+      onTap: () => popularPeopleScrollController.animateTo(
+        popularPeopleScrollController.position.minScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      ),
+      child: const Text('Popular'),
     );
   }
 }
