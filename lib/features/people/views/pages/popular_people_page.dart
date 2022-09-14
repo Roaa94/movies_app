@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/features/people/views/widgets/popular_people_list.dart';
-import 'package:movies_app/features/people/views/widgets/popular_person_app_bar.dart';
+import 'package:movies_app/features/people/views/widgets/popular_people_app_bar.dart';
 
 class PopularPeoplePage extends StatelessWidget {
   const PopularPeoplePage({Key? key}) : super(key: key);

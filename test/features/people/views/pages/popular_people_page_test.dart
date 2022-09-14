@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/people/providers/popular_people_count_provider.dart';
 import 'package:movies_app/features/people/providers/popular_people_list_scroll_controller_provider.dart';
 import 'package:movies_app/features/people/views/pages/popular_people_page.dart';
-import 'package:movies_app/features/people/views/widgets/popular_person_app_bar.dart';
+import 'package:movies_app/features/people/views/widgets/popular_people_app_bar.dart';
 
 import '../../../../test-utils/pump_app.dart';
 
