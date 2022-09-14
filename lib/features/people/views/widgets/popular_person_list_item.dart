@@ -57,14 +57,9 @@ class PopularPersonListItem extends ConsumerWidget {
                   const SizedBox(width: 20),
                   Expanded(
                     flex: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          person.name,
-                          style: Theme.of(context).textTheme.headline2,
-                        ),
-                      ],
+                    child: Text(
+                      person.name,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ),
                 ],

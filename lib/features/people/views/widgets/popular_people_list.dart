@@ -2,25 +2,23 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movies_app/core/configs/styles/ui_constants.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/core/widgets/list_item_shimmer.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/current_popular_person_provider.dart';
 import 'package:movies_app/features/people/providers/paginated_popular_people_provider.dart';
 import 'package:movies_app/features/people/providers/popular_people_count_provider.dart';
+import 'package:movies_app/features/people/providers/popular_people_list_scroll_controller_provider.dart';
 import 'package:movies_app/features/people/views/widgets/popular_person_list_item.dart';
 
 class PopularPeopleList extends ConsumerWidget {
-  const PopularPeopleList({
-    Key? key,
-    this.scrollController,
-  }) : super(key: key);
-
-  final ScrollController? scrollController;
+  const PopularPeopleList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final popularPeopleCount = ref.watch(popularPeopleCountProvider);
+    final scrollController = ref.watch(popularPeopleScrollControllerProvider);
 
     return popularPeopleCount.when(
       loading: () => const ListItemShimmer(),
@@ -28,6 +26,7 @@ class PopularPeopleList extends ConsumerWidget {
         return ListView.builder(
           controller: scrollController,
           itemCount: count,
+          itemExtent: UIConstants.personListItemHeight,
           itemBuilder: (context, index) {
             final AsyncValue<Person> currentPopularPersonFromIndex = ref
                 .watch(paginatedPopularPeopleProvider(index ~/ 20))

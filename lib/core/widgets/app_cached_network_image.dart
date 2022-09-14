@@ -38,33 +38,39 @@ class AppCachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      placeholder: noLoader
-          ? null
-          : (_, __) => Center(
-                child: loaderWidget ??
-                    (isLoaderShimmer
-                        ? Shimmer(
-                            height: height,
-                            width: width,
-                          )
-                        : const AppLoader()),
-              ),
-      imageUrl: imageUrl,
-      width: width,
-      height: height,
-      fit: fit,
-      color: color,
-      colorBlendMode: colorBlendMode,
-      alignment: alignment,
-      errorWidget: customErrorWidgetBuilder ??
-          // Todo: test this
-          // coverage:ignore-start
-          (BuildContext context, String url, dynamic error) {
-            log('🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼 Error Fetching Image 🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼');
-            log('Image url: $url');
-            return customErrorWidget ?? const ErrorView();
-          }, // coverage:ignore-end
+    final memCacheHeight = height != null ? (height! * 2).ceil() : null;
+    final memCacheWidth = width != null ? (width! * 2).ceil() : null;
+    return RepaintBoundary(
+      child: CachedNetworkImage(
+        placeholder: noLoader
+            ? null
+            : (_, __) => Center(
+                  child: loaderWidget ??
+                      (isLoaderShimmer
+                          ? Shimmer(
+                              height: height,
+                              width: width,
+                            )
+                          : const AppLoader()),
+                ),
+        memCacheHeight: memCacheHeight,
+        memCacheWidth: memCacheWidth,
+        imageUrl: imageUrl,
+        width: width,
+        height: height,
+        fit: fit,
+        color: color,
+        colorBlendMode: colorBlendMode,
+        alignment: alignment,
+        errorWidget: customErrorWidgetBuilder ??
+            // Todo: test this
+            // coverage:ignore-start
+            (BuildContext context, String url, dynamic error) {
+              log('🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼 Error Fetching Image 🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼');
+              log('Image url: $url');
+              return customErrorWidget ?? const ErrorView();
+            }, // coverage:ignore-end
+      ),
     );
   }
 }
