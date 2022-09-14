@@ -53,6 +53,7 @@ dev_dependencies:
   http_mock_adapter: ^0.3.3
   mocktail: ^0.3.0
   hive_test: ^1.0.1
+  very_good_analysis: ^2.4.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
