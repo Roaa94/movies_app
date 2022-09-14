@@ -83,17 +83,46 @@ class Media extends Equatable {
 
   /// list of genre ids
   final List<int> genreIds;
+
+  /// Media type
   final MediaType mediaType;
+
+  /// Media's original language
   final String? originalLanguage;
+
+  /// Media's original title in the original language
   final String? originalTitle;
+
+  /// Media's overview
   final String? overview;
+
+  /// Media's posterPath
+  ///
+  /// used with [TMDBImageConfigs] to generate
+  /// valid urls for [poster] and [posterThumb]
   final String? posterPath;
+
+  /// Generated image Url from [TMDBImageConfigs] and [posterPath]
+  /// with a [posterThumbSize]
   final String? posterThumb;
+
+  /// Generated image Url from [TMDBImageConfigs] and [posterPath]
+  /// with a [posterSize]
   final String? poster;
+
+  /// Media's release date
   final DateTime? releaseDate;
+
+  /// Media's title
   final String? title;
+
+  /// Indicates if a media has a video
   final bool video;
+
+  /// Media's voting average
   final double voteAverage;
+
+  /// Media's vote count
   final int voteCount;
 
   /// Converts object to raw data

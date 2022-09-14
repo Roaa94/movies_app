@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/configs/styles/app_colors.dart';
 
+/// Shimmer widget with simple fade animation
 class Shimmer extends StatefulWidget {
+  /// Creates a new instance of [Shimmer]
   const Shimmer({
     Key? key,
     this.width,
@@ -10,9 +12,16 @@ class Shimmer extends StatefulWidget {
     this.maxOpacity = 0.1,
   }) : super(key: key);
 
+  /// Shimmer area width
   final double? width;
+
+  /// Shimmer area height
   final double? height;
+
+  /// Shimmer fade minimum opacity
   final double minOpacity;
+
+  /// Shimmer fade maximum opacity
   final double maxOpacity;
 
   @override

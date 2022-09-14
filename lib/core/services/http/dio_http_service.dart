@@ -27,6 +27,12 @@ class DioHttpService implements HttpService {
   /// The Dio Http client
   late final Dio dio;
 
+  /// The Dio base options
+  BaseOptions get baseOptions => BaseOptions(
+        baseUrl: baseUrl,
+        headers: headers,
+      );
+
   @override
   String get baseUrl => Configs.apiBaseUrl;
 
@@ -35,11 +41,6 @@ class DioHttpService implements HttpService {
     'accept': 'application/json',
     'content-type': 'application/json'
   };
-
-  BaseOptions get baseOptions => BaseOptions(
-        baseUrl: baseUrl,
-        headers: headers,
-      );
 
   @override
   Future<Map<String, dynamic>> get(
