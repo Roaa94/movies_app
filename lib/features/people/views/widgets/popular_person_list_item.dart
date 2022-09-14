@@ -9,13 +9,14 @@ import 'package:movies_app/features/people/providers/current_popular_person_prov
 import 'package:movies_app/features/people/views/pages/person_details_page.dart';
 import 'package:movies_app/features/people/views/widgets/person_avatar.dart';
 
+/// Widget holding a list item in the popular people list
 class PopularPersonListItem extends ConsumerWidget {
+  /// Creates a new instance of [PopularPersonListItem]
   const PopularPersonListItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<Person> personAsync =
-        ref.watch(currentPopularPersonProvider);
+    final personAsync = ref.watch(currentPopularPersonProvider);
 
     return Container(
       child: personAsync.when(

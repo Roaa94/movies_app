@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_redundant_argument_values
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';

@@ -6,7 +6,11 @@ import 'package:movies_app/core/widgets/app_loader.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
 import 'package:movies_app/core/widgets/shimmer.dart';
 
+/// Wrapper widget around a [CachedNetworkImage]
+///
+/// See: https://pub.dev/packages/cached_network_image
 class AppCachedNetworkImage extends StatelessWidget {
+  /// Creates a new instance of [AppCachedNetworkImage]
   const AppCachedNetworkImage({
     Key? key,
     required this.imageUrl,
@@ -23,17 +27,48 @@ class AppCachedNetworkImage extends StatelessWidget {
     this.isLoaderShimmer = true,
   }) : super(key: key);
 
+  /// The image url
   final String imageUrl;
+
+  /// An optional custom error widget builder
   final LoadingErrorWidgetBuilder? customErrorWidgetBuilder;
+
+  /// An optional custom error widget
+  ///
+  /// Default to an [ErrorView] widget
   final Widget? customErrorWidget;
+
+  /// An optional custom loader widget
+  ///
+  /// Defaults to a [Shimmer] widget if [isLoaderShimmer] is true
+  /// Defaults to a [AppLoader] widget if [isLoaderShimmer] is false
   final Widget? loaderWidget;
+
+  /// Forces a null placeholder
   final bool noLoader;
+
+  /// Image height
   final double? height;
+
+  /// Image width
   final double? width;
+
+  /// Image fit
   final BoxFit fit;
+
+  /// Image alignment
   final Alignment alignment;
+
+  /// Image overlay color
   final Color? color;
+
+  /// Image overlay color blend mode
   final BlendMode? colorBlendMode;
+
+  /// Indicates what loading widget to render
+  ///
+  /// [AppLoader] or [Shimmer]
+  /// Defaults to true
   final bool isLoaderShimmer;
 
   @override
@@ -66,7 +101,7 @@ class AppCachedNetworkImage extends StatelessWidget {
             // Todo: test this
             // coverage:ignore-start
             (BuildContext context, String url, dynamic error) {
-              log('🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼 Error Fetching Image 🖼 🖼 🖼 🖼 🖼 🖼 🖼 🖼');
+              log('🖼 🖼 🖼 🖼 🖼 Error Fetching Image 🖼 🖼 🖼 🖼 🖼');
               log('Image url: $url');
               return customErrorWidget ?? const ErrorView();
             }, // coverage:ignore-end

@@ -17,7 +17,8 @@ void main() {
 
     await tester.pump();
 
-    PersonImagesSliderPageState personImagesSliderPageState =
+    // ignore: omit_local_variable_types
+    final PersonImagesSliderPageState personImagesSliderPageState =
         tester.state(find.byType(PersonImagesSliderPage));
 
     expect(personImagesSliderPageState.pageController.initialPage, equals(1));
@@ -39,14 +40,16 @@ void main() {
     });
 
     await tester.pump();
-
+    // ignore: omit_local_variable_types
     PersonImagesSliderPageState personImagesSliderPageState =
         tester.state(find.byType(PersonImagesSliderPage));
     expect(personImagesSliderPageState.pageController.page, equals(0));
 
-    await tester.tap(find.byKey(
-      const ValueKey('__slider_next_button__'),
-    ));
+    await tester.tap(
+      find.byKey(
+        const ValueKey('__slider_next_button__'),
+      ),
+    );
 
     await tester.pump(const Duration(milliseconds: 300));
     await tester.pump(const Duration(milliseconds: 300));
@@ -66,7 +69,8 @@ void main() {
 
     await tester.pump();
 
-    PersonImagesSliderPageState personImagesSliderPageState =
+    // ignore: omit_local_variable_types
+    final PersonImagesSliderPageState personImagesSliderPageState =
         tester.state(find.byType(PersonImagesSliderPage));
 
     expect(personImagesSliderPageState.pageController.initialPage, equals(1));
@@ -90,13 +94,16 @@ void main() {
 
     await tester.pump();
 
+    // ignore: omit_local_variable_types
     PersonImagesSliderPageState personImagesSliderPageState =
         tester.state(find.byType(PersonImagesSliderPage));
     expect(personImagesSliderPageState.pageController.page, equals(1));
 
-    await tester.tap(find.byKey(
-      const ValueKey('__slider_previous_button__'),
-    ));
+    await tester.tap(
+      find.byKey(
+        const ValueKey('__slider_previous_button__'),
+      ),
+    );
 
     await tester.pump(const Duration(milliseconds: 300));
     await tester.pump(const Duration(milliseconds: 300));

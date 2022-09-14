@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_redundant_argument_values
-
 import 'package:flutter/material.dart';
 
 /// Styles class holding app color information

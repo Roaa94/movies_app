@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/features/people/views/widgets/popular_people_list.dart';
 import 'package:movies_app/features/people/views/widgets/popular_people_app_bar.dart';
+import 'package:movies_app/features/people/views/widgets/popular_people_list.dart';
 
+/// Widget for the popular people page
 class PopularPeoplePage extends StatelessWidget {
+  /// Creates a new instance of [PopularPeoplePage]
   const PopularPeoplePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

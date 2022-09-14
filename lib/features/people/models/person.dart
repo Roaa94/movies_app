@@ -7,24 +7,13 @@ import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
+/// Model representing a Person object
+///
+/// See:
+/// https://developers.themoviedb.org/3/people/get-popular-people
+/// https://developers.themoviedb.org/3/people/get-person-details
 class Person extends Equatable {
-  final bool adult;
-  final Gender gender;
-  final int? id;
-  final List<Media> knownFor;
-  final String? knownForDepartment;
-  final String name;
-  final double popularity;
-  final String? profilePath;
-  final String? avatar;
-  final String? cover;
-  final String? biography;
-  final DateTime? birthday;
-  final DateTime? deathDate;
-  final String? homepage;
-  final String? imdbId;
-  final String? placeOfBirth;
-
+  /// Creates a new instance of [Person]
   const Person({
     this.adult = false,
     this.gender = Gender.unknown,
@@ -44,9 +33,7 @@ class Person extends Equatable {
     this.placeOfBirth,
   });
 
-  static ImageSize avatarSize = ImageSize.h632;
-  static ImageSize coverSize = ImageSize.original;
-
+  /// Creates a new instance of [Person] from parsed data
   factory Person.fromJson(Map<String, dynamic> json) {
     DateTime? birthday;
 
@@ -94,6 +81,63 @@ class Person extends Equatable {
     );
   }
 
+  /// Indicates if the content of this person is +18
+  final bool adult;
+
+  /// Person gender
+  final Gender gender;
+
+  /// Person id
+  final int? id;
+
+  /// Person media list
+  final List<Media> knownFor;
+
+  /// Person departments
+  final String? knownForDepartment;
+
+  /// Person name
+  final String name;
+
+  /// Person popularity
+  final double popularity;
+
+  /// Person profile path
+  ///
+  /// Used with [TMDBImageConfigs] to generate valid [avatar] & [cover]
+  final String? profilePath;
+
+  /// Generated avatar image from [TMDBImageConfigs] & [profilePath]
+  final String? avatar;
+
+  /// Generated cover image from [TMDBImageConfigs] & [profilePath]
+  final String? cover;
+
+  /// Person biography
+  final String? biography;
+
+  /// Person birthday
+  final DateTime? birthday;
+
+  /// Person death date if applicable
+  final DateTime? deathDate;
+
+  /// Person homepage if applicable
+  final String? homepage;
+
+  /// Person IMDB id
+  final String? imdbId;
+
+  /// Person place of borth
+  final String? placeOfBirth;
+
+  /// Default avatar image size
+  static ImageSize avatarSize = ImageSize.h632;
+
+  /// Default avatar cover image size
+  static ImageSize coverSize = ImageSize.original;
+
+  /// Converts object to raw data
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'adult': adult,
@@ -121,6 +165,8 @@ class Person extends Equatable {
   // Todo: to preserve clean architecture,
   // this should be handled in an entity not the data source model,
   // but it's done this way due to time limitation
+  /// Populate the [avatar] and [cover] with generated
+  /// valid images from the [TMDBImageConfigs] build image methods
   Person populateImages(TMDBImageConfigs imageConfigs) {
     return Person(
       adult: adult,

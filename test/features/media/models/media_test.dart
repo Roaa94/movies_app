@@ -1,5 +1,4 @@
 // ignore_for_file: lines_longer_than_80_chars
-// ignore_for_file: avoid_redundant_argument_values
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/media/enums/media_type.dart';

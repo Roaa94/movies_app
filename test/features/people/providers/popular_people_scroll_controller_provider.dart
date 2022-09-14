@@ -7,7 +7,8 @@ void main() {
   test('popularPeopleScrollControllerProvider is a ScrollController', () {
     final container = ProviderContainer();
 
-    final scrollController = container.read(popularPeopleScrollControllerProvider);
+    final scrollController =
+        container.read(popularPeopleScrollControllerProvider);
 
     expect(scrollController, isA<ScrollController>());
   });

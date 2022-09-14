@@ -127,7 +127,7 @@ class Media extends Equatable {
   // Todo: to preserve clean architecture,
   // this should be handled in an entity not the data source model,
   // but it's done this way due to time limitation
-  /// Populate the configurations object with generated
+  /// Populate the [poster] and [posterThumb] with generated
   /// valid images from the [TMDBImageConfigs] build image methods
   Media populateImages(TMDBImageConfigs imageConfigs) {
     return Media(

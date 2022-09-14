@@ -12,7 +12,8 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpApp(
         PersonImagesGridItem(
-            PersonImage.fromJson(DummyPeople.rawDummyPersonImage1)),
+          PersonImage.fromJson(DummyPeople.rawDummyPersonImage1),
+        ),
       );
 
       await tester.pumpAndSettle();

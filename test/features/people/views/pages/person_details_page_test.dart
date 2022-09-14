@@ -25,7 +25,8 @@ void main() {
 
     await tester.pumpAndSettle();
     // The second one is needed for the `AppBarLeading` delayed animation
-    // Todo: figure out a way to resolve this without needing a second pumpAndSettle()
+    // Todo: figure out a way to resolve this without
+    //  needing a second pumpAndSettle()
     await tester.pumpAndSettle();
     expect(find.byType(ErrorView), findsOneWidget);
   });
@@ -47,6 +48,7 @@ void main() {
 
     await tester.pumpAndSettle();
     // The second one is needed for the `AppBarLeading` delayed animation
+    // ignore: lines_longer_than_80_chars
     // Todo: figure out a way to resolve this without needing a second pumpAndSettle()
     await tester.pumpAndSettle();
 

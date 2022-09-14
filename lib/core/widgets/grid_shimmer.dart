@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/widgets/shimmer.dart';
 
+/// Widget used for a Grid shimmer effect
 class GridShimmer extends StatelessWidget {
+  /// Creates a new instance of [GridShimmer]
   const GridShimmer({
     Key? key,
     this.minOpacity = 0.05,
     this.maxOpacity = 0.1,
   }) : super(key: key);
 
+  /// Minimum opacity of the shimmer effect
   final double minOpacity;
+
+  /// Maximum opacity of the shimmer effect
   final double maxOpacity;
 
   @override
   Widget build(BuildContext context) {
-    double itemHeight =
+    final itemHeight =
         (MediaQuery.of(context).size.width - 17 * 2 - 10 * 2) / 3;
 
     return SizedBox(

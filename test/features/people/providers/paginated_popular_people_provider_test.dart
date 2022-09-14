@@ -15,11 +15,13 @@ void main() {
   final PeopleRepository mockPeopleRepository = MockPeopleRepository();
 
   setUp(() {
-    when(() => mockPeopleRepository.getPopularPeople(
-          forceRefresh: false,
-          page: 1,
-          imageConfigs: DummyConfigs.imageConfigs,
-        )).thenAnswer((_) async => DummyPeople.paginatedPopularPeopleResponse);
+    when(
+      () => mockPeopleRepository.getPopularPeople(
+        forceRefresh: false,
+        page: 1,
+        imageConfigs: DummyConfigs.imageConfigs,
+      ),
+    ).thenAnswer((_) async => DummyPeople.paginatedPopularPeopleResponse);
   });
 
   test('fetches paginated popular people', () async {
@@ -49,10 +51,12 @@ void main() {
     expect(firstReading, const AsyncValue<PaginatedResponse<Person>>.loading());
 
     // Listener was fired from `null` to loading AsyncValue
-    verify(() => popularPeopleListener(
-          null,
-          const AsyncValue<PaginatedResponse<Person>>.loading(),
-        )).called(1);
+    verify(
+      () => popularPeopleListener(
+        null,
+        const AsyncValue<PaginatedResponse<Person>>.loading(),
+      ),
+    ).called(1);
 
     // Perform second reading, by waiting for the request, expects fetched data
     final secondReading =
@@ -60,11 +64,14 @@ void main() {
     expect(secondReading, DummyPeople.paginatedPopularPeopleResponse);
 
     // Listener was fired from loading to fetched values
-    verify(() => popularPeopleListener(
-          const AsyncValue<PaginatedResponse<Person>>.loading(),
-          AsyncValue<PaginatedResponse<Person>>.data(
-              DummyPeople.paginatedPopularPeopleResponse),
-        )).called(1);
+    verify(
+      () => popularPeopleListener(
+        const AsyncValue<PaginatedResponse<Person>>.loading(),
+        AsyncValue<PaginatedResponse<Person>>.data(
+          DummyPeople.paginatedPopularPeopleResponse,
+        ),
+      ),
+    ).called(1);
 
     // No more further listener events fired
     verifyNoMoreInteractions(popularPeopleListener);

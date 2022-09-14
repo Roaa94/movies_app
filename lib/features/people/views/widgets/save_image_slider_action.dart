@@ -27,7 +27,7 @@ class SaveImageSliderAction extends ConsumerWidget {
             icon: const Icon(Icons.download),
             onTap: ref.watch(isLoadingSaveImage)
                 ? null
-                : () async {
+                : () {
                     ref.read(isLoadingSaveImage.notifier).state = true;
                     ref
                         .read(mediaServiceProvider)

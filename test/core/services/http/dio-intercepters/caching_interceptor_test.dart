@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_redundant_argument_values
-
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -15,7 +15,9 @@ import 'package:movies_app/features/people/views/widgets/person_info.dart';
 import 'package:movies_app/features/people/views/widgets/person_media.dart';
 import 'package:movies_app/features/people/views/widgets/person_name.dart';
 
+/// Page widget of the Person details
 class PersonDetailsPage extends ConsumerWidget {
+  /// Creates new instance of [PersonDetailsPage]
   const PersonDetailsPage({
     Key? key,
     required this.personId,
@@ -25,16 +27,24 @@ class PersonDetailsPage extends ConsumerWidget {
     this.personMedia = const [],
   }) : super(key: key);
 
+  /// Person name
   final String personName;
+
+  /// Person avatar url
   final String? personAvatar;
+
+  /// Person id
   final int personId;
+
+  /// Person gender
   final Gender personGender;
+
+  /// Person media list (from knownFor)
   final List<Media> personMedia;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<Person> personAsync =
-        ref.watch(personDetailsProvider(personId));
+    final personAsync = ref.watch(personDetailsProvider(personId));
 
     return Scaffold(
       body: CustomScrollView(

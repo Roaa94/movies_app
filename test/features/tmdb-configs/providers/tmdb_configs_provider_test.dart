@@ -39,10 +39,12 @@ void main() {
     expect(firstReading, const AsyncValue<TMDBConfigs>.loading());
 
     // Listener was fired from `null` to loading AsyncValue
-    verify(() => tmdbConfigsListener(
-          null,
-          const AsyncValue<TMDBConfigs>.loading(),
-        )).called(1);
+    verify(
+      () => tmdbConfigsListener(
+        null,
+        const AsyncValue<TMDBConfigs>.loading(),
+      ),
+    ).called(1);
 
     // Perform second reading, by waiting for the request, expects fetched data
     final secondReading =
@@ -50,10 +52,12 @@ void main() {
     expect(secondReading, DummyConfigs.tmdbConfigs);
 
     // Listener was fired from loading to fetched values
-    verify(() => tmdbConfigsListener(
-          const AsyncValue<TMDBConfigs>.loading(),
-          const AsyncValue<TMDBConfigs>.data(DummyConfigs.tmdbConfigs),
-        )).called(1);
+    verify(
+      () => tmdbConfigsListener(
+        const AsyncValue<TMDBConfigs>.loading(),
+        const AsyncValue<TMDBConfigs>.data(DummyConfigs.tmdbConfigs),
+      ),
+    ).called(1);
 
     // No more further listener events fired
     verifyNoMoreInteractions(tmdbConfigsListener);

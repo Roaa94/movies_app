@@ -4,9 +4,9 @@ import 'package:movies_app/features/tmdb-configs/models/tmdb_configs.dart';
 import 'package:movies_app/features/tmdb-configs/repositories/tmdb_configs_repository.dart';
 
 class HttpTMDBConfigsRepository implements TMDBConfigsRepository {
-  final HttpService httpService;
-
   HttpTMDBConfigsRepository(this.httpService);
+
+  final HttpService httpService;
 
   @override
   String get path => '/configuration';

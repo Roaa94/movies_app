@@ -49,7 +49,8 @@ class PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
                             ? Container()
                             : AppCachedNetworkImage(
                                 key: ValueKey(
-                                    '__person_image_slider_${index}__'),
+                                  '__person_image_slider_${index}__',
+                                ),
                                 imageUrl: widget.images[index].imageUrl!,
                                 fit: BoxFit.fitWidth,
                                 isLoaderShimmer: false,
