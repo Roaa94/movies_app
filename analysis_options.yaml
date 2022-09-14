@@ -5,3 +5,4 @@ linter:
     prefer_single_quotes: true
     always_use_package_imports: true
     flutter_style_todos: false
+    avoid_redundant_argument_values: false
