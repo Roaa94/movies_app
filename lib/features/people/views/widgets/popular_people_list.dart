@@ -8,7 +8,7 @@ import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/current_popular_person_provider.dart';
 import 'package:movies_app/features/people/providers/paginated_popular_people_provider.dart';
 import 'package:movies_app/features/people/providers/popular_people_count_provider.dart';
-import 'package:movies_app/features/people/providers/scroll_controller_provider.dart';
+import 'package:movies_app/features/people/providers/popular_people_list_scroll_controller_provider.dart';
 import 'package:movies_app/features/people/views/widgets/popular_person_list_item.dart';
 
 class PopularPeopleList extends ConsumerWidget {
@@ -17,7 +17,7 @@ class PopularPeopleList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final popularPeopleCount = ref.watch(popularPeopleCountProvider);
-    final scrollController = ref.watch(scrollControllerProvider);
+    final scrollController = ref.watch(popularPeopleScrollControllerProvider);
 
     return popularPeopleCount.when(
       loading: () => const ListItemShimmer(),
