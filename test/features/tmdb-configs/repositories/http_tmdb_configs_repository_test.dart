@@ -9,22 +9,23 @@ import '../../../test-utils/mocks.dart';
 
 void main() {
   final HttpService mockHttpService = MockHttpService();
-  final HttpTMDBConfigsRepository httpTMDBConfigsRepository =
-      HttpTMDBConfigsRepository(mockHttpService);
+  final httpTMDBConfigsRepository = HttpTMDBConfigsRepository(mockHttpService);
 
   test('fetches TMDB configs', () async {
-    when(() => mockHttpService.get(
-          httpTMDBConfigsRepository.path,
-          queryParameters: {
-            'api_key': '',
-          },
-        )).thenAnswer(
-      (_) async => {
+    when(
+      () => mockHttpService.get(
+        httpTMDBConfigsRepository.path,
+        queryParameters: <String, dynamic>{
+          'api_key': '',
+        },
+      ),
+    ).thenAnswer(
+      (_) async => <String, dynamic>{
         'images': DummyConfigs.rawImageConfigs,
       },
     );
 
-    final TMDBConfigs configs = await httpTMDBConfigsRepository.get();
+    final configs = await httpTMDBConfigsRepository.get();
 
     expect(
       configs,

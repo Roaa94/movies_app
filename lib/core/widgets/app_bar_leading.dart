@@ -18,7 +18,7 @@ class _AppBarLeadingState extends State<AppBarLeading>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    Future.delayed(const Duration(milliseconds: 200)).then((_) {
+    Future<void>.delayed(const Duration(milliseconds: 200)).then((_) {
       animationController.forward();
     });
     super.initState();

@@ -5,7 +5,7 @@ class HiveStorageService implements StorageService {
   late Box hiveBox;
 
   Future<void> openBox([String boxName = 'MOVES_APP']) async {
-    hiveBox = await Hive.openBox(boxName);
+    hiveBox = await Hive.openBox<dynamic>(boxName);
   }
 
   @override

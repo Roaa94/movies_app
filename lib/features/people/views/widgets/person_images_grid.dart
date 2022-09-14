@@ -30,8 +30,8 @@ class PersonImagesGrid extends StatelessWidget {
           child: PersonImagesGridItem(
             images[index],
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
+              Navigator.of(context).push<PersonImagesSliderPage>(
+                MaterialPageRoute<PersonImagesSliderPage>(
                   builder: (context) => PersonImagesSliderPage(
                     images: images,
                     initialImageIndex: index,

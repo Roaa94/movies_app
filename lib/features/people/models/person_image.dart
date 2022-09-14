@@ -27,13 +27,13 @@ class PersonImage extends Equatable {
 
   factory PersonImage.fromJson(Map<String, dynamic> json) {
     return PersonImage(
-      aspectRatio: json['aspect_ratio']?.toDouble() ?? 0,
-      height: json['height']?.toDouble() ?? 0,
-      iso6391: json['iso_639_1'],
-      filePath: json['file_path'],
-      voteAverage: json['vote_average']?.toDouble() ?? 0,
-      voteCount: json['vote_count'] ?? 0,
-      width: json['width']?.toDouble() ?? 0,
+      aspectRatio: (json['aspect_ratio'] as num?)?.toDouble() ?? 0,
+      height: (json['height'] as num?)?.toDouble() ?? 0,
+      iso6391: json['iso_639_1'] as String?,
+      filePath: json['file_path'] as String?,
+      voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0,
+      voteCount: (json['vote_count'] as int?) ?? 0,
+      width: (json['width'] as num?)?.toDouble() ?? 0,
     );
   }
 

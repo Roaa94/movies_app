@@ -51,49 +51,57 @@ class Person extends Equatable {
     DateTime? birthday;
 
     try {
-      birthday = json['birthday'] == null || json['birthday'].isEmpty
-          ? null
-          : DateTime.parse(json['birthday']);
+      birthday =
+          json['birthday'] == null || (json['birthday'] as String).isEmpty
+              ? null
+              : DateTime.parse(json['birthday'] as String);
     } catch (e) {
       log('Error parsing birthday date! ${json['birthday']}');
     }
     DateTime? deathDate;
 
     try {
-      deathDate = json['deathday'] == null || json['deathday'].isEmpty
-          ? null
-          : DateTime.parse(json['deathday']);
+      deathDate =
+          json['deathday'] == null || (json['deathday'] as String).isEmpty
+              ? null
+              : DateTime.parse(json['deathday'] as String);
     } catch (e) {
       log('Error parsing deathDate date! ${json['deathday']}');
     }
     return Person(
-      adult: json['adult'] ?? false,
+      adult: (json['adult'] as bool?) ?? false,
       gender: json['gender'] == null
           ? Gender.unknown
-          : Gender.fromInt(json['gender']),
-      id: json['id'],
+          : Gender.fromInt(json['gender'] as int),
+      id: json['id'] as int?,
       knownFor: json['known_for'] == null
           ? []
-          : List<Media>.from(json['known_for'].map((x) => Media.fromJson(x))),
-      knownForDepartment: json['known_for_department'],
-      name: json['name'],
-      popularity: json['popularity']?.toDouble() ?? 0.0,
-      profilePath: json['profile_path'],
-      biography: json['biography'],
+          : List<Media>.from(
+              (json['known_for'] as List<dynamic>).map<Media>(
+                (dynamic x) => Media.fromJson(x as Map<String, dynamic>),
+              ),
+            ),
+      knownForDepartment: json['known_for_department'] as String?,
+      name: json['name'] as String,
+      popularity: (json['popularity'] as num?)?.toDouble() ?? 0.0,
+      profilePath: json['profile_path'] as String?,
+      biography: json['biography'] as String?,
       birthday: birthday,
       deathDate: deathDate,
-      homepage: json['homepage'],
-      imdbId: json['imdb_id'],
-      placeOfBirth: json['place_of_birth'],
+      homepage: json['homepage'] as String?,
+      imdbId: json['imdb_id'] as String?,
+      placeOfBirth: json['place_of_birth'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'adult': adult,
       'gender': gender.toInt,
       'id': id,
-      'known_for': List<dynamic>.from(knownFor.map((x) => x.toJson())),
+      'known_for': List<dynamic>.from(
+        knownFor.map<Map<String, dynamic>>((x) => x.toJson()),
+      ),
       'known_for_department': knownForDepartment,
       'name': name,
       'popularity': popularity,

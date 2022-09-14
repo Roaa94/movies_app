@@ -18,7 +18,7 @@ class HttpTMDBConfigsRepository implements TMDBConfigsRepository {
   Future<TMDBConfigs> get({bool forceRefresh = false}) async {
     final response = await httpService.get(
       path,
-      queryParameters: {
+      queryParameters: <String, dynamic>{
         'api_key': apiKey,
       },
       forceRefresh: forceRefresh,

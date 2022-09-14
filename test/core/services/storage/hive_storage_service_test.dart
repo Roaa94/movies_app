@@ -5,7 +5,7 @@ import 'package:movies_app/core/services/storage/storage_service.dart';
 
 void main() {
   final StorageService hiveStorageService = HiveStorageService();
-  const String testStorageKey = 'test';
+  const testStorageKey = 'test';
 
   setUp(() async {
     await setUpTestHive();
@@ -13,39 +13,39 @@ void main() {
   });
 
   test('Can store & get value', () async {
-    hiveStorageService.set(testStorageKey, 'someValue');
+    await hiveStorageService.set(testStorageKey, 'someValue');
 
     expect(hiveStorageService.get(testStorageKey), 'someValue');
   });
 
   test('Can check if key exists', () async {
-    hiveStorageService.set(testStorageKey, 'someValue');
+    await hiveStorageService.set(testStorageKey, 'someValue');
     expect(hiveStorageService.has(testStorageKey), true);
 
-    hiveStorageService.remove(testStorageKey);
+    await hiveStorageService.remove(testStorageKey);
     expect(hiveStorageService.has(testStorageKey), false);
   });
 
   test('Can delete value', () async {
-    hiveStorageService.set(testStorageKey, 'someValue');
-    hiveStorageService.remove(testStorageKey);
+    await hiveStorageService.set(testStorageKey, 'someValue');
+    await hiveStorageService.remove(testStorageKey);
 
     expect(hiveStorageService.get(testStorageKey), null);
   });
 
   test('Can get all values', () async {
-    hiveStorageService.set(testStorageKey, 'someValue');
-    hiveStorageService.set('test2', 'otherValue');
+    await hiveStorageService.set(testStorageKey, 'someValue');
+    await hiveStorageService.set('test2', 'otherValue');
 
     expect(hiveStorageService.getAll(), ['someValue', 'otherValue']);
   });
 
   test('Can clear all values', () async {
-    hiveStorageService.set(testStorageKey, 'someValue');
-    hiveStorageService.set('test2', 'otherValue');
+    await hiveStorageService.set(testStorageKey, 'someValue');
+    await hiveStorageService.set('test2', 'otherValue');
     await hiveStorageService.clear();
 
-    expect(hiveStorageService.getAll(), []);
+    expect(hiveStorageService.getAll(), <dynamic>[]);
   });
 
   tearDown(() async {

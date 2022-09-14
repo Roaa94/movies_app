@@ -1,9 +1,8 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:movies_app/core/models/paginated_response.dart';
 import 'package:movies_app/core/services/http/http_service.dart';
-import 'package:movies_app/features/people/models/person.dart';
-import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/repositories/http_people_repository.dart';
 
 import '../../../test-utils/dummy-data/dummy_configs.dart';
@@ -12,22 +11,22 @@ import '../../../test-utils/mocks.dart';
 
 void main() {
   final HttpService mockHttpService = MockHttpService();
-  final HttpPeopleRepository httpPeopleRepository = HttpPeopleRepository(
+  final httpPeopleRepository = HttpPeopleRepository(
     mockHttpService,
   );
 
   test('fetches paginated popular people', () async {
-    int page = 1;
+    const page = 1;
     when(
       () => mockHttpService.get(
         '${httpPeopleRepository.path}/popular',
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'page': page,
           'api_key': '',
         },
       ),
     ).thenAnswer(
-      (_) async => {
+      (_) async => <String, dynamic>{
         'page': page,
         'results': DummyPeople.rawPopularPeople1,
         'total_pages': 1,
@@ -35,8 +34,7 @@ void main() {
       },
     );
 
-    PaginatedResponse<Person> paginatedPopularPeople =
-        await httpPeopleRepository.getPopularPeople(
+    final paginatedPopularPeople = await httpPeopleRepository.getPopularPeople(
       page: 1,
       imageConfigs: DummyConfigs.imageConfigs,
     );
@@ -51,7 +49,7 @@ void main() {
     when(
       () => mockHttpService.get(
         '${httpPeopleRepository.path}/${DummyPeople.person1.id}',
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'api_key': '',
         },
       ),
@@ -59,7 +57,7 @@ void main() {
       (_) async => DummyPeople.rawPerson1,
     );
 
-    final Person person = await httpPeopleRepository.getPersonDetails(
+    final person = await httpPeopleRepository.getPersonDetails(
       DummyPeople.person1.id!,
       imageConfigs: DummyConfigs.imageConfigs,
     );
@@ -70,12 +68,12 @@ void main() {
     when(
       () => mockHttpService.get(
         '${httpPeopleRepository.path}/${DummyPeople.person1.id}/images',
-        queryParameters: {
+        queryParameters: <String, dynamic>{
           'api_key': '',
         },
       ),
     ).thenAnswer(
-      (_) async => {
+      (_) async => <String, dynamic>{
         'profiles': [
           DummyPeople.rawDummyPersonImage1,
           DummyPeople.rawDummyPersonImage2,
@@ -83,8 +81,7 @@ void main() {
       },
     );
 
-    final List<PersonImage> personImages =
-        await httpPeopleRepository.getPersonImages(
+    final personImages = await httpPeopleRepository.getPersonImages(
       DummyPeople.person1.id!,
       imageConfigs: DummyConfigs.imageConfigs,
     );

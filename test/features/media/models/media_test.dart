@@ -1,3 +1,6 @@
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/media/enums/media_type.dart';
 import 'package:movies_app/features/media/models/media.dart';
@@ -5,7 +8,7 @@ import 'package:movies_app/features/media/models/media.dart';
 import '../../../test-utils/dummy-data/dummy_configs.dart';
 
 void main() {
-  const Map<String, dynamic> rawExampleMedia = {
+  const rawExampleMedia = <String, dynamic>{
     'id': 335984,
     'adult': false,
     'backdrop_path': '/sAtoMqDVhNDQBc3QJL3RF6hlhGq.jpg',
@@ -23,7 +26,7 @@ void main() {
     'vote_count': 10892
   };
 
-  final Media exampleMedia = Media(
+  final exampleMedia = Media(
     id: 335984,
     adult: false,
     backdropPath: '/sAtoMqDVhNDQBc3QJL3RF6hlhGq.jpg',
@@ -50,7 +53,7 @@ void main() {
   });
 
   test('has MediaType.unknown for invalid value', () {
-    Map<String, dynamic> invalidMediaTypeExampleMedia = {
+    final invalidMediaTypeExampleMedia = <String, dynamic>{
       ...rawExampleMedia,
       'media_type': 'some_invalid_value',
     };
@@ -62,7 +65,7 @@ void main() {
   });
 
   test('returns null release date for invalid format', () {
-    Map<String, dynamic> invalidDateExampleMedia = {
+    final invalidDateExampleMedia = <String, dynamic>{
       ...rawExampleMedia,
       'release_date': 'invalid!',
     };
@@ -73,21 +76,21 @@ void main() {
   test(
       'can populate posterThumb and poster from posterPath with correct image urls',
       () {
-    Media personWithGeneratedImages =
+    final personWithGeneratedImages =
         exampleMedia.populateImages(DummyConfigs.imageConfigs);
 
-    String posterThumb =
+    final posterThumb =
         '${DummyConfigs.imageConfigs.secureBaseUrl}${Media.posterThumbSize.name}${exampleMedia.posterPath}';
-    // https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg
+    // Example: https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg
 
     expect(
       personWithGeneratedImages.posterThumb,
       equals(posterThumb),
     );
 
-    String poster =
+    final poster =
         '${DummyConfigs.imageConfigs.secureBaseUrl}${Media.posterSize.name}${exampleMedia.posterPath}';
-    // https://image.tmdb.org/t/p/original/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg
+    // Example: https://image.tmdb.org/t/p/original/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg
 
     expect(
       personWithGeneratedImages.poster,

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,17 +14,17 @@ import '../../../../test-utils/mocks.dart';
 
 void main() {
   late DioHttpService dioHttpService;
-  StorageService storageService = MockStorageService();
+  final StorageService storageService = MockStorageService();
   late DioAdapter dioAdapter;
-  final CacheInterceptor cacheInterceptor = CacheInterceptor(storageService);
-  const String baseUrl = 'https://api.test/';
+  final cacheInterceptor = CacheInterceptor(storageService);
+  const baseUrl = 'https://api.test/';
 
-  Map<String, dynamic> headers = {
+  final headers = <String, dynamic>{
     'accept': 'application/json',
     'content-type': 'application/json'
   };
 
-  Map<String, List<String>> responseHeaders = {
+  final responseHeaders = <String, List<String>>{
     'content-type': ['application/json; charset=utf-8']
   };
 
@@ -43,33 +45,35 @@ void main() {
   });
 
   test('Creates appropriate storage key from request information', () async {
-    const String path = 'storage-key-test';
-    final String storageKey = cacheInterceptor.createStorageKey(
+    const path = 'storage-key-test';
+    final storageKey = cacheInterceptor.createStorageKey(
       'get',
       baseUrl,
       path,
-      {
+      <String, dynamic>{
         'param1': 'value1',
         'param2': 'value2',
       },
     );
     expect(
-        storageKey, equals('GET:$baseUrl$path/?param1=value1&param2=value2&'));
+      storageKey,
+      equals('GET:$baseUrl$path/?param1=value1&param2=value2&'),
+    );
   });
 
   test(
     'creates correct cache response from request information',
     () {
-      final Map<String, dynamic> responseData = {'data': 'Success!'};
+      final responseData = <String, dynamic>{'data': 'Success!'};
 
-      CachedResponse cachedResponse = CachedResponse(
+      final cachedResponse = CachedResponse(
         data: responseData,
         headers: Headers.fromMap(responseHeaders),
         age: DateTime(2022, 1, 1, 12, 0),
         statusCode: 200,
       );
 
-      Map<String, dynamic> rawCachedResponse = {
+      final rawCachedResponse = <String, dynamic>{
         'data': {'data': 'Success!'},
         'age': '2022-01-01 12:00:00.000',
         'statusCode': 200,
@@ -83,9 +87,9 @@ void main() {
   );
 
   test('cache response is invalid when it passes max age', () {
-    final Map<String, dynamic> responseData = {'data': 'Success!'};
+    final responseData = <String, dynamic>{'data': 'Success!'};
 
-    CachedResponse cachedResponse = CachedResponse(
+    final cachedResponse = CachedResponse(
       data: responseData,
       headers: Headers.fromMap(responseHeaders),
       age: DateTime(2022, 1, 1, 12, 0),
@@ -98,9 +102,9 @@ void main() {
   });
 
   test('cache response is valid when it is not older than max age', () {
-    final Map<String, dynamic> responseData = {'data': 'Success!'};
+    final responseData = <String, dynamic>{'data': 'Success!'};
 
-    CachedResponse cachedResponse = CachedResponse(
+    final cachedResponse = CachedResponse(
       data: responseData,
       headers: Headers.fromMap(responseHeaders),
       age: DateTime(2022, 1, 1, 12, 0),
@@ -113,61 +117,63 @@ void main() {
   });
 
   test(
-      'Retrieves data from network when it does not exist, then caches it in storage',
-      () async {
-    DateTime fetchTime = DateTime(2022, 1, 1, 12, 0);
-    const String path = 'retrieve-data-from-network-test';
-    final Map<String, dynamic> responseData = {'data': 'Success!'};
+    'Retrieves data from network when it does not exist, '
+    'then caches it in storage',
+    () async {
+      final fetchTime = DateTime(2022, 1, 1, 12, 0);
+      const path = 'retrieve-data-from-network-test';
+      final responseData = <String, dynamic>{'data': 'Success!'};
 
-    dioAdapter.onGet(
-      path,
-      (server) => server.reply(200, responseData),
-    );
+      dioAdapter.onGet(
+        path,
+        (server) => server.reply(200, responseData),
+      );
 
-    final String storageKey = cacheInterceptor.createStorageKey(
-      'get',
-      baseUrl,
-      path,
-    );
+      final storageKey = cacheInterceptor.createStorageKey(
+        'get',
+        baseUrl,
+        path,
+      );
 
-    when(() => storageService.has(storageKey)).thenReturn(false);
+      when(() => storageService.has(storageKey)).thenReturn(false);
 
-    CachedResponse cachedResponse = CachedResponse(
-      data: responseData,
-      headers: Headers.fromMap(responseHeaders),
-      age: fetchTime,
-      statusCode: 200,
-    );
+      final cachedResponse = CachedResponse(
+        data: responseData,
+        headers: Headers.fromMap(responseHeaders),
+        age: fetchTime,
+        statusCode: 200,
+      );
 
-    when(() => storageService.has(storageKey)).thenReturn(false);
-    when(() => storageService.set(storageKey, cachedResponse.toJson()))
-        .thenAnswer((_) async {});
+      when(() => storageService.has(storageKey)).thenReturn(false);
+      when(() => storageService.set(storageKey, cachedResponse.toJson()))
+          .thenAnswer((_) async {});
 
-    await withClock(Clock.fixed(fetchTime), () async {
-      final response = await dioHttpService.get(path);
-      expect(response, {'data': 'Success!'});
-    });
-  });
+      await withClock(Clock.fixed(fetchTime), () async {
+        final response = await dioHttpService.get(path);
+        expect(response, {'data': 'Success!'});
+      });
+    },
+  );
 
   test('Retrieves data from cache when it exists and the cache is valid',
       () async {
-    DateTime fetchTime = DateTime(2022, 1, 1, 12, 0);
-    const String path = 'retrieve-data-from-cache-test';
-    final Map<String, dynamic> responseData = {'data': 'Success!'};
+    final fetchTime = DateTime(2022, 1, 1, 12, 0);
+    const path = 'retrieve-data-from-cache-test';
+    final responseData = <String, dynamic>{'data': 'Success!'};
 
     dioAdapter.onGet(
       path,
       (server) => server.reply(200, responseData),
     );
 
-    final String storageKey = cacheInterceptor.createStorageKey(
+    final storageKey = cacheInterceptor.createStorageKey(
       'get',
       baseUrl,
       path,
     );
 
     when(() => storageService.has(storageKey)).thenReturn(true);
-    CachedResponse cachedResponse = CachedResponse(
+    final cachedResponse = CachedResponse(
       data: responseData,
       headers: Headers.fromMap(responseHeaders),
       age: fetchTime.subtract(const Duration(minutes: 30)),
@@ -177,7 +183,7 @@ void main() {
     await withClock(Clock.fixed(fetchTime), () async {
       expect(cachedResponse.isValid, isTrue);
 
-      when(() => storageService.get(storageKey))
+      when<dynamic>(() => storageService.get(storageKey))
           .thenReturn(cachedResponse.toJson());
       final response = await dioHttpService.get(path);
       expect(response, cachedResponse.data);
@@ -186,20 +192,19 @@ void main() {
 
   test('Retrieves data from network when cache exists but is too old',
       () async {
-    DateTime fetchTime = DateTime(2022, 1, 1, 12, 0);
-    const String path = 'retrieve-data-from-old-cache-test';
-    final Map<String, dynamic> responseData = {'data': 'Success!'};
+    final fetchTime = DateTime(2022, 1, 1, 12, 0);
+    const path = 'retrieve-data-from-old-cache-test';
+    final responseData = <String, dynamic>{'data': 'Success!'};
 
     dioAdapter.onGet(
       path,
       (server) => server.reply(200, responseData),
     );
 
-    final String storageKey =
-        cacheInterceptor.createStorageKey('get', baseUrl, path);
+    final storageKey = cacheInterceptor.createStorageKey('get', baseUrl, path);
 
     when(() => storageService.has(storageKey)).thenReturn(true);
-    CachedResponse cachedResponse = CachedResponse(
+    final cachedResponse = CachedResponse(
       data: responseData,
       headers: Headers.fromMap(responseHeaders),
       age: fetchTime.subtract(const Duration(hours: 2)),
@@ -208,10 +213,10 @@ void main() {
 
     await withClock(Clock.fixed(fetchTime), () async {
       expect(cachedResponse.isValid, isFalse);
-      when(() => storageService.get(storageKey))
+      when<dynamic>(() => storageService.get(storageKey))
           .thenReturn(cachedResponse.toJson());
 
-      CachedResponse newCachedResponse = CachedResponse(
+      final newCachedResponse = CachedResponse(
         data: responseData,
         headers: Headers.fromMap(responseHeaders),
         age: fetchTime,
@@ -227,19 +232,18 @@ void main() {
   });
 
   test('Retrieves data from network when refresh is forced', () async {
-    DateTime fetchTime = DateTime(2022, 1, 1, 12, 0);
-    const String path = 'force-refresh-test';
-    final Map<String, dynamic> responseData = {'data': 'Success!'};
+    final fetchTime = DateTime(2022, 1, 1, 12, 0);
+    const path = 'force-refresh-test';
+    final responseData = <String, dynamic>{'data': 'Success!'};
 
     dioAdapter.onGet(
       path,
       (server) => server.reply(200, responseData),
     );
 
-    final String storageKey =
-        cacheInterceptor.createStorageKey('get', baseUrl, path);
+    final storageKey = cacheInterceptor.createStorageKey('get', baseUrl, path);
 
-    CachedResponse refreshedCachedResponse = CachedResponse(
+    final refreshedCachedResponse = CachedResponse(
       data: responseData,
       headers: Headers.fromMap(responseHeaders),
       age: fetchTime,
@@ -262,24 +266,24 @@ void main() {
   test(
     'Retrieves data from cache when an error occurs and the cache exists',
     () async {
-      DateTime fetchTime = DateTime(2022, 1, 1, 12, 0);
-      const String path = '404-get-request-test';
+      final fetchTime = DateTime(2022, 1, 1, 12, 0);
+      const path = '404-get-request-test';
       dioAdapter.onGet(
         path,
         (server) => server.reply(404, {'error': 'no data returned!'}),
       );
 
-      final String storageKey =
+      final storageKey =
           cacheInterceptor.createStorageKey('get', baseUrl, path);
       when(() => storageService.has(storageKey)).thenReturn(true);
 
-      CachedResponse cachedResponse = CachedResponse(
+      final cachedResponse = CachedResponse(
         data: {'data': 'Success!'},
         headers: Headers.fromMap(responseHeaders),
         age: fetchTime,
         statusCode: 200,
       );
-      when(() => storageService.get(storageKey))
+      when<dynamic>(() => storageService.get(storageKey))
           .thenReturn(cachedResponse.toJson());
 
       await withClock(Clock.fixed(fetchTime), () async {
@@ -296,13 +300,13 @@ void main() {
   test(
     'Throws error when http error occurs and no cache exists',
     () async {
-      const String path = '404-get-request-test';
+      const path = '404-get-request-test';
       dioAdapter.onGet(
         path,
         (server) => server.reply(404, {'error': 'no data returned!'}),
       );
 
-      final String storageKey =
+      final storageKey =
           cacheInterceptor.createStorageKey('get', baseUrl, path);
       when(() => storageService.has(storageKey)).thenReturn(false);
 

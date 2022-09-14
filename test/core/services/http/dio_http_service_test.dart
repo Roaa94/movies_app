@@ -9,7 +9,7 @@ import '../../../test-utils/mocks.dart';
 
 void main() {
   late DioHttpService dioHttpService;
-  StorageService storageService = MockStorageService();
+  final StorageService storageService = MockStorageService();
   late DioAdapter dioAdapter;
 
   setUp(() {
@@ -19,7 +19,7 @@ void main() {
           baseUrl: 'https://api.test/',
           // To handle errors manually rather than by Dio
           validateStatus: (status) => true,
-          headers: {
+          headers: <String, dynamic>{
             'accept': 'application/json',
             'content-type': 'application/json'
           },
@@ -53,8 +53,10 @@ void main() {
       (server) => server.reply(404, {'error': '404 Error!'}),
     );
 
-    expect(() async => await dioHttpService.get('404-get-request-test'),
-        throwsA(isA<HttpException>()));
+    expect(
+      () async => dioHttpService.get('404-get-request-test'),
+      throwsA(isA<HttpException>()),
+    );
 
     try {
       await dioHttpService.get('404-get-request-test');
@@ -70,7 +72,7 @@ void main() {
       (server) => server.reply(200, {'data': 'Success!'}),
     );
 
-    final response = await dioHttpService.post(
+    final dynamic response = await dioHttpService.post(
       'successful-post-request-test',
     );
 
@@ -84,7 +86,7 @@ void main() {
     );
 
     expect(
-      () async => await dioHttpService.post('404-post-request-test'),
+      () async => dioHttpService.post('404-post-request-test'),
       throwsA(isA<HttpException>()),
     );
 
@@ -98,11 +100,11 @@ void main() {
 
   test('Unimplemented methods', () async {
     expect(
-      () async => await dioHttpService.delete(),
+      () async => dioHttpService.delete(),
       throwsA(isA<UnimplementedError>()),
     );
     expect(
-      () async => await dioHttpService.put(),
+      () async => dioHttpService.put(),
       throwsA(isA<UnimplementedError>()),
     );
   });

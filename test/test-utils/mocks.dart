@@ -20,6 +20,6 @@ class Listener<T> extends Mock {
 
 class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
-class MockRoute extends Mock implements Route {}
+class MockRoute extends Mock implements Route<dynamic> {}
 
 class MockMediaServiceProvider extends Mock implements MediaService {}

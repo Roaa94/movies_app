@@ -1,3 +1,6 @@
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:movies_app/core/models/paginated_response.dart';
 import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/models/person_image.dart';
@@ -6,7 +9,7 @@ import 'dummy_configs.dart';
 
 class DummyPeople {
   static List<Map<String, dynamic>> rawPopularPeople1 = [
-    {
+    <String, dynamic>{
       'adult': false,
       'gender': 2,
       'id': 73457,
@@ -68,7 +71,7 @@ class DummyPeople {
       'popularity': 118.423,
       'profile_path': '/83o3koL82jt30EJ0rz4Bnzrt2dd.jpg'
     },
-    {
+    <String, dynamic>{
       'adult': false,
       'gender': 2,
       'id': 30614,
@@ -141,11 +144,12 @@ class DummyPeople {
   );
 
   static List<Person> popularPeople1 = List<Person>.from(
-    rawPopularPeople1.map(
-        (x) => Person.fromJson(x).populateImages(DummyConfigs.imageConfigs)),
+    rawPopularPeople1.map<Person>(
+      (x) => Person.fromJson(x).populateImages(DummyConfigs.imageConfigs),
+    ),
   );
 
-  static Map<String, dynamic> rawPerson1 = {
+  static Map<String, dynamic> rawPerson1 = <String, dynamic>{
     'adult': false,
     'also_known_as': [
       'Ana Celia de Armas',
@@ -174,7 +178,7 @@ class DummyPeople {
   static Person person1 =
       Person.fromJson(rawPerson1).populateImages(DummyConfigs.imageConfigs);
 
-  static const Map<String, dynamic> rawDummyPersonImage1 = {
+  static const Map<String, dynamic> rawDummyPersonImage1 = <String, dynamic>{
     'aspect_ratio': 0.667,
     'height': 900,
     'iso_639_1': null,
@@ -184,7 +188,7 @@ class DummyPeople {
     'width': 600,
   };
 
-  static const Map<String, dynamic> rawDummyPersonImage2 = {
+  static const Map<String, dynamic> rawDummyPersonImage2 = <String, dynamic>{
     'aspect_ratio': 0.667,
     'height': 1366,
     'iso_639_1': null,
@@ -212,6 +216,6 @@ class DummyPeople {
     [
       rawDummyPersonImage1,
       rawDummyPersonImage2,
-    ].map((x) => PersonImage.fromJson(x)),
+    ].map<PersonImage>(PersonImage.fromJson),
   );
 }

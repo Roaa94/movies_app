@@ -5,11 +5,11 @@ import 'package:movies_app/core/services/http/dio-interceptors/cache_interceptor
 import 'package:movies_app/core/services/http/http_service.dart';
 import 'package:movies_app/core/services/storage/storage_service.dart';
 
+/// Http service implementation using the Dio package
+///
+/// See https://pub.dev/packages/dio
 class DioHttpService implements HttpService {
-  final StorageService storageService;
-
-  late final Dio dio;
-
+  /// Creates new instance of [DioHttpService]
   DioHttpService(
     this.storageService, {
     Dio? dioOverride,
@@ -20,6 +20,12 @@ class DioHttpService implements HttpService {
       dio.interceptors.add(CacheInterceptor(storageService));
     }
   }
+
+  /// Storage service used for caching http responses
+  final StorageService storageService;
+
+  /// The Dio Http client
+  late final Dio dio;
 
   @override
   String get baseUrl => Configs.apiBaseUrl;
@@ -36,7 +42,7 @@ class DioHttpService implements HttpService {
       );
 
   @override
-  Future<dynamic> get(
+  Future<Map<String, dynamic>> get(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
     bool forceRefresh = false,
@@ -44,7 +50,7 @@ class DioHttpService implements HttpService {
   }) async {
     dio.options.extra[dioCacheForceRefreshKey] = forceRefresh;
 
-    Response response = await dio.get(
+    final Response response = await dio.get<Map<String, dynamic>>(
       endpoint,
       queryParameters: queryParameters,
     );
@@ -56,7 +62,7 @@ class DioHttpService implements HttpService {
       );
     }
 
-    return response.data;
+    return response.data as Map<String, dynamic>;
   }
 
   @override
@@ -64,7 +70,7 @@ class DioHttpService implements HttpService {
     String endpoint, {
     Map<String, dynamic>? queryParameters,
   }) async {
-    Response response = await dio.post(
+    final Response response = await dio.post<Map<String, dynamic>>(
       endpoint,
       queryParameters: queryParameters,
     );

@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_redundant_argument_values
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
@@ -6,7 +7,7 @@ import '../../../test-utils/dummy-data/dummy_configs.dart';
 
 void main() {
   test('returns TMDBConfigs model from valid json', () {
-    Map<String, dynamic> rawValidConfigs = {
+    final rawValidConfigs = <String, dynamic>{
       'base_url': 'http://image.tmdb.org/t/p/',
       'secure_base_url': 'https://image.tmdb.org/t/p/',
       'backdrop_sizes': ['w300', 'w780', 'w1280', 'original'],
@@ -31,65 +32,69 @@ void main() {
   });
 
   test(
-      'returns TMDBConfigs model with original image sizes from empty configs image sizes',
-      () {
-    Map<String, dynamic> rawInvalidConfigs = {
-      'base_url': 'http://image.tmdb.org/t/p/',
-      'secure_base_url': 'https://image.tmdb.org/t/p/',
-      'backdrop_sizes': [],
-      'logo_sizes': [],
-      'poster_sizes': ['invalidValue'],
-      'profile_sizes': [],
-      'still_sizes': []
-    };
+    'returns TMDBConfigs model with original '
+    'image sizes from empty configs image sizes',
+    () {
+      final rawInvalidConfigs = <String, dynamic>{
+        'base_url': 'http://image.tmdb.org/t/p/',
+        'secure_base_url': 'https://image.tmdb.org/t/p/',
+        'backdrop_sizes': <String>[],
+        'logo_sizes': <String>[],
+        'poster_sizes': ['invalidValue'],
+        'profile_sizes': <String>[],
+        'still_sizes': <String>[]
+      };
 
-    const TMDBImageConfigs validConfigs = TMDBImageConfigs(
-      baseUrl: 'http://image.tmdb.org/t/p/',
-      secureBaseUrl: 'https://image.tmdb.org/t/p/',
-      backdropSizes: [],
-      logoSizes: [],
-      posterSizes: [ImageSize.original],
-      profileSizes: [],
-      stillSizes: [],
-    );
+      const validConfigs = TMDBImageConfigs(
+        baseUrl: 'http://image.tmdb.org/t/p/',
+        secureBaseUrl: 'https://image.tmdb.org/t/p/',
+        backdropSizes: <ImageSize>[],
+        logoSizes: [],
+        posterSizes: [ImageSize.original],
+        profileSizes: [],
+        stillSizes: [],
+      );
 
-    expect(
-      TMDBImageConfigs.fromJson(rawInvalidConfigs),
-      equals(validConfigs),
-    );
-  });
+      expect(
+        TMDBImageConfigs.fromJson(rawInvalidConfigs),
+        equals(validConfigs),
+      );
+    },
+  );
 
   test(
-      'returns TMDBConfigs model with empty image sizes from null configs image sizes',
-      () {
-    Map<String, dynamic> rawInvalidConfigs = {
-      'base_url': 'http://image.tmdb.org/t/p/',
-      'secure_base_url': 'https://image.tmdb.org/t/p/',
-      'backdrop_sizes': null,
-      'logo_sizes': null,
-      'poster_sizes': null,
-      'profile_sizes': null,
-      'still_sizes': null
-    };
+    'returns TMDBConfigs model with empty image '
+    'sizes from null configs image sizes',
+    () {
+      final rawInvalidConfigs = <String, dynamic>{
+        'base_url': 'http://image.tmdb.org/t/p/',
+        'secure_base_url': 'https://image.tmdb.org/t/p/',
+        'backdrop_sizes': null,
+        'logo_sizes': null,
+        'poster_sizes': null,
+        'profile_sizes': null,
+        'still_sizes': null
+      };
 
-    const TMDBImageConfigs validConfigs = TMDBImageConfigs(
-      baseUrl: 'http://image.tmdb.org/t/p/',
-      secureBaseUrl: 'https://image.tmdb.org/t/p/',
-      backdropSizes: [],
-      logoSizes: [],
-      posterSizes: [],
-      profileSizes: [],
-      stillSizes: [],
-    );
+      const validConfigs = TMDBImageConfigs(
+        baseUrl: 'http://image.tmdb.org/t/p/',
+        secureBaseUrl: 'https://image.tmdb.org/t/p/',
+        backdropSizes: [],
+        logoSizes: [],
+        posterSizes: [],
+        profileSizes: [],
+        stillSizes: [],
+      );
 
-    expect(
-      TMDBImageConfigs.fromJson(rawInvalidConfigs),
-      equals(validConfigs),
-    );
-  });
+      expect(
+        TMDBImageConfigs.fromJson(rawInvalidConfigs),
+        equals(validConfigs),
+      );
+    },
+  );
 
   test('can build profile image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.imageConfigs.buildProfileImage(
+    final generatedImageUrl = DummyConfigs.imageConfigs.buildProfileImage(
       ImageSize.h632,
       '/image-path.png',
     );
@@ -101,7 +106,7 @@ void main() {
   });
 
   test('can build backdrop image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.imageConfigs.buildBackdropImage(
+    final generatedImageUrl = DummyConfigs.imageConfigs.buildBackdropImage(
       ImageSize.w1280,
       '/image-path.png',
     );
@@ -113,7 +118,7 @@ void main() {
   });
 
   test('can build poster image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.imageConfigs.buildPosterImage(
+    final generatedImageUrl = DummyConfigs.imageConfigs.buildPosterImage(
       ImageSize.w780,
       '/image-path.png',
     );
@@ -125,7 +130,7 @@ void main() {
   });
 
   test('can build still image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.imageConfigs.buildStillImage(
+    final generatedImageUrl = DummyConfigs.imageConfigs.buildStillImage(
       ImageSize.w300,
       '/image-path.png',
     );
@@ -137,7 +142,7 @@ void main() {
   });
 
   test('can build logo image Url from size and path', () {
-    String generatedImageUrl = DummyConfigs.imageConfigs.buildLogoImage(
+    final generatedImageUrl = DummyConfigs.imageConfigs.buildLogoImage(
       ImageSize.w45,
       '/image-path.png',
     );
@@ -147,7 +152,7 @@ void main() {
       equals('https://image.tmdb.org/t/p/w45/image-path.png'),
     );
 
-    String generatedImageUrlInvalidSize =
+    final generatedImageUrlInvalidSize =
         DummyConfigs.imageConfigs.buildLogoImage(
       ImageSize.h632,
       '/image-path.png',

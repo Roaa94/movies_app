@@ -9,7 +9,9 @@ import 'package:movies_app/features/people/views/pages/popular_people_page.dart'
 import 'package:movies_app/features/tmdb-configs/models/tmdb_configs.dart';
 import 'package:movies_app/features/tmdb-configs/providers/tmdb_configs_provider.dart';
 
+/// Main App Widget
 class MoviesApp extends ConsumerWidget {
+  /// Creates new instance of [MoviesApp]
   const MoviesApp({Key? key}) : super(key: key);
 
   @override
@@ -27,8 +29,9 @@ class MoviesApp extends ConsumerWidget {
           return const PopularPeoplePage();
         },
         error: (Object error, StackTrace? stackTrace) {
-          log('Error fetching popular people');
+          log('Error fetching configurations');
           log(error.toString());
+          log(stackTrace.toString());
           return const Scaffold(body: ErrorView());
         },
         loading: () => const Scaffold(body: AppLoader()),

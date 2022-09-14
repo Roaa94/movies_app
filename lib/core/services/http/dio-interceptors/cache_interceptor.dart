@@ -19,12 +19,12 @@ class CacheInterceptor implements Interceptor {
     String method,
     String baseUrl,
     String path, [
-    Map<String, dynamic> queryParameters = const {},
+    Map<String, dynamic> queryParameters = const <String, dynamic>{},
   ]) {
-    String storageKey = '${method.toUpperCase()}:${baseUrl + path}/';
+    var storageKey = '${method.toUpperCase()}:${baseUrl + path}/';
     if (queryParameters.isNotEmpty) {
       storageKey += '?';
-      queryParameters.forEach((key, value) {
+      queryParameters.forEach((key, dynamic value) {
         storageKey += '$key=$value&';
       });
     }
@@ -37,20 +37,23 @@ class CacheInterceptor implements Interceptor {
     log('❌ ❌ ❌ Url: ${err.requestOptions.uri}');
     log('❌ ❌ ❌ ${err.stackTrace}');
     log('❌ ❌ ❌ Response Errors: ${err.response?.data}');
-    String storageKey = createStorageKey(
+    var storageKey = createStorageKey(
       err.requestOptions.method,
       err.requestOptions.baseUrl,
       err.requestOptions.path,
       err.requestOptions.queryParameters,
     );
     if (storageService.has(storageKey)) {
-      final CachedResponse? cachedResponse = _getCachedResponse(storageKey);
+      final cachedResponse = _getCachedResponse(storageKey);
       if (cachedResponse != null) {
         log('📦 📦 📦 Retrieved response from cache');
-        final Response response =
-            cachedResponse.buildResponse(err.requestOptions);
+        final response = cachedResponse.buildResponse(err.requestOptions);
         log('⬅️ ⬅️ ⬅️ Response');
-        log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
+        log(
+          '''
+          <---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'}'
+          ' ${response.requestOptions.baseUrl}${response.requestOptions.path}''',
+        );
         log('Query params: ${response.requestOptions.queryParameters}');
         log('-------------------------');
         return handler.resolve(response);
@@ -65,17 +68,17 @@ class CacheInterceptor implements Interceptor {
       log('🌍 🌍 🌍 Retrieving request from network by force refresh');
       return handler.next(options);
     }
-    String storageKey = createStorageKey(
+    var storageKey = createStorageKey(
       options.method,
       options.baseUrl,
       options.path,
       options.queryParameters,
     );
     if (storageService.has(storageKey)) {
-      final CachedResponse? cachedResponse = _getCachedResponse(storageKey);
+      final cachedResponse = _getCachedResponse(storageKey);
       if (cachedResponse != null) {
         log('📦 📦 📦 Retrieved response from cache');
-        final Response response = cachedResponse.buildResponse(options);
+        final response = cachedResponse.buildResponse(options);
         log('⬅️ ⬅️ ⬅️ Response');
         log('<---- ${response.statusCode != 200 ? '❌ ${response.statusCode} ❌' : '✅ 200 ✅'} ${response.requestOptions.baseUrl}${response.requestOptions.path}');
         log('Query params: ${response.requestOptions.queryParameters}');
@@ -88,7 +91,7 @@ class CacheInterceptor implements Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    String storageKey = createStorageKey(
+    var storageKey = createStorageKey(
       response.requestOptions.method,
       response.requestOptions.baseUrl,
       response.requestOptions.path,
@@ -104,7 +107,7 @@ class CacheInterceptor implements Interceptor {
       log('Query params: ${response.requestOptions.queryParameters}');
       log('-------------------------');
 
-      CachedResponse cachedResponse = CachedResponse(
+      var cachedResponse = CachedResponse(
         data: response.data,
         headers: Headers.fromMap(response.headers.map),
         age: clock.now(),
@@ -116,10 +119,10 @@ class CacheInterceptor implements Interceptor {
   }
 
   CachedResponse? _getCachedResponse(String storageKey) {
-    final rawCachedResponse = storageService.get(storageKey);
+    final dynamic rawCachedResponse = storageService.get(storageKey);
     try {
-      final CachedResponse cachedResponse = CachedResponse.fromJson(
-        json.decode(json.encode(rawCachedResponse)),
+      final cachedResponse = CachedResponse.fromJson(
+        json.decode(json.encode(rawCachedResponse)) as Map<String, dynamic>,
       );
       if (cachedResponse.isValid) {
         return cachedResponse;

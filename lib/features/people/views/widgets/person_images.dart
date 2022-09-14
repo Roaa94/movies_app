@@ -9,12 +9,15 @@ import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/providers/person_images_provider.dart';
 import 'package:movies_app/features/people/views/widgets/person_images_grid.dart';
 
+/// Widget holding horizontal list of a person's images
 class PersonImages extends ConsumerWidget {
+  /// Creates new instance of [PersonImages]
   const PersonImages(
     this.personId, {
     Key? key,
   }) : super(key: key);
 
+  /// Person object id
   final int personId;
 
   @override
@@ -68,6 +71,7 @@ class PersonImages extends ConsumerWidget {
               error: (Object error, StackTrace? stackTrace) {
                 log('Error fetching person images');
                 log(error.toString());
+                log(stackTrace.toString());
                 return const ErrorView();
               },
               loading: () {

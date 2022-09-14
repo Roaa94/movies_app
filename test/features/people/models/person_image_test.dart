@@ -1,10 +1,12 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/features/people/models/person_image.dart';
 
 import '../../../test-utils/dummy-data/dummy_configs.dart';
 
 void main() {
-  const Map<String, dynamic> rawExamplePersonImage = {
+  const rawExamplePersonImage = <String, dynamic>{
     'aspect_ratio': 0.667,
     'height': 900,
     'iso_639_1': null,
@@ -14,7 +16,7 @@ void main() {
     'width': 600,
   };
 
-  const PersonImage examplePersonImage = PersonImage(
+  const examplePersonImage = PersonImage(
     aspectRatio: 0.667,
     height: 900,
     iso6391: null,
@@ -35,13 +37,15 @@ void main() {
     final examplePersonImageWithImages =
         examplePersonImage.populateImages(DummyConfigs.imageConfigs);
 
-    String imageUrl =
+    final imageUrl =
+    // ignore: lines_longer_than_80_chars
         '${DummyConfigs.imageConfigs.secureBaseUrl}${PersonImage.imageSize.name}${examplePersonImage.filePath}';
     // https://image.tmdb.org/t/p/original/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
 
     expect(examplePersonImageWithImages.imageUrl, equals(imageUrl));
 
-    String thumbnailUrl =
+    final thumbnailUrl =
+    // ignore: lines_longer_than_80_chars
         '${DummyConfigs.imageConfigs.secureBaseUrl}${PersonImage.thumbnailSize.name}${examplePersonImage.filePath}';
     // https://image.tmdb.org/t/p/h632/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
 

@@ -24,8 +24,8 @@ class PopularPersonListItem extends ConsumerWidget {
             onTap: person.id == null
                 ? null
                 : () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
+                    Navigator.of(context).push<PersonDetailsPage>(
+                      MaterialPageRoute<PersonDetailsPage>(
                         builder: (context) => PersonDetailsPage(
                           personId: person.id!,
                           personName: person.name,
@@ -45,7 +45,6 @@ class PopularPersonListItem extends ConsumerWidget {
                 children: [
                   // Avatar
                   Expanded(
-                    flex: 1,
                     child: Hero(
                       tag: 'person_${person.id}_profile_picture',
                       child: PersonAvatar(

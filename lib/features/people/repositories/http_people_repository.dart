@@ -6,10 +6,13 @@ import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/repositories/people_repository.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
+/// Http implementation of the [PeopleRepository]
 class HttpPeopleRepository implements PeopleRepository {
-  final HttpService httpService;
-
+  /// Creates a new instance of [HttpPeopleRepository]
   HttpPeopleRepository(this.httpService);
+
+  /// Http service used to access an Http client and make calls
+  final HttpService httpService;
 
   @override
   String get path => '/person';
@@ -26,7 +29,7 @@ class HttpPeopleRepository implements PeopleRepository {
     final responseData = await httpService.get(
       '$path/popular',
       forceRefresh: forceRefresh,
-      queryParameters: {
+      queryParameters: <String, dynamic>{
         'page': page,
         'api_key': apiKey,
       },
@@ -35,8 +38,9 @@ class HttpPeopleRepository implements PeopleRepository {
     return PaginatedResponse.fromJson(
       responseData,
       results: List<Person>.from(
-        responseData['results'].map(
-          (x) => Person.fromJson(x).populateImages(imageConfigs),
+        (responseData['results'] as List<dynamic>).map<Person>(
+          (dynamic x) => Person.fromJson(x as Map<String, dynamic>)
+              .populateImages(imageConfigs),
         ),
       ),
     );
@@ -51,7 +55,7 @@ class HttpPeopleRepository implements PeopleRepository {
     final responseData = await httpService.get(
       '$path/$personId',
       forceRefresh: forceRefresh,
-      queryParameters: {
+      queryParameters: <String, dynamic>{
         'api_key': apiKey,
       },
     );
@@ -65,14 +69,17 @@ class HttpPeopleRepository implements PeopleRepository {
     bool forceRefresh = false,
     required TMDBImageConfigs imageConfigs,
   }) async {
-    final responseData =
-        await httpService.get('$path/$personId/images', queryParameters: {
-      'api_key': apiKey,
-    });
+    final responseData = await httpService.get(
+      '$path/$personId/images',
+      queryParameters: <String, dynamic>{
+        'api_key': apiKey,
+      },
+    );
 
     return List<PersonImage>.from(
-      responseData['profiles'].map(
-        (x) => PersonImage.fromJson(x).populateImages(imageConfigs),
+      (responseData['profiles'] as List<dynamic>).map<PersonImage>(
+        (dynamic x) => PersonImage.fromJson(x as Map<String, dynamic>)
+            .populateImages(imageConfigs),
       ),
     );
   }

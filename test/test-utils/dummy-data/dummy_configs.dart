@@ -3,7 +3,7 @@ import 'package:movies_app/features/tmdb-configs/models/tmdb_configs.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
 
 class DummyConfigs {
-  static const Map<String, dynamic> rawImageConfigs = {
+  static const Map<String, dynamic> rawImageConfigs = <String, dynamic>{
     'base_url': 'http://image.tmdb.org/t/p/',
     'secure_base_url': 'https://image.tmdb.org/t/p/',
     'backdrop_sizes': ['w300', 'w780', 'w1280', 'original'],

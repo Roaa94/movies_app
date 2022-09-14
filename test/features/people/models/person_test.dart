@@ -1,15 +1,18 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:movies_app/features/media/models/media.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/models/person.dart';
 
 import '../../../test-utils/dummy-data/dummy_configs.dart';
 
 void main() {
-  const Map<String, dynamic> rawExamplePerson = {
+  const rawExamplePerson = <String, dynamic>{
     'adult': false,
     'gender': 1,
     'id': 224513,
-    'known_for': [],
+    'known_for': <String>[],
     'known_for_department': 'Acting',
     'name': 'Ana de Armas',
     'popularity': 493.285,
@@ -22,11 +25,11 @@ void main() {
     'place_of_birth': null,
   };
 
-  final Person examplePerson = Person(
+  final examplePerson = Person(
     id: 224513,
     adult: false,
     gender: Gender.female,
-    knownFor: const [],
+    knownFor: const <Media>[],
     knownForDepartment: 'Acting',
     name: 'Ana de Armas',
     popularity: 493.285,
@@ -47,7 +50,7 @@ void main() {
   });
 
   test('returns null dates for invalid formats', () {
-    Map<String, dynamic> invalidDateExamplePerson = {
+    final invalidDateExamplePerson = <String, dynamic>{
       ...rawExamplePerson,
       'deathday': 'invalid!',
       'birthday': 'invalid!',
@@ -59,10 +62,11 @@ void main() {
 
   test('can populate avatar and cover from profilePath with correct image urls',
       () {
-    Person personWithGeneratedImages =
+    final personWithGeneratedImages =
         examplePerson.populateImages(DummyConfigs.imageConfigs);
 
-    String avatarUrl =
+    final avatarUrl =
+        // ignore: lines_longer_than_80_chars
         '${DummyConfigs.imageConfigs.secureBaseUrl}${Person.avatarSize.name}${examplePerson.profilePath}';
     // https://image.tmdb.org/t/p/h632/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
 
@@ -71,7 +75,8 @@ void main() {
       equals(avatarUrl),
     );
 
-    String coverUrl =
+    final coverUrl =
+        // ignore: lines_longer_than_80_chars
         '${DummyConfigs.imageConfigs.secureBaseUrl}${Person.coverSize.name}${examplePerson.profilePath}';
     // https://image.tmdb.org/t/p/original/14uxt0jH28J9zn4vNQNTae3Bmr7.jpg
 
