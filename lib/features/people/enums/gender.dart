@@ -1,8 +1,15 @@
+/// Enum to indicated male, female, or unknown person gender
 enum Gender {
+  /// Female gender value
   female,
+
+  /// Male gender value
   male,
+
+  /// Unknown gender value
   unknown;
 
+  /// Integer value from gender value based on the TMDB response
   int get toInt {
     switch (this) {
       case Gender.unknown:
@@ -14,6 +21,7 @@ enum Gender {
     }
   }
 
+  /// Gender value from integer value based on the TMDB response
   static Gender fromInt(int integer) {
     switch (integer) {
       case 1:

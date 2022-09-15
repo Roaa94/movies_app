@@ -4,23 +4,31 @@ import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/views/widgets/save_image_slider_action.dart';
 import 'package:movies_app/features/people/views/widgets/slider_action.dart';
 
+/// Slider widget for person images
 class PersonImagesSliderPage extends StatefulWidget {
+  /// Creates a new instance of [PersonImagesSliderPage]
   const PersonImagesSliderPage({
     Key? key,
     this.initialImageIndex = 0,
     required this.images,
   }) : super(key: key);
 
+  /// The initial image index to the slider should first open to
   final int initialImageIndex;
+
+  /// The list of person images displayed in the slider
   final List<PersonImage> images;
 
   @override
   State<PersonImagesSliderPage> createState() => PersonImagesSliderPageState();
 }
 
+/// Person images slider widget state
 class PersonImagesSliderPageState extends State<PersonImagesSliderPage> {
+  /// Page controller attached to the slider [PageView] widget
   late final PageController pageController;
 
+  /// Indicates if saving image to device gallery is loading
   bool isLoadingImageSave = false;
 
   @override

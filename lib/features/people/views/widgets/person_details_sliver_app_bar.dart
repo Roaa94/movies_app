@@ -3,7 +3,9 @@ import 'package:movies_app/core/widgets/app_bar_leading.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
 import 'package:movies_app/features/people/views/widgets/person_cover.dart';
 
+/// Person details page Sliver AppBar widget
 class PersonDetailsSliverAppBar extends StatelessWidget {
+  /// Creates a new instance of [PersonDetailsSliverAppBar]
   const PersonDetailsSliverAppBar({
     Key? key,
     this.avatar,
@@ -11,8 +13,19 @@ class PersonDetailsSliverAppBar extends StatelessWidget {
     required this.personId,
   }) : super(key: key);
 
+  /// Id of the person being previewed
   final int personId;
+
+  /// Avatar of the person
+  /// used for the Hero animation
   final String? avatar;
+
+  /// Gender of the person
+  ///
+  /// This is used to show female/male/unknown placeholder images:
+  /// assets/images/placeholder-female.png
+  /// assets/images/placeholder-male.png
+  /// assets/images/placeholder-unknown.png
   final Gender gender;
 
   @override

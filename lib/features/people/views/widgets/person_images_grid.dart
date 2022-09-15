@@ -3,12 +3,15 @@ import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/views/pages/person_images_slider_page.dart';
 import 'package:movies_app/features/people/views/widgets/person_images_grid_item.dart';
 
+/// Widget of the images grid section of the person details
 class PersonImagesGrid extends StatelessWidget {
+  /// Creates a new instance of [PersonImagesGrid]
   const PersonImagesGrid(
     this.images, {
     Key? key,
   }) : super(key: key);
 
+  /// List of person images to be displayed in the grid
   final List<PersonImage> images;
 
   @override

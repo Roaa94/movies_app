@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/configs/styles/app_colors.dart';
 
+/// Widget for a person name with adaptive text size
 class PersonName extends StatelessWidget {
+  /// Creates a new instance of [PersonName]
   const PersonName(
     this.personName, {
     Key? key,
   }) : super(key: key);
 
+  /// Person name
   final String personName;
 
   @override

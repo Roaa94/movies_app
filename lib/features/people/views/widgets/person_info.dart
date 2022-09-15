@@ -3,12 +3,17 @@ import 'package:intl/intl.dart';
 import 'package:movies_app/core/configs/styles/app_colors.dart';
 import 'package:movies_app/features/people/models/person.dart';
 
+/// Person information widget
+///
+/// Contains person department and birthday info
 class PersonInfo extends StatelessWidget {
+  /// Creates a new instance of [PersonInfo]
   const PersonInfo(
     this.person, {
     Key? key,
   }) : super(key: key);
 
+  /// Person object
   final Person person;
 
   @override

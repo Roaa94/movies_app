@@ -3,7 +3,9 @@ import 'package:movies_app/core/configs/styles/ui_constants.dart';
 import 'package:movies_app/core/widgets/app_cached_network_image.dart';
 import 'package:movies_app/features/people/enums/gender.dart';
 
+/// Widget for a person cover image
 class PersonCover extends StatelessWidget {
+  /// Creates a new instance of [PersonCover]
   const PersonCover(
     this.coverUrl, {
     Key? key,
@@ -11,8 +13,18 @@ class PersonCover extends StatelessWidget {
     this.height = UIConstants.personListItemHeight,
   }) : super(key: key);
 
+  /// Cover image url
   final String? coverUrl;
+
+  /// Gender of the person
+  ///
+  /// This is used to show female/male/unknown placeholder images:
+  /// assets/images/placeholder-female.png
+  /// assets/images/placeholder-male.png
+  /// assets/images/placeholder-unknown.png
   final Gender gender;
+
+  /// Cover image height
   final double height;
 
   @override

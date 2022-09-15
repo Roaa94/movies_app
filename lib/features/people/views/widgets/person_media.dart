@@ -3,12 +3,15 @@ import 'package:movies_app/core/configs/styles/app_colors.dart';
 import 'package:movies_app/core/widgets/app_cached_network_image.dart';
 import 'package:movies_app/features/media/models/media.dart';
 
+/// List widget of a Person's 'knownFor' Media (movies & tv shows)
 class PersonMedia extends StatelessWidget {
+  /// Creates a new instance of [PersonMedia]
   const PersonMedia(
     this.media, {
     Key? key,
   }) : super(key: key);
 
+  /// Media list
   final List<Media> media;
 
   @override

@@ -6,7 +6,10 @@ import 'package:movies_app/features/tmdb-configs/providers/tmdb_configs_provider
 
 /// FutureProvider that fetches paginated popular people
 ///
-/// See: https://developers.themoviedb.org/3/people/get-popular-people
+/// See:
+/// https://developers.themoviedb.org/3/people/get-popular-people
+/// For infinite scroll tutorial:
+/// https://github.com/Roaa94/movies_app/tree/main#infinite-scroll-functionality
 final paginatedPopularPeopleProvider =
     FutureProvider.family<PaginatedResponse<Person>, int>(
   (ref, int pageIndex) async {

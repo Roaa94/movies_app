@@ -5,14 +5,18 @@ import 'package:movies_app/core/services/media/media_service.dart';
 import 'package:movies_app/core/widgets/app_loader.dart';
 import 'package:movies_app/features/people/views/widgets/slider_action.dart';
 
+/// StateProvider for loading state of image saving action
 final isLoadingSaveImage = StateProvider<bool>((_) => false);
 
+/// Slider action widget for saving image to device gallery
 class SaveImageSliderAction extends ConsumerWidget {
+  /// Creates a new instance of [SaveImageSliderAction]
   const SaveImageSliderAction({
     Key? key,
     required this.imageUrl,
   }) : super(key: key);
 
+  /// Url of the image to be saved
   final String imageUrl;
 
   @override

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/configs/styles/app_colors.dart';
 
+/// Widget for a Person Biography
 class PersonBio extends StatelessWidget {
+  /// Creates a new instance of [PersonBio]
   const PersonBio(
     this.biography, {
     Key? key,
   }) : super(key: key);
 
+  /// Person biography text
   final String? biography;
 
   @override
