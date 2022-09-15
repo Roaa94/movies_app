@@ -6,3 +6,4 @@ linter:
     always_use_package_imports: true
     flutter_style_todos: false
     avoid_redundant_argument_values: false
+    sort_pub_dependencies: false
