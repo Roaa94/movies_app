@@ -47,3 +47,7 @@ app.*.map.json
 /android/app/release
 pubspec.lock
 /coverage/html/
+
+# Goldens
+/test/**/goldens/**/*.*
+/test/**/failures/**/*.*
