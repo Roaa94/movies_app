@@ -51,3 +51,7 @@ pubspec.lock
 # Goldens
 /test/**/goldens/**/*.*
 /test/**/failures/**/*.*
+
+#mason
+.mason/
+mason-lock.json
