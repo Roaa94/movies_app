@@ -20,7 +20,6 @@ void main() {
     );
 
     await tester.pumpAndSettle();
-    await tester.pumpAndSettle();
 
     await tester.tap(find.byType(InkWell));
     verify(() => mockNavigatorObserver.didPop(any(), any()));

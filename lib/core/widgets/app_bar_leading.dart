@@ -13,16 +13,21 @@ class AppBarLeading extends StatefulWidget {
 class _AppBarLeadingState extends State<AppBarLeading>
     with SingleTickerProviderStateMixin {
   late final AnimationController animationController;
+  late final Animation<double> fadeAnimation;
 
   @override
   void initState() {
     animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 600),
+    )..forward();
+
+    fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: const Interval(0.5, 1, curve: Curves.easeInOut),
+      ),
     );
-    Future<void>.delayed(const Duration(milliseconds: 200)).then((_) {
-      animationController.forward();
-    });
     super.initState();
   }
 
@@ -35,7 +40,7 @@ class _AppBarLeadingState extends State<AppBarLeading>
   @override
   Widget build(BuildContext context) {
     return FadeTransition(
-      opacity: animationController,
+      opacity: fadeAnimation,
       child: Center(
         child: ClipOval(
           child: Material(
