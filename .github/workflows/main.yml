@@ -19,14 +19,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v1
         with:
-          distribution: 'zulu'
-          java-version: '11'
+          java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.0.5'
-
+          channel: 'stable'  
+      - run: flutter pub get
+      
       - name: Get all Flutter Packages
         run: flutter pub get
 
