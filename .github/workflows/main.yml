@@ -24,11 +24,10 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'stable'  
-      - run: flutter pub get
+          channel: 'stable'
       
       - name: Get all Flutter Packages
         run: flutter pub get
 
       - name: Run Flutter Test
-        run: flutter test
+        run: flutter test --update-goldens
