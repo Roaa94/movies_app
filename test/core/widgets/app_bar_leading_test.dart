@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:movies_app/core/widgets/app_bar_leading.dart';
 
+import '../../test-utils/golden_test_utils.dart';
 import '../../test-utils/mocks.dart';
 import '../../test-utils/pump_app.dart';
 
@@ -23,5 +24,19 @@ void main() {
 
     await tester.tap(find.byType(InkWell));
     verify(() => mockNavigatorObserver.didPop(any(), any()));
+  });
+
+  testWidgets('matches expected widget', (WidgetTester tester) async {
+    await GoldenTestUtils.loadMaterialIconsFont();
+    await tester.pumpApp(
+      const AppBarLeading(),
+    );
+
+    await tester.pumpAndSettle();
+
+    await expectLater(
+      find.byType(AppBarLeading),
+      matchesGoldenFile('goldens/app_bar_leading.png'),
+    );
   });
 }

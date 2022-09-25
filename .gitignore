@@ -50,3 +50,11 @@ pubspec.lock
 
 .fvm
 .vscode
+
+# Goldens
+/test/**/goldens/**/*.*
+/test/**/failures/**/*.*
+
+#mason
+.mason/
+mason-lock.json
