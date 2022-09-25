@@ -48,6 +48,9 @@ app.*.map.json
 pubspec.lock
 /coverage/html/
 
+.fvm
+.vscode
+
 # Goldens
 /test/**/goldens/**/*.*
 /test/**/failures/**/*.*
