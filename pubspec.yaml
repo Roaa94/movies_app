@@ -36,13 +36,13 @@ dependencies:
   cupertino_icons: ^1.0.5
   collection: ^1.16.0
   flutter_riverpod: ^1.0.4
-  cached_network_image: ^3.2.1
+  cached_network_image: ^3.2.2
   hive_flutter: ^1.1.0
   dio: ^4.0.6
   intl: ^0.17.0
-  equatable: ^2.0.3
-  url_launcher: ^6.1.5
-  clock: ^1.1.0
+  equatable: ^2.0.5
+  url_launcher: ^6.1.6
+  clock: ^1.1.1
   gallery_saver: ^2.3.2
   mocktail_image_network: ^0.3.1
 
@@ -53,8 +53,7 @@ dev_dependencies:
   http_mock_adapter: ^0.3.3
   mocktail: ^0.3.0
   hive_test: ^1.0.1
-  very_good_analysis: ^2.4.0
-  flutter_lints: ^2.0.0
+  very_good_analysis: ^3.1.0
   test_coverage_badge: ^0.2.0
 
 # For information on the generic Dart part of this file, see the
