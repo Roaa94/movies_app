@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
+import 'package:movies_app/features/people/models/person_image.dart';
 import 'package:movies_app/features/people/providers/person_images_provider.dart';
 import 'package:movies_app/features/people/views/widgets/person_images.dart';
 import 'package:movies_app/features/people/views/widgets/person_images_grid.dart';
@@ -13,8 +14,10 @@ void main() {
     await tester.pumpProviderApp(
       PersonImages(DummyPeople.person1.id!),
       overrides: [
-        personImagesProvider(DummyPeople.person1.id!).overrideWithValue(
-          const AsyncValue.error('Error!'),
+        personImagesProvider(DummyPeople.person1.id!).overrideWithProvider(
+          FutureProvider<List<PersonImage>>(
+            (ref) => throw Exception(),
+          ),
         ),
       ],
     );
@@ -27,8 +30,10 @@ void main() {
     await tester.pumpProviderApp(
       PersonImages(DummyPeople.person1.id!),
       overrides: [
-        personImagesProvider(DummyPeople.person1.id!).overrideWithValue(
-          AsyncValue.data(DummyPeople.personImagesWithoutImages),
+        personImagesProvider(DummyPeople.person1.id!).overrideWithProvider(
+          FutureProvider<List<PersonImage>>(
+            (ref) async => Future.value(DummyPeople.personImagesWithoutImages),
+          ),
         ),
       ],
     );

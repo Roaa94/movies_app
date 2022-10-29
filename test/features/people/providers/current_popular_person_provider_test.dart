@@ -11,13 +11,7 @@ void main() {
 
     expect(
       () => providerContainer.read(currentPopularPersonProvider),
-      throwsA(isA<ProviderException>()),
+      throwsA(isA<UnimplementedError>()),
     );
-
-    try {
-      providerContainer.read(currentPopularPersonProvider);
-    } on ProviderException catch (e) {
-      expect(e.exception, isA<UnimplementedError>());
-    }
   });
 }

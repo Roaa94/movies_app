@@ -1,6 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movies_app/features/tmdb-configs/enums/image_size.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_configs.dart';
 import 'package:movies_app/features/tmdb-configs/models/tmdb_image_configs.dart';
+
+final dummyTmdbConfigsProvider = FutureProvider<TMDBConfigs>(
+  (ref) async => Future.value(DummyConfigs.tmdbConfigs),
+);
 
 class DummyConfigs {
   static const Map<String, dynamic> rawImageConfigs = <String, dynamic>{

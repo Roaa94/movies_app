@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movies_app/core/widgets/error_view.dart';
+import 'package:movies_app/features/people/models/person.dart';
 import 'package:movies_app/features/people/providers/person_details_provider.dart';
 import 'package:movies_app/features/people/views/pages/person_details_page.dart';
 
@@ -17,8 +18,10 @@ void main() {
         personGender: DummyPeople.person1.gender,
       ),
       overrides: [
-        personDetailsProvider(DummyPeople.person1.id!).overrideWithValue(
-          const AsyncValue.error('Error!'),
+        personDetailsProvider(DummyPeople.person1.id!).overrideWithProvider(
+          FutureProvider<Person>(
+            (ref) => throw Exception(),
+          ),
         ),
       ],
     );
@@ -36,8 +39,10 @@ void main() {
         personGender: DummyPeople.person1.gender,
       ),
       overrides: [
-        personDetailsProvider(DummyPeople.person1.id!).overrideWithValue(
-          AsyncValue.data(DummyPeople.person1),
+        personDetailsProvider(DummyPeople.person1.id!).overrideWithProvider(
+          FutureProvider<Person>(
+            (ref) async => Future.value(DummyPeople.person1),
+          ),
         ),
       ],
     );

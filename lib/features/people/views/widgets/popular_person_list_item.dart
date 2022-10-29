@@ -70,9 +70,6 @@ class PopularPersonListItem extends ConsumerWidget {
         error: (Object error, StackTrace? stackTrace) {
           log('Error fetching current popular person');
           log(error.toString());
-          if (error is FormatException) {
-            log('Format Exception: ${error.source}');
-          }
           return const ErrorView();
         },
         loading: () => const ListItemShimmer(),

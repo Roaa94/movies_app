@@ -29,9 +29,7 @@ void main() {
     final providerContainer = ProviderContainer(
       overrides: [
         peopleRepositoryProvider.overrideWithValue(mockPeopleRepository),
-        tmdbConfigsProvider.overrideWithValue(
-          const AsyncValue.data(DummyConfigs.tmdbConfigs),
-        ),
+        tmdbConfigsProvider.overrideWithProvider(dummyTmdbConfigsProvider),
       ],
     );
 
