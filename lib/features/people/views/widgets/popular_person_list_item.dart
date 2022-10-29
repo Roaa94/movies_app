@@ -48,6 +48,7 @@ class PopularPersonListItem extends ConsumerWidget {
                   Expanded(
                     child: Hero(
                       tag: 'person_${person.id}_profile_picture',
+                      transitionOnUserGestures: true,
                       child: PersonAvatar(
                         person.avatar,
                         gender: person.gender,
