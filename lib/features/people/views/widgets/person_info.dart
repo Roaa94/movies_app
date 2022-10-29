@@ -10,15 +10,15 @@ class PersonInfo extends StatelessWidget {
   /// Creates a new instance of [PersonInfo]
   const PersonInfo(
     this.person, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Person object
   final Person person;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: AppColors.secondary,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(

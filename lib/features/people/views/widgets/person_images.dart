@@ -14,8 +14,8 @@ class PersonImages extends ConsumerWidget {
   /// Creates new instance of [PersonImages]
   const PersonImages(
     this.personId, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Person object id
   final int personId;
@@ -29,14 +29,14 @@ class PersonImages extends ConsumerWidget {
           height: 100,
           left: 0,
           right: 0,
-          child: Container(color: Theme.of(context).scaffoldBackgroundColor),
+          child: ColoredBox(color: Theme.of(context).scaffoldBackgroundColor),
         ),
-        Positioned(
+        const Positioned(
           top: 0,
           height: 100,
           left: 0,
           right: 0,
-          child: Container(color: AppColors.secondary),
+          child: ColoredBox(color: AppColors.secondary),
         ),
         ClipRRect(
           borderRadius: const BorderRadius.only(

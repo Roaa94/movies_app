@@ -5,7 +5,7 @@ import 'package:movies_app/features/people/providers/popular_people_list_scroll_
 /// AppBar widget for popular people page
 class PopularPeopleAppBar extends ConsumerWidget {
   /// Creates a new instance of [PopularPeopleAppBar]
-  const PopularPeopleAppBar({Key? key}) : super(key: key);
+  const PopularPeopleAppBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

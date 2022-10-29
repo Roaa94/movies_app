@@ -6,7 +6,7 @@ import 'package:movies_app/core/services/storage/storage_service.dart';
 /// See: https://pub.dev/packages/hive_flutter
 class HiveStorageService implements StorageService {
   /// A Hive Box
-  late Box hiveBox;
+  late Box<dynamic> hiveBox;
 
   /// Opens a Hive box by its name
   Future<void> openBox([String boxName = 'MOVES_APP']) async {

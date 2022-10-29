@@ -19,13 +19,13 @@ import 'package:movies_app/features/people/views/widgets/person_name.dart';
 class PersonDetailsPage extends ConsumerWidget {
   /// Creates new instance of [PersonDetailsPage]
   const PersonDetailsPage({
-    Key? key,
+    super.key,
     required this.personId,
     required this.personName,
     required this.personAvatar,
     required this.personGender,
     this.personMedia = const [],
-  }) : super(key: key);
+  });
 
   /// Person name
   final String personName;

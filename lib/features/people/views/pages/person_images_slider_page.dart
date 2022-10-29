@@ -8,10 +8,10 @@ import 'package:movies_app/features/people/views/widgets/slider_action.dart';
 class PersonImagesSliderPage extends StatefulWidget {
   /// Creates a new instance of [PersonImagesSliderPage]
   const PersonImagesSliderPage({
-    Key? key,
+    super.key,
     this.initialImageIndex = 0,
     required this.images,
-  }) : super(key: key);
+  });
 
   /// The initial image index to the slider should first open to
   final int initialImageIndex;

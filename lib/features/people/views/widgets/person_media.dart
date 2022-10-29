@@ -8,8 +8,8 @@ class PersonMedia extends StatelessWidget {
   /// Creates a new instance of [PersonMedia]
   const PersonMedia(
     this.media, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Media list
   final List<Media> media;
@@ -18,12 +18,12 @@ class PersonMedia extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
+        const Positioned(
           height: 100,
           left: 0,
           right: 0,
           bottom: 0,
-          child: Container(color: AppColors.primary),
+          child: ColoredBox(color: AppColors.primary),
         ),
         ClipRRect(
           borderRadius: const BorderRadius.only(

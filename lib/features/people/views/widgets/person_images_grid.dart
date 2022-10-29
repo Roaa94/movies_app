@@ -8,8 +8,8 @@ class PersonImagesGrid extends StatelessWidget {
   /// Creates a new instance of [PersonImagesGrid]
   const PersonImagesGrid(
     this.images, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// List of person images to be displayed in the grid
   final List<PersonImage> images;

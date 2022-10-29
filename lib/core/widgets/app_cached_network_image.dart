@@ -12,7 +12,7 @@ import 'package:movies_app/core/widgets/shimmer.dart';
 class AppCachedNetworkImage extends StatelessWidget {
   /// Creates a new instance of [AppCachedNetworkImage]
   const AppCachedNetworkImage({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.customErrorWidgetBuilder,
     this.noLoader = false,
@@ -25,7 +25,7 @@ class AppCachedNetworkImage extends StatelessWidget {
     this.color,
     this.colorBlendMode,
     this.isLoaderShimmer = true,
-  }) : super(key: key);
+  });
 
   /// The image url
   final String imageUrl;

@@ -7,9 +7,9 @@ class PersonImagesGridItem extends StatelessWidget {
   /// Creates a new instance of [PersonImagesGridItem]
   const PersonImagesGridItem(
     this.personImage, {
-    Key? key,
+    super.key,
     this.onTap,
-  }) : super(key: key);
+  });
 
   /// Image item of the person images grid
   final PersonImage personImage;
@@ -22,7 +22,7 @@ class PersonImagesGridItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: personImage.thumbnail == null
-          ? Container(color: Colors.white)
+          ? const ColoredBox(color: Colors.white)
           : AppCachedNetworkImage(
               imageUrl: personImage.thumbnail!,
               fit: BoxFit.cover,

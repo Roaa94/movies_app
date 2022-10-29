@@ -8,10 +8,10 @@ class PersonCover extends StatelessWidget {
   /// Creates a new instance of [PersonCover]
   const PersonCover(
     this.coverUrl, {
-    Key? key,
+    super.key,
     this.gender = Gender.unknown,
     this.height = UIConstants.personListItemHeight,
-  }) : super(key: key);
+  });
 
   /// Cover image url
   final String? coverUrl;

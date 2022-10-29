@@ -6,15 +6,15 @@ class PersonBio extends StatelessWidget {
   /// Creates a new instance of [PersonBio]
   const PersonBio(
     this.biography, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Person biography text
   final String? biography;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: AppColors.primary,
       child: ClipRRect(
         borderRadius: const BorderRadius.only(

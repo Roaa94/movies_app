@@ -4,7 +4,7 @@ import 'package:movies_app/core/widgets/shimmer.dart';
 /// Widget used for a list shimmer effect
 class ListItemShimmer extends StatelessWidget {
   /// Creates a new instance of [ListItemShimmer]
-  const ListItemShimmer({Key? key}) : super(key: key);
+  const ListItemShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

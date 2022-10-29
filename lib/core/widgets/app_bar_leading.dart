@@ -4,7 +4,7 @@ import 'package:movies_app/core/configs/styles/app_colors.dart';
 /// Widget with a default AppBar leading icon and action
 class AppBarLeading extends StatefulWidget {
   /// Creates a new instance of [AppBarLeading]
-  const AppBarLeading({Key? key}) : super(key: key);
+  const AppBarLeading({super.key});
 
   @override
   State<AppBarLeading> createState() => _AppBarLeadingState();

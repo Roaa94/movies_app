@@ -7,9 +7,9 @@ class PersonAvatar extends StatelessWidget {
   /// Creates a new instance of [PersonAvatar]
   const PersonAvatar(
     this.avatarUrl, {
-    Key? key,
+    super.key,
     this.gender = Gender.unknown,
-  }) : super(key: key);
+  });
 
   /// Image url of person avatar
   final String? avatarUrl;

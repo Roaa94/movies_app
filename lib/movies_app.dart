@@ -12,7 +12,7 @@ import 'package:movies_app/features/tmdb-configs/providers/tmdb_configs_provider
 /// Main App Widget
 class MoviesApp extends ConsumerWidget {
   /// Creates new instance of [MoviesApp]
-  const MoviesApp({Key? key}) : super(key: key);
+  const MoviesApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

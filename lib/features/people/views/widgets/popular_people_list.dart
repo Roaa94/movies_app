@@ -14,7 +14,7 @@ import 'package:movies_app/features/people/views/widgets/popular_person_list_ite
 /// Widget holding the list of popular people
 class PopularPeopleList extends ConsumerWidget {
   /// Creates new instance of [PopularPeopleList]
-  const PopularPeopleList({Key? key}) : super(key: key);
+  const PopularPeopleList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

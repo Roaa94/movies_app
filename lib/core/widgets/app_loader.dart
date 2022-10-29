@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Default loading widget with an adaptive [CircularProgressIndicator]
 class AppLoader extends StatelessWidget {
   /// Creates a new instance of [AppLoader]
-  const AppLoader({Key? key}) : super(key: key);
+  const AppLoader({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,10 +5,10 @@ import 'package:movies_app/core/widgets/shimmer.dart';
 class GridShimmer extends StatelessWidget {
   /// Creates a new instance of [GridShimmer]
   const GridShimmer({
-    Key? key,
+    super.key,
     this.minOpacity = 0.05,
     this.maxOpacity = 0.1,
-  }) : super(key: key);
+  });
 
   /// Minimum opacity of the shimmer effect
   final double minOpacity;

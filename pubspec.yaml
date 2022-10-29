@@ -45,6 +45,8 @@ dependencies:
   clock: ^1.1.1
   gallery_saver: ^2.3.2
   mocktail_image_network: ^0.3.1
+  file: ^6.1.4
+  platform: ^3.1.0
 
 dev_dependencies:
   flutter_test:

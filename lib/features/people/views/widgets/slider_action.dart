@@ -5,11 +5,11 @@ import 'package:movies_app/core/configs/styles/app_colors.dart';
 class SliderAction extends StatelessWidget {
   /// Creates a new instance of [SliderAction]
   const SliderAction({
-    Key? key,
+    super.key,
     required this.icon,
     this.onTap,
     this.color = AppColors.primary,
-  }) : super(key: key);
+  });
 
   /// Icons widget inside the slider action
   final Widget icon;

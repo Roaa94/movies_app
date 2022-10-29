@@ -6,8 +6,8 @@ class PersonName extends StatelessWidget {
   /// Creates a new instance of [PersonName]
   const PersonName(
     this.personName, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Person name
   final String personName;

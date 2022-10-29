@@ -12,7 +12,7 @@ import 'package:movies_app/features/people/views/widgets/person_avatar.dart';
 /// Widget holding a list item in the popular people list
 class PopularPersonListItem extends ConsumerWidget {
   /// Creates a new instance of [PopularPersonListItem]
-  const PopularPersonListItem({Key? key}) : super(key: key);
+  const PopularPersonListItem({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

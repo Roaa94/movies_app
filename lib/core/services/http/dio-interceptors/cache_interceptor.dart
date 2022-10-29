@@ -101,7 +101,10 @@ class CacheInterceptor implements Interceptor {
 
   /// Method that intercepts Dio response
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(
+    Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     final storageKey = createStorageKey(
       response.requestOptions.method,
       response.requestOptions.baseUrl,

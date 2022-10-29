@@ -64,7 +64,7 @@ class CachedResponse {
   }
 
   /// Builds a dio response from a [RequestOptions] object
-  Response buildResponse(RequestOptions options) {
+  Response<dynamic> buildResponse(RequestOptions options) {
     return Response<dynamic>(
       data: data,
       headers: headers,

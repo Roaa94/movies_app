@@ -12,9 +12,9 @@ final isLoadingSaveImage = StateProvider<bool>((_) => false);
 class SaveImageSliderAction extends ConsumerWidget {
   /// Creates a new instance of [SaveImageSliderAction]
   const SaveImageSliderAction({
-    Key? key,
+    super.key,
     required this.imageUrl,
-  }) : super(key: key);
+  });
 
   /// Url of the image to be saved
   final String imageUrl;

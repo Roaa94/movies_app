@@ -5,12 +5,12 @@ import 'package:movies_app/core/configs/styles/app_colors.dart';
 class Shimmer extends StatefulWidget {
   /// Creates a new instance of [Shimmer]
   const Shimmer({
-    Key? key,
+    super.key,
     this.width,
     this.height,
     this.minOpacity = 0.05,
     this.maxOpacity = 0.1,
-  }) : super(key: key);
+  });
 
   /// Shimmer area width
   final double? width;
